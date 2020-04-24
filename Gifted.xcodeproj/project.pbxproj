@@ -9,21 +9,23 @@
 /* Begin PBXBuildFile section */
 		B66F781D24537AF400E0727E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F781C24537AF400E0727E /* AppDelegate.swift */; };
 		B66F781F24537AF400E0727E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F781E24537AF400E0727E /* SceneDelegate.swift */; };
-		B66F782124537AF400E0727E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F782024537AF400E0727E /* ViewController.swift */; };
+		B66F782124537AF400E0727E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F782024537AF400E0727E /* MainViewController.swift */; };
 		B66F782424537AF400E0727E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B66F782224537AF400E0727E /* Main.storyboard */; };
 		B66F782624537AF500E0727E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B66F782524537AF500E0727E /* Assets.xcassets */; };
 		B66F782924537AF500E0727E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B66F782724537AF500E0727E /* LaunchScreen.storyboard */; };
+		B66F7836245380F100E0727E /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F7835245380F100E0727E /* MenuCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B66F781924537AF400E0727E /* Gifted.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gifted.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B66F781C24537AF400E0727E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B66F781E24537AF400E0727E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B66F782024537AF400E0727E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B66F782024537AF400E0727E /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		B66F782324537AF400E0727E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B66F782524537AF500E0727E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B66F782824537AF500E0727E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B66F782A24537AF500E0727E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B66F7835245380F100E0727E /* MenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,10 +58,11 @@
 		B66F781B24537AF400E0727E /* Gifted */ = {
 			isa = PBXGroup;
 			children = (
-				B66F783024537BE300E0727E /* Resources */,
-				B66F782024537AF400E0727E /* ViewController.swift */,
+				B66F782024537AF400E0727E /* MainViewController.swift */,
+				B66F7835245380F100E0727E /* MenuCell.swift */,
 				B66F782224537AF400E0727E /* Main.storyboard */,
 				B66F782A24537AF500E0727E /* Info.plist */,
+				B66F783024537BE300E0727E /* Resources */,
 			);
 			path = Gifted;
 			sourceTree = "<group>";
@@ -146,8 +149,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B66F782124537AF400E0727E /* ViewController.swift in Sources */,
+				B66F782124537AF400E0727E /* MainViewController.swift in Sources */,
 				B66F781D24537AF400E0727E /* AppDelegate.swift in Sources */,
+				B66F7836245380F100E0727E /* MenuCell.swift in Sources */,
 				B66F781F24537AF400E0727E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -295,6 +299,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4939K9623X;
 				INFOPLIST_FILE = Gifted/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -302,7 +307,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nick.Gifted;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -313,6 +318,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4939K9623X;
 				INFOPLIST_FILE = Gifted/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -320,7 +326,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nick.Gifted;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
