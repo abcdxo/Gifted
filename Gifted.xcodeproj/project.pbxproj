@@ -14,7 +14,27 @@
 		B66F782624537AF500E0727E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B66F782524537AF500E0727E /* Assets.xcassets */; };
 		B66F782924537AF500E0727E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B66F782724537AF500E0727E /* LaunchScreen.storyboard */; };
 		B66F7836245380F100E0727E /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F7835245380F100E0727E /* MenuCell.swift */; };
+		B66F7840245384F700E0727E /* GiftedUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F783F245384F700E0727E /* GiftedUITests.swift */; };
+		B66F784E2453850200E0727E /* GiftedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F784D2453850200E0727E /* GiftedTests.swift */; };
+		B66F78562453864100E0727E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B66F78552453864100E0727E /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B66F7842245384F700E0727E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B66F781124537AF400E0727E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B66F781824537AF400E0727E;
+			remoteInfo = Gifted;
+		};
+		B66F78502453850200E0727E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B66F781124537AF400E0727E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B66F781824537AF400E0727E;
+			remoteInfo = Gifted;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		B66F781924537AF400E0727E /* Gifted.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gifted.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -26,10 +46,31 @@
 		B66F782824537AF500E0727E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B66F782A24537AF500E0727E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B66F7835245380F100E0727E /* MenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
+		B66F783D245384F700E0727E /* GiftedUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GiftedUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B66F783F245384F700E0727E /* GiftedUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftedUITests.swift; sourceTree = "<group>"; };
+		B66F7841245384F700E0727E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B66F784B2453850200E0727E /* GiftedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GiftedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B66F784D2453850200E0727E /* GiftedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftedTests.swift; sourceTree = "<group>"; };
+		B66F784F2453850200E0727E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B66F78552453864100E0727E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		B66F781624537AF400E0727E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B66F783A245384F700E0727E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B66F78482453850200E0727E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -42,7 +83,10 @@
 		B66F781024537AF400E0727E = {
 			isa = PBXGroup;
 			children = (
+				B66F78552453864100E0727E /* Default-568h@2x.png */,
 				B66F781B24537AF400E0727E /* Gifted */,
+				B66F783E245384F700E0727E /* GiftedUITests */,
+				B66F784C2453850200E0727E /* GiftedTests */,
 				B66F781A24537AF400E0727E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -51,6 +95,8 @@
 			isa = PBXGroup;
 			children = (
 				B66F781924537AF400E0727E /* Gifted.app */,
+				B66F783D245384F700E0727E /* GiftedUITests.xctest */,
+				B66F784B2453850200E0727E /* GiftedTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -61,7 +107,6 @@
 				B66F782024537AF400E0727E /* MainViewController.swift */,
 				B66F7835245380F100E0727E /* MenuCell.swift */,
 				B66F782224537AF400E0727E /* Main.storyboard */,
-				B66F782A24537AF500E0727E /* Info.plist */,
 				B66F783024537BE300E0727E /* Resources */,
 			);
 			path = Gifted;
@@ -70,12 +115,31 @@
 		B66F783024537BE300E0727E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B66F782A24537AF500E0727E /* Info.plist */,
 				B66F781C24537AF400E0727E /* AppDelegate.swift */,
 				B66F781E24537AF400E0727E /* SceneDelegate.swift */,
 				B66F782524537AF500E0727E /* Assets.xcassets */,
 				B66F782724537AF500E0727E /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		B66F783E245384F700E0727E /* GiftedUITests */ = {
+			isa = PBXGroup;
+			children = (
+				B66F783F245384F700E0727E /* GiftedUITests.swift */,
+				B66F7841245384F700E0727E /* Info.plist */,
+			);
+			path = GiftedUITests;
+			sourceTree = "<group>";
+		};
+		B66F784C2453850200E0727E /* GiftedTests */ = {
+			isa = PBXGroup;
+			children = (
+				B66F784D2453850200E0727E /* GiftedTests.swift */,
+				B66F784F2453850200E0727E /* Info.plist */,
+			);
+			path = GiftedTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -98,6 +162,42 @@
 			productReference = B66F781924537AF400E0727E /* Gifted.app */;
 			productType = "com.apple.product-type.application";
 		};
+		B66F783C245384F700E0727E /* GiftedUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B66F7844245384F700E0727E /* Build configuration list for PBXNativeTarget "GiftedUITests" */;
+			buildPhases = (
+				B66F7839245384F700E0727E /* Sources */,
+				B66F783A245384F700E0727E /* Frameworks */,
+				B66F783B245384F700E0727E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B66F7843245384F700E0727E /* PBXTargetDependency */,
+			);
+			name = GiftedUITests;
+			productName = GiftedUITests;
+			productReference = B66F783D245384F700E0727E /* GiftedUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		B66F784A2453850200E0727E /* GiftedTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B66F78522453850200E0727E /* Build configuration list for PBXNativeTarget "GiftedTests" */;
+			buildPhases = (
+				B66F78472453850200E0727E /* Sources */,
+				B66F78482453850200E0727E /* Frameworks */,
+				B66F78492453850200E0727E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B66F78512453850200E0727E /* PBXTargetDependency */,
+			);
+			name = GiftedTests;
+			productName = GiftedTests;
+			productReference = B66F784B2453850200E0727E /* GiftedTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -110,6 +210,14 @@
 				TargetAttributes = {
 					B66F781824537AF400E0727E = {
 						CreatedOnToolsVersion = 11.4.1;
+					};
+					B66F783C245384F700E0727E = {
+						CreatedOnToolsVersion = 11.4.1;
+						TestTargetID = B66F781824537AF400E0727E;
+					};
+					B66F784A2453850200E0727E = {
+						CreatedOnToolsVersion = 11.4.1;
+						TestTargetID = B66F781824537AF400E0727E;
 					};
 				};
 			};
@@ -127,6 +235,8 @@
 			projectRoot = "";
 			targets = (
 				B66F781824537AF400E0727E /* Gifted */,
+				B66F783C245384F700E0727E /* GiftedUITests */,
+				B66F784A2453850200E0727E /* GiftedTests */,
 			);
 		};
 /* End PBXProject section */
@@ -137,8 +247,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				B66F782924537AF500E0727E /* LaunchScreen.storyboard in Resources */,
+				B66F78562453864100E0727E /* Default-568h@2x.png in Resources */,
 				B66F782624537AF500E0727E /* Assets.xcassets in Resources */,
 				B66F782424537AF400E0727E /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B66F783B245384F700E0727E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B66F78492453850200E0727E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,7 +281,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B66F7839245384F700E0727E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B66F7840245384F700E0727E /* GiftedUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B66F78472453850200E0727E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B66F784E2453850200E0727E /* GiftedTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B66F7843245384F700E0727E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B66F781824537AF400E0727E /* Gifted */;
+			targetProxy = B66F7842245384F700E0727E /* PBXContainerItemProxy */;
+		};
+		B66F78512453850200E0727E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B66F781824537AF400E0727E /* Gifted */;
+			targetProxy = B66F78502453850200E0727E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		B66F782224537AF400E0727E /* Main.storyboard */ = {
@@ -228,7 +382,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -282,7 +436,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				"INFOPLIST_FILE[sdk=*]" = Gifted/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -298,7 +453,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4939K9623X;
-				INFOPLIST_FILE = Gifted/Info.plist;
+				INFOPLIST_FILE = Gifted/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -317,7 +472,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4939K9623X;
-				INFOPLIST_FILE = Gifted/Info.plist;
+				INFOPLIST_FILE = Gifted/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -327,6 +482,84 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		B66F7845245384F700E0727E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4939K9623X;
+				INFOPLIST_FILE = GiftedUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nick.GiftedUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Gifted;
+			};
+			name = Debug;
+		};
+		B66F7846245384F700E0727E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4939K9623X;
+				INFOPLIST_FILE = GiftedUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nick.GiftedUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Gifted;
+			};
+			name = Release;
+		};
+		B66F78532453850200E0727E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4939K9623X;
+				INFOPLIST_FILE = GiftedTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nick.GiftedTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Gifted.app/Gifted";
+			};
+			name = Debug;
+		};
+		B66F78542453850200E0727E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4939K9623X;
+				INFOPLIST_FILE = GiftedTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nick.GiftedTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Gifted.app/Gifted";
 			};
 			name = Release;
 		};
@@ -347,6 +580,24 @@
 			buildConfigurations = (
 				B66F782E24537AF500E0727E /* Debug */,
 				B66F782F24537AF500E0727E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B66F7844245384F700E0727E /* Build configuration list for PBXNativeTarget "GiftedUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B66F7845245384F700E0727E /* Debug */,
+				B66F7846245384F700E0727E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B66F78522453850200E0727E /* Build configuration list for PBXNativeTarget "GiftedTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B66F78532453850200E0727E /* Debug */,
+				B66F78542453850200E0727E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
