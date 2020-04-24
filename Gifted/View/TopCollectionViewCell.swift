@@ -1,5 +1,5 @@
 //
-//  MenuCell.swift
+//  TopCollectionViewCell.swift
 //  Gifted
 //
 //  Created by Nick Nguyen on 4/24/20.
@@ -8,21 +8,22 @@
 
 import UIKit
 
-class MenuCell: UICollectionViewCell {
+class TopCollectionViewCell: UICollectionViewCell {
     
     
-    @IBOutlet weak var menuLabel: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-          backgroundColor = .secondarySystemBackground
-        layer.cornerRadius = 16
-    }
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        backgroundColor = .red
-     
         
     }
-   
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        clipsToBounds = true
+    }
+    
+    
+    
+    
 }
