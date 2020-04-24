@@ -56,15 +56,23 @@
 		B66F781B24537AF400E0727E /* Gifted */ = {
 			isa = PBXGroup;
 			children = (
-				B66F781C24537AF400E0727E /* AppDelegate.swift */,
-				B66F781E24537AF400E0727E /* SceneDelegate.swift */,
+				B66F783024537BE300E0727E /* Resources */,
 				B66F782024537AF400E0727E /* ViewController.swift */,
 				B66F782224537AF400E0727E /* Main.storyboard */,
-				B66F782524537AF500E0727E /* Assets.xcassets */,
-				B66F782724537AF500E0727E /* LaunchScreen.storyboard */,
 				B66F782A24537AF500E0727E /* Info.plist */,
 			);
 			path = Gifted;
+			sourceTree = "<group>";
+		};
+		B66F783024537BE300E0727E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B66F781C24537AF400E0727E /* AppDelegate.swift */,
+				B66F781E24537AF400E0727E /* SceneDelegate.swift */,
+				B66F782524537AF500E0727E /* Assets.xcassets */,
+				B66F782724537AF500E0727E /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
