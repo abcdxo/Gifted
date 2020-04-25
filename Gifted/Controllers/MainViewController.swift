@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import  SceneKit
 
 class MainViewController: UIViewController {
 
@@ -19,8 +20,6 @@ class MainViewController: UIViewController {
         }
     }
     
-    
-    private var minimumSpacing: CGFloat = 5
     @IBOutlet weak var topCollectionView: UICollectionView! {
         didSet {
             topCollectionView.delegate = self
@@ -35,19 +34,22 @@ class MainViewController: UIViewController {
             bottomCollectionView.dataSource = self
         }
     }
-    var scrollingTimer = Timer()
     
-    var menuItem = ["Photo to Gif","Video to Gif","AR","Camera","Gif Editor","Timelapse","Slowmotion","Live Photo to GIF"]
     
-    let photos = [ UIImage(named: "background"),
-                   UIImage(named: "rose"),
-                   UIImage(named: "selfie"),
-                   UIImage(named: "smile"),
-                   UIImage(named: "sit")  ]
-        
-    var timer = Timer()
-    var counter = 0
-
+    private var menuOptions = ["Photo to Gif","Video to Gif","AR","Camera","Gif Editor","Timelapse","Slowmotion","Live Photo to GIF"]
+    
+    private let photos = [ UIImage(named: "art"),
+                           UIImage(named: "background"),
+                           UIImage(named: "smile"),
+                           UIImage(named: "rose"),
+                           UIImage(named: "selfie"),
+                           UIImage(named: "sit")  ]
+    
+    private var timer = Timer()
+    private var counter = 0
+    private var minimumSpacing: CGFloat = 5
+    
+    //MARK:- Outlets
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +63,7 @@ class MainViewController: UIViewController {
     }
     
     @objc func changeImage() {
+        // automate page view
         if counter < photos.count {
             let index = IndexPath(item: counter, section: 0)
             self.topCollectionView.scrollToItem(at: index, at: .centeredHorizontally, animated: true)
@@ -82,7 +85,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView {
             case bottomCollectionView:
-                return menuItem.count
+                return menuOptions.count
             default: // top collection view
                 return photos.count
         }
@@ -91,8 +94,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch collectionView {
             case bottomCollectionView:
-                let menu = menuItem[indexPath.row]
-                let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: "MenuCell", for: indexPath) as! MenuCell
+                let menu = menuOptions[indexPath.row]
+                let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: "MenuCell", for: indexPath) as! BottomCollectionViewCell
                 cell.menuLabel.text = menu
                 
                 return cell
@@ -103,10 +106,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 } else if let ab = cell.viewWithTag(222) as? UIPageControl {
                     ab.currentPage = indexPath.row
                 }
-                
-                
               
-                
                return cell
            
             

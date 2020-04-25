@@ -8,20 +8,22 @@
 
 import UIKit
 
-class MenuCell: UICollectionViewCell {
+class BottomCollectionViewCell: UICollectionViewCell {
     
     
     @IBOutlet weak var menuLabel: UILabel!
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        
         backgroundColor = .secondarySystemBackground
         layer.cornerRadius = 16
         clipsToBounds = true
     }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .red
+      
         
         
     }
