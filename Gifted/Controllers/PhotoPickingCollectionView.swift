@@ -9,6 +9,56 @@
 import UIKit
 import Photos // access photos
 
+extension PhotoPickingCollectionView {
+    func updateCache() {
+        let currentFrameCenter = collectionView.bounds.minY
+        let height = collectionView.bounds.height
+        let visibleIndexes = collectionView.indexPathsForVisibleItems.sorted { (a, b) -> Bool in
+            return a.item < b.item
+        }
+        guard abs(currentFrameCenter - lastCacheFrameCenter) >= height/3.0,
+            visibleIndexes.count > 0 else {
+                return
+        }
+        lastCacheFrameCenter = currentFrameCenter
+        
+        let totalItemCount = assetsFetchResults?.count ?? selectedAssets.count
+        let firstItemToCache = max(visibleIndexes[0].item - numOffscreenAssetsToCache / 2, 0)
+        let lastItemToCache = min(visibleIndexes[visibleIndexes.count - 1].item + numOffscreenAssetsToCache / 2, totalItemCount - 1)
+        
+        var indexesToStartCaching: [IndexPath] = []
+        for i in firstItemToCache..<lastItemToCache {
+            let indexPath = IndexPath(item: i, section: 0)
+            if !cachedIndexes.contains(indexPath) {
+                indexesToStartCaching.append(indexPath)
+            }
+        }
+        cachedIndexes += indexesToStartCaching
+        imageManager.startCachingImages(for: assetsAtIndexPaths(indexesToStartCaching), targetSize: cellSize, contentMode: .aspectFill, options: requestOptions)
+        
+        var indexesToStopCaching: [IndexPath] = []
+        cachedIndexes = cachedIndexes.filter({ (indexPath) -> Bool in
+            if indexPath.item < firstItemToCache || indexPath.item > lastItemToCache {
+                indexesToStopCaching.append(indexPath)
+                return false
+            }
+            return true
+        })
+        imageManager.stopCachingImages(for: assetsAtIndexPaths(indexesToStopCaching), targetSize: cellSize, contentMode: .aspectFill, options: requestOptions)
+    }
+    
+    func assetsAtIndexPaths(_ indexPaths: [IndexPath]) -> [PHAsset] {
+        return indexPaths.map { (indexPath) -> PHAsset in
+            return self.currentAssetAtIndex(indexPath.item)
+        }
+    }
+    
+    func resetCache() {
+        imageManager.stopCachingImagesForAllAssets()
+        cachedIndexes = []
+        lastCacheFrameCenter = 0
+    }
+}
 
 
 extension PhotoPickingCollectionView: PHPhotoLibraryChangeObserver {
@@ -42,9 +92,15 @@ extension PhotoPickingCollectionView: PHPhotoLibraryChangeObserver {
 class PhotoPickingCollectionView: UICollectionViewController, UICollectionViewDelegateFlowLayout
 {
     
+    private var cellSize: CGSize {
+        get {
+            return (collectionViewLayout as? UICollectionViewFlowLayout)?.itemSize ?? .zero
+        }
+    }
+    
     var assetsFetchResults: PHFetchResult<PHAsset>?
     var selectedAssets : [PHAsset] = []
-    private let numOffScreenAssetsToCache = 60
+    private let numOffscreenAssetsToCache = 60
     private let imageManager : PHCachingImageManager = PHCachingImageManager()
     private var cachedIndexes: [IndexPath] = []
     private var lastCacheFrameCenter: CGFloat = 0
@@ -58,14 +114,36 @@ class PhotoPickingCollectionView: UICollectionViewController, UICollectionViewDe
         return option
     }()
     
+    deinit {
+        PHPhotoLibrary.shared().unregisterChangeObserver(self)
+    }
     
     //MARK:- Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
          PHPhotoLibrary.shared().register(self)
+    
+       
         setUpNavBar()
 
     }
+    private var userAlbums: PHFetchResult<PHAssetCollection>?
+    private var userFavorites: PHFetchResult<PHAssetCollection>?
+    func fetchCollections() {
+        if let albums = PHCollectionList.fetchTopLevelUserCollections(with: nil) as? PHFetchResult<PHAssetCollection> {
+            userAlbums = albums
+        }
+        userFavorites = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumFavorites, options: nil)
+    }
+    override func viewWillAppear(_ animated: Bool)  {
+        super.viewWillAppear(animated)
+        resetCache()
+        fetchCollections()
+        collectionView.reloadData()
+        updateSelectedItems()
+    }
+    
     func currentAssetAtIndex(_ index:NSInteger) -> PHAsset {
         if let fetchResult = assetsFetchResults {
             return fetchResult[index]
@@ -141,11 +219,12 @@ class PhotoPickingCollectionView: UICollectionViewController, UICollectionViewDe
 //    }
 //
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let fetchResult = assetsFetchResults {
-            return fetchResult.count
-        } else {
-            return selectedAssets.count
-        }
+//        if let fetchResult = assetsFetchResults {
+//            return fetchResult.count
+//        } else {
+//            return selectedAssets.count
+//        }
+        return userAlbums!.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -154,7 +233,7 @@ class PhotoPickingCollectionView: UICollectionViewController, UICollectionViewDe
         let reuseCount = cell.reuseCount
         
         let asset = currentAssetAtIndex(indexPath.item)
-        
+//        userAlbums?.object(at: indexPath.row)
         imageManager.requestImage(for: asset, targetSize: CGSize(width: collectionView.frame.width / 3 - 1, height: collectionView.frame.width / 3 - 1), contentMode: .aspectFill, options: requestOptions) { (image, metadata) in
             if reuseCount == cell.reuseCount {
                 cell.photoImageView.image = image
