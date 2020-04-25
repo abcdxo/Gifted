@@ -12,6 +12,8 @@ class BottomCollectionViewCell: UICollectionViewCell {
     
     
     @IBOutlet weak var menuLabel: UILabel!
+    @IBOutlet weak var menuImage: UIImageView!
+    
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
