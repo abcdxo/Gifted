@@ -15,12 +15,15 @@ class TopCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        
+       
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         clipsToBounds = true
+        imageView.layer.cornerRadius = imageView.frame.size.width / 2
+        imageView.layer.borderWidth = 5
+        imageView.layer.borderColor =  UIColor.red.cgColor
     }
     
     

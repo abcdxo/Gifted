@@ -1,8 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "undraw_smiley_face_lmgm.png",
-      "idiom" : "universal"
+      "filename" : "undraw_celebration_0jvk.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {

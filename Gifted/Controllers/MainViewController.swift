@@ -52,7 +52,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
-     
+      
         
         DispatchQueue.main.async {
             self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
@@ -130,7 +130,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 return CGSize(width: width, height: width)
             default:
                 let size = topCollectionView.frame.size
-              return CGSize(width: size.width, height: size.height )
+               
+                return CGSize(width: size.width, height: size.height  )
         }
       
     }

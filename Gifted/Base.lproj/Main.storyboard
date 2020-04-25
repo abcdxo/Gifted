@@ -17,11 +17,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="wiK-lH-Q6M" userLabel="Bottom Collection View">
-                                <rect key="frame" x="0.0" y="404" width="414" height="492"/>
+                                <rect key="frame" x="0.0" y="424" width="414" height="472"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="492" id="G4q-H5-FnX"/>
-                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="qIv-Se-yjk">
                                     <size key="itemSize" width="193" height="154"/>
                                     <size key="estimatedItemSize" width="128" height="128"/>
@@ -57,39 +54,34 @@
                                 </cells>
                             </collectionView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dbw-G9-Ho9">
-                                <rect key="frame" x="0.0" y="88" width="414" height="300"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="320"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="300" id="4CF-UP-KdY"/>
-                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="WiT-BS-Ln4">
                                     <size key="itemSize" width="414" height="319"/>
-                                    <size key="estimatedItemSize" width="414" height="319"/>
+                                    <size key="estimatedItemSize" width="400" height="300"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TopCell" id="puS-Bb-DqI" customClass="TopCollectionViewCell" customModule="Gifted" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="-9.5" width="414" height="319"/>
+                                        <rect key="frame" x="0.0" y="0.5" width="414" height="319"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="t0s-zd-qug">
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="nqn-wL-Hcd">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="319"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="111" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lrz-v6-htx">
-                                                    <rect key="frame" x="8" y="8" width="400" height="300"/>
+                                                    <rect key="frame" x="20" y="9.5" width="374" height="300"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="300" id="EXB-IM-aAU"/>
-                                                        <constraint firstAttribute="width" constant="400" id="voS-gz-wTi"/>
+                                                        <constraint firstAttribute="height" constant="300" id="BE6-Rh-whq"/>
+                                                        <constraint firstAttribute="width" constant="374" id="GeT-w6-lqk"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="lrz-v6-htx" secondAttribute="bottom" constant="11" id="TAe-pt-pam"/>
-                                                <constraint firstAttribute="trailing" secondItem="lrz-v6-htx" secondAttribute="trailing" constant="8" id="hye-Fr-Fdc"/>
-                                                <constraint firstItem="lrz-v6-htx" firstAttribute="leading" secondItem="t0s-zd-qug" secondAttribute="leading" constant="8" id="lau-Ej-pqU"/>
-                                                <constraint firstItem="lrz-v6-htx" firstAttribute="top" secondItem="t0s-zd-qug" secondAttribute="top" constant="8" id="o0d-ZC-8Dd"/>
+                                                <constraint firstItem="lrz-v6-htx" firstAttribute="centerY" secondItem="nqn-wL-Hcd" secondAttribute="centerY" id="5VZ-8p-Kc5"/>
+                                                <constraint firstItem="lrz-v6-htx" firstAttribute="centerX" secondItem="nqn-wL-Hcd" secondAttribute="centerX" id="ZW3-iX-fne"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="414" height="319"/>
@@ -100,20 +92,22 @@
                                 </cells>
                             </collectionView>
                             <pageControl opaque="NO" tag="222" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="2tH-qT-mhl">
-                                <rect key="frame" x="20" y="341" width="374" height="37"/>
+                                <rect key="frame" x="20" y="371" width="374" height="37"/>
                             </pageControl>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="dbw-G9-Ho9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="4T6-29-jgi"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="2tH-qT-mhl" secondAttribute="trailing" constant="20" id="5wz-YU-B2N"/>
                             <constraint firstItem="wiK-lH-Q6M" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="7qd-Lw-gzU"/>
+                            <constraint firstItem="dbw-G9-Ho9" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="A7M-bZ-Wpf"/>
                             <constraint firstItem="wiK-lH-Q6M" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="DEv-wC-5y8"/>
-                            <constraint firstItem="dbw-G9-Ho9" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="JaU-on-KHm"/>
                             <constraint firstItem="2tH-qT-mhl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="ON7-A2-QLc"/>
+                            <constraint firstItem="wiK-lH-Q6M" firstAttribute="top" secondItem="dbw-G9-Ho9" secondAttribute="bottom" constant="16" id="XOe-zf-tOZ"/>
                             <constraint firstAttribute="bottom" secondItem="wiK-lH-Q6M" secondAttribute="bottom" id="brb-iO-fJj"/>
-                            <constraint firstItem="2tH-qT-mhl" firstAttribute="bottom" secondItem="dbw-G9-Ho9" secondAttribute="bottom" constant="-10" id="s1w-Uj-dKF"/>
-                            <constraint firstItem="dbw-G9-Ho9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="uh8-pS-5O6"/>
-                            <constraint firstItem="dbw-G9-Ho9" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="zum-XT-Yds"/>
+                            <constraint firstItem="2tH-qT-mhl" firstAttribute="bottom" secondItem="dbw-G9-Ho9" secondAttribute="bottom" id="hR7-gw-AC2"/>
+                            <constraint firstItem="dbw-G9-Ho9" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="pka-2y-hzP"/>
+                            <constraint firstItem="2tH-qT-mhl" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="283" id="tEw-vn-N3D"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
