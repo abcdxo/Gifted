@@ -10,7 +10,7 @@ import UIKit
 import  SceneKit
 
 class MainViewController: UIViewController {
-
+// My thinking make me make this app.
     
     @IBOutlet weak var pageView: UIPageControl! {
         didSet {
@@ -57,7 +57,7 @@ class MainViewController: UIViewController {
       
         
         DispatchQueue.main.async {
-            self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
+            self.timer = Timer.scheduledTimer(timeInterval: 1.4523, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
         }
        
     }
