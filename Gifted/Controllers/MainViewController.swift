@@ -91,25 +91,25 @@ class MainViewController: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
-        PHPhotoLibrary.requestAuthorization { (status) in
-            DispatchQueue.main.async {
-                switch status {
-                    case .authorized:
-                        PHPhotoLibrary.shared().register(self)
-                        self.fetchCollections()
-                    print("granted")
-                    case .notDetermined:
-                        break
-                    case .restricted:
-                        break
-                    case .denied:
-                        break
-                    @unknown default:
-                        break
-                }
-                
-            }
-        }
+//        PHPhotoLibrary.requestAuthorization { (status) in
+//            DispatchQueue.main.async {
+//                switch status {
+//                    case .authorized:
+//                        PHPhotoLibrary.shared().register(self)
+//                        self.fetchCollections()
+//                    print("granted")
+//                    case .notDetermined:
+//                        break
+//                    case .restricted:
+//                        break
+//                    case .denied:
+//                        break
+//                    @unknown default:
+//                        break
+//                }
+//                
+//            }
+//        }
         
         DispatchQueue.main.async {
             self.timer = Timer.scheduledTimer(timeInterval: 1.4523, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
@@ -224,7 +224,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         switch indexPath.row {
             case 0:
                 
-                let photoPickingVC = PhotoPickingCollectionView(collectionViewLayout: UICollectionViewLayout())
+                let photoPickingVC = PhotoPickingCollectionViewController(collectionViewLayout: UICollectionViewLayout())
                 let nav = UINavigationController(rootViewController: photoPickingVC)
                 nav.modalPresentationStyle = .fullScreen
             present(nav, animated: true, completion: nil)

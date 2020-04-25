@@ -9,7 +9,7 @@
 import UIKit
 import Photos // access photos
 
-extension PhotoPickingCollectionView {
+extension PhotoPickingCollectionViewController {
     func updateCache() {
         let currentFrameCenter = collectionView.bounds.minY
         let height = collectionView.bounds.height
@@ -61,7 +61,7 @@ extension PhotoPickingCollectionView {
 }
 
 
-extension PhotoPickingCollectionView: PHPhotoLibraryChangeObserver {
+extension PhotoPickingCollectionViewController: PHPhotoLibraryChangeObserver {
     func photoLibraryDidChange(_ changeInstance: PHChange)  {
         DispatchQueue.main.async {
             if let assetsFetchResults = self.assetsFetchResults,
@@ -89,7 +89,7 @@ extension PhotoPickingCollectionView: PHPhotoLibraryChangeObserver {
     
 }
 
-class PhotoPickingCollectionView: UICollectionViewController, UICollectionViewDelegateFlowLayout
+class PhotoPickingCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout
 {
     
     private var cellSize: CGSize {
@@ -105,7 +105,7 @@ class PhotoPickingCollectionView: UICollectionViewController, UICollectionViewDe
     private var cachedIndexes: [IndexPath] = []
     private var lastCacheFrameCenter: CGFloat = 0
     private var cacheQueue = DispatchQueue(label: "cache_queue")
-    
+    var photos : PHFetchResult<PHAsset>?
     
     let requestOptions: PHImageRequestOptions = {
        let option = PHImageRequestOptions()
@@ -117,13 +117,13 @@ class PhotoPickingCollectionView: UICollectionViewController, UICollectionViewDe
     deinit {
         PHPhotoLibrary.shared().unregisterChangeObserver(self)
     }
-    
+      let imageManager2 = PHImageManager.default()
     //MARK:- Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-         PHPhotoLibrary.shared().register(self)
-    
+//         PHPhotoLibrary.shared().register(self)
+        collectionView.register(PhotoPickingCollectionViewCell.self, forCellWithReuseIdentifier: "PhotoCell")
        
         setUpNavBar()
 
@@ -138,14 +138,16 @@ class PhotoPickingCollectionView: UICollectionViewController, UICollectionViewDe
     }
     override func viewWillAppear(_ animated: Bool)  {
         super.viewWillAppear(animated)
-        resetCache()
-        fetchCollections()
-        collectionView.reloadData()
-        updateSelectedItems()
+//        resetCache()
+//        fetchCollections()
+      
+//        updateSelectedItems()
+        getPhotosAndVideos()
+        
     }
     
     func currentAssetAtIndex(_ index:NSInteger) -> PHAsset {
-        if let fetchResult = assetsFetchResults {
+        if let fetchResult = photos {
             return fetchResult[index]
         } else {
             return selectedAssets[index]
@@ -177,6 +179,26 @@ class PhotoPickingCollectionView: UICollectionViewController, UICollectionViewDe
     }
     @objc func handleBack() {
         dismiss(animated: true, completion: nil)
+    }
+    var images: [UIImage] = []
+    private func getPhotosAndVideos(){
+        
+        let fetchOptions = PHFetchOptions()
+        
+        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate",ascending: false)]
+//        fetchOptions.predicate = NSPredicate(format: "mediaType = %d || mediaType = %d", PHAssetMediaType.image.rawValue, PHAssetMediaType.video.rawValue)
+        let imagesAndVideos = PHAsset.fetchAssets(with: .image,options: fetchOptions)
+        photos = imagesAndVideos
+        print(imagesAndVideos.count)
+        for index in 0 ..< photos!.count {
+            imageManager2.requestImage(for: (photos?.object(at: index))!, targetSize: CGSize(width: collectionView.frame.width / 3 - 1, height: collectionView.frame.width / 3 - 1), contentMode: .aspectFit, options: requestOptions) { (image, _) in
+                print(image!.size)
+                self.images.append(image!)
+                self.collectionView.reloadData()
+            }
+        }
+        
+     
     }
 //    var fetchResult: PHFetchResult<PHAsset> = PHFetchResult()
 //
@@ -224,21 +246,35 @@ class PhotoPickingCollectionView: UICollectionViewController, UICollectionViewDe
 //        } else {
 //            return selectedAssets.count
 //        }
-        return userAlbums!.count
+//        print(photos?.count)
+        return images.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PhotoPickingCollectionViewCell
-        cell.reuseCount = cell.reuseCount + 1
-        let reuseCount = cell.reuseCount
-        
-        let asset = currentAssetAtIndex(indexPath.item)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotoPickingCollectionViewCell
+        let image = images[indexPath.row]
+        cell.photoImageView.image = image
+//        print(cell)
+//        cell.reuseCount = cell.reuseCount + 1
+//        let reuseCount = cell.reuseCount
+//        let photo = (photos?.firstObject)!
+//        print(photo)
+//        imageManager.requestImage(for: photo, targetSize: CGSize(width: collectionView.frame.width / 3 - 1, height: collectionView.frame.width / 3 - 1), contentMode: .aspectFill, options: requestOptions) { (image, _) in
+//            cell.photoImageView.image = image
+//        }
+       
+//        imageManager2.requestImage(for: (photos?.object(at: indexPath.row))!, targetSize: CGSize(width: collectionView.frame.width / 3 - 1, height: collectionView.frame.width / 3 - 1), contentMode: .aspectFit, options: requestOptions) { (image, _) in
+//            print(image?.size)
+//            print(self.photos?.object(at: indexPath.row) as Any)
+//            cell.photoImageView.image = image
+//        }
+//        let asset = currentAssetAtIndex(indexPath.item)
 //        userAlbums?.object(at: indexPath.row)
-        imageManager.requestImage(for: asset, targetSize: CGSize(width: collectionView.frame.width / 3 - 1, height: collectionView.frame.width / 3 - 1), contentMode: .aspectFill, options: requestOptions) { (image, metadata) in
-            if reuseCount == cell.reuseCount {
-                cell.photoImageView.image = image
-            }
-        }
+//        imageManager.requestImage(for: asset, targetSize: CGSize(width: collectionView.frame.width / 3 - 1, height: collectionView.frame.width / 3 - 1), contentMode: .aspectFill, options: requestOptions) { (image, metadata) in
+//            if reuseCount == cell.reuseCount {
+//                cell.photoImageView.image = image
+//            }
+//        }
         return cell
 
     }
