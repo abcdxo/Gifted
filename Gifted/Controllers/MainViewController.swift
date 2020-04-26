@@ -88,10 +88,11 @@ class MainViewController: UIViewController
         }
         userFavorites = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumFavorites, options: nil)
     }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
-
+      
         
         DispatchQueue.main.async {
             self.timer = Timer.scheduledTimer(timeInterval: 1.4523, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)

@@ -15,6 +15,7 @@ class ContainerViewController: UIViewController
     
     var images: [UIImage]?
     
+
     @IBOutlet weak var containerCollectionView: UICollectionView! {
         didSet {
             containerCollectionView.delegate = self
@@ -41,10 +42,23 @@ class ContainerViewController: UIViewController
     
    
   
+    @IBAction func deSelectAllButtonPressed(_ sender: UIButton) {
+        print("deselect")
+        images?.removeAll()
+        containerCollectionView.reloadData()
+       NotificationCenter.default.post(name: NSNotification.Name("Close"), object: nil)
+    }
+    
+    
+    
+    @IBAction func nextStepButtonPressed(_ sender: UIButton) {
+        print("nextstep")
+    }
+    
+    
     
     @objc func didGetPhotos(_ notification: Notification) {
-        guard let userInfo = notification.userInfo,
-            let photos = userInfo["Photos"] as? [UIImage] else { return }
+        guard let userInfo = notification.userInfo,  let photos = userInfo["Photos"] as? [UIImage] else { return }
         self.images = photos
       
         containerCollectionView.reloadData()

@@ -139,10 +139,31 @@ class PhotoPickingCollectionViewController: UIViewController
 
       let imageManager = PHImageManager.default()
     //MARK:- Life Cycle
+    
+    @objc func closeScrene(_ notification: Notification) {
+        containerHeightConstraint.constant = 0
+        let visibleCells = photoCollectionView.visibleCells as! [PhotoPickingCollectionViewCell]
+        visibleCells.forEach { (cell) in
+            cell.isSelected = false
+           
+            selectedImages.removeAll()
+             photoCollectionView.reloadData()
+        }
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+            
+        }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         containerHeightConstraint.constant = 0
         setUpNavBar()
+          NotificationCenter.default.addObserver(self, selector: #selector(closeScrene(_:)), name: NSNotification.Name("Close"), object: nil)
 
     }
     override func viewWillAppear(_ animated: Bool)  {
@@ -285,14 +306,17 @@ class PhotoPickingCollectionViewController: UIViewController
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
 
-        
+        selectedImages.remove(at: indexPath.row)
         print(selectedImages.count)
-        self.containerHeightConstraint.constant = 0
-
-        UIView.animate(withDuration: 0.2) {
-            self.view.layoutIfNeeded()
-
+        if selectedImages.count == 0 {
+            self.containerHeightConstraint.constant = 0
+            
+            UIView.animate(withDuration: 0.2) {
+                self.view.layoutIfNeeded()
+                
+            }
         }
+      
     }
    
 
