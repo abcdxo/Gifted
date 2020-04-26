@@ -22,7 +22,7 @@
 
 - Visualization
 
- ![](Gifted.gif)
+ ![](GIF.gif)
 
 
 
