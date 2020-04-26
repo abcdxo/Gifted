@@ -141,7 +141,7 @@ class PhotoPickingCollectionViewController: UIViewController
     //MARK:- Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        containerHeightConstraint.constant = -1000
+        containerHeightConstraint.constant = 0
         setUpNavBar()
 
     }
@@ -286,14 +286,16 @@ class PhotoPickingCollectionViewController: UIViewController
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         selectedImages.remove(at:indexPath.row)
 //        collectionView.deleteItems(at: [indexPath])
+//        collectionView.reloadItems(at: [indexPath])
+//        collectionView.deleteItems(at: [indexPath])
         
         print(selectedImages.count)
-//        self.containerHeightConstraint.constant = 0
-//
-//        UIView.animate(withDuration: 0.2) {
-//            self.view.layoutIfNeeded()
-//
-//        }
+        self.containerHeightConstraint.constant = 0
+
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+
+        }
     }
    
 

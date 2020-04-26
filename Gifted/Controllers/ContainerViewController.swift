@@ -8,7 +8,59 @@
 
 import UIKit
 
-extension ContainerViewController: UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UICollectionViewDataSource  {
+
+
+class ContainerViewController: UIViewController
+{
+    
+    var images: [UIImage]?
+    
+    @IBOutlet weak var containerCollectionView: UICollectionView! {
+        didSet {
+            containerCollectionView.delegate = self
+            containerCollectionView.dataSource = self
+          
+        }
+    }
+    // MARK:- Life Cycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if let flowLayout = self.containerCollectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
+            flowLayout.estimatedItemSize = CGSize(width: 1, height: 1)
+        }
+        NotificationCenter.default.addObserver(self, selector: #selector(didGetPhotos(_:)), name: NSNotification.Name("NewPhoto"), object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+      
+        
+     
+    }
+    
+   
+  
+    
+    @objc func didGetPhotos(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+            let photos = userInfo["Photos"] as? [UIImage] else { return }
+        self.images = photos
+      
+        containerCollectionView.reloadData()
+       
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+   
+
+}
+//MARK:- Datasource
+
+extension ContainerViewController: UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UICollectionViewDataSource
+{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
@@ -32,60 +84,12 @@ extension ContainerViewController: UICollectionViewDelegateFlowLayout,UICollecti
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-        let view = cell.viewWithTag(69) as? UIImageView
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! HorizontalBottomCollectionViewCell
+        
         let image = images![indexPath.row]
-        view?.image = image
-        cell.layer.cornerRadius = 8
+        DispatchQueue.main.async {  cell.imageView.image = image }
+        
         return cell
     }
- 
-}
-
-class ContainerViewController: UIViewController
-{
     
-   
-    var images: [UIImage]?
-    
-    
-    @IBOutlet weak var containerCollectionView: UICollectionView! {
-        didSet {
-            containerCollectionView.delegate = self
-            containerCollectionView.dataSource = self
-          
-        }
-    }
-    
-  
-    
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-       
-     
-    }
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        if let flowLayout = self.containerCollectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.estimatedItemSize = CGSize(width: 1, height: 1)
-        }
-        NotificationCenter.default.addObserver(self, selector: #selector(didGetPhotos(_:)), name: NSNotification.Name("NewPhoto"), object: nil)
-    }
-    @objc func didGetPhotos(_ notification: Notification) {
-        guard let userInfo = notification.userInfo,
-            let photos = userInfo["Photos"] as? [UIImage] else { return }
-        self.images = photos
-        containerCollectionView.reloadData()
-      
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-
-
 }
