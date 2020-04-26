@@ -220,7 +220,7 @@
                         <constraints>
                             <constraint firstItem="v2b-rO-yVk" firstAttribute="trailing" secondItem="Ffq-TO-HMI" secondAttribute="trailing" id="2BP-ix-dAg"/>
                             <constraint firstItem="yga-tF-fjG" firstAttribute="trailing" secondItem="v2b-rO-yVk" secondAttribute="trailing" id="4U3-QM-A8B"/>
-                            <constraint firstItem="v2b-rO-yVk" firstAttribute="bottom" secondItem="LR0-NH-b20" secondAttribute="bottom" constant="-34" id="9Zk-dw-rNZ"/>
+                            <constraint firstAttribute="bottom" secondItem="LR0-NH-b20" secondAttribute="bottom" id="9Zk-dw-rNZ"/>
                             <constraint firstItem="Ffq-TO-HMI" firstAttribute="top" secondItem="v2b-rO-yVk" secondAttribute="top" id="9wP-nw-1EU"/>
                             <constraint firstItem="yga-tF-fjG" firstAttribute="top" secondItem="Ffq-TO-HMI" secondAttribute="bottom" id="MvX-b3-kcP"/>
                             <constraint firstItem="v2b-rO-yVk" firstAttribute="bottom" secondItem="yga-tF-fjG" secondAttribute="bottom" id="O4k-wV-c05"/>
@@ -337,32 +337,36 @@
                                 </cells>
                             </collectionView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="100" translatesAutoresizingMaskIntoConstraints="NO" id="ron-UO-vQj">
-                                <rect key="frame" x="16" y="94" width="382" height="46"/>
+                                <rect key="frame" x="8" y="94" width="398" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jrf-uQ-J7O">
-                                        <rect key="frame" x="0.0" y="0.0" width="141" height="46"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="149" height="30"/>
                                         <state key="normal" title="Deselect All">
                                             <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2FT-Oe-Bzk">
-                                        <rect key="frame" x="241" y="0.0" width="141" height="46"/>
+                                        <rect key="frame" x="249" y="0.0" width="149" height="30"/>
                                         <state key="normal" title="Next"/>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="398" id="2lW-TR-r2r"/>
+                                    <constraint firstAttribute="height" constant="30" id="H7i-gy-xkI"/>
+                                </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="ron-UO-vQj" firstAttribute="leading" secondItem="eqF-hc-FHm" secondAttribute="leading" constant="16" id="0Yp-Ma-4Uc"/>
-                            <constraint firstAttribute="trailing" secondItem="ron-UO-vQj" secondAttribute="trailing" constant="16" id="DqO-ua-OQm"/>
+                            <constraint firstItem="hWA-oK-odg" firstAttribute="trailing" secondItem="ron-UO-vQj" secondAttribute="trailing" constant="8" id="0uL-4T-gzN"/>
+                            <constraint firstItem="ron-UO-vQj" firstAttribute="top" secondItem="kMO-Qz-oYm" secondAttribute="bottom" constant="8" id="1Qk-ET-Ufj"/>
+                            <constraint firstItem="ron-UO-vQj" firstAttribute="leading" secondItem="hWA-oK-odg" secondAttribute="leading" constant="8" id="Suz-29-gxs"/>
                             <constraint firstItem="kMO-Qz-oYm" firstAttribute="leading" secondItem="eqF-hc-FHm" secondAttribute="leading" id="X3R-hy-gsi"/>
                             <constraint firstAttribute="trailing" secondItem="kMO-Qz-oYm" secondAttribute="trailing" id="eKQ-Tb-iFb"/>
-                            <constraint firstItem="ron-UO-vQj" firstAttribute="top" secondItem="kMO-Qz-oYm" secondAttribute="bottom" constant="8" id="eiD-Zk-1pe"/>
                             <constraint firstItem="kMO-Qz-oYm" firstAttribute="top" secondItem="eqF-hc-FHm" secondAttribute="top" id="lXE-UY-mW1"/>
-                            <constraint firstAttribute="bottom" secondItem="ron-UO-vQj" secondAttribute="bottom" id="yYI-cM-zYb"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="hWA-oK-odg"/>
                     </view>
                     <navigationItem key="navigationItem" id="Jbq-vh-hmR"/>
                     <connections>

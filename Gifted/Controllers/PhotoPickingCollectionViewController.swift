@@ -284,10 +284,7 @@ class PhotoPickingCollectionViewController: UIViewController
         print(selectedImages.count)
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        selectedImages.remove(at:indexPath.row)
-//        collectionView.deleteItems(at: [indexPath])
-//        collectionView.reloadItems(at: [indexPath])
-//        collectionView.deleteItems(at: [indexPath])
+
         
         print(selectedImages.count)
         self.containerHeightConstraint.constant = 0
