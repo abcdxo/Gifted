@@ -36,14 +36,13 @@ class HorizontalBottomCollectionViewCell: UICollectionViewCell {
         redCancelButton.topAnchor.constraint(equalTo:topAnchor,constant: 2).isActive = true
         redCancelButton.heightAnchor.constraint(equalToConstant: 15).isActive = true
         redCancelButton.widthAnchor.constraint(equalToConstant: 15).isActive = true
+
     }
     
     lazy var redCancelButton: UIButton = { // lazy var so I can add Target
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .black
-        button.layer.cornerRadius = 4
-        button.setImage(UIImage(systemName: "clear")!, for: .normal)
+        button.setImage(UIImage(systemName: "xmark.circle",withConfiguration: UIImage.SymbolConfiguration( weight: .heavy))!, for: .normal)
         button.tintColor = .red
         button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
         return button
@@ -55,3 +54,4 @@ class HorizontalBottomCollectionViewCell: UICollectionViewCell {
     }
     
 }
+

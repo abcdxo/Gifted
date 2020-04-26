@@ -311,7 +311,7 @@ class PhotoPickingCollectionViewController: UIViewController
        
 
   //FIXME:remove item of arrays when deselect a row
-        selectedImages.remove(at: indexPath.row)
+//        selectedImages.remove(at: indexPath.row)
         
         print("Selected images after DESELECT is \(selectedImages.count)")
         if selectedImages.count == 0 {
