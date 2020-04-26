@@ -104,6 +104,7 @@ class PhotoPickingCollectionViewController: UIViewController
             photoCollectionView.delegate = self
             photoCollectionView.dataSource = self
             photoCollectionView.backgroundColor = .white
+            photoCollectionView.allowsMultipleSelection = true
         }
     }
     
@@ -213,10 +214,6 @@ class PhotoPickingCollectionViewController: UIViewController
 
     }
     
-    
-   
-    
-    
     @objc func handleBack() {
         dismiss(animated: true, completion: nil)
     }
@@ -233,7 +230,7 @@ class PhotoPickingCollectionViewController: UIViewController
         
         if fetchResult.count > 0 {
             for index in 0 ..< fetchResult.count {
-                imageManager.requestImage(for: fetchResult.object(at: index) , targetSize: CGSize(width: photoCollectionView.frame.width / 3 - 1 , height: photoCollectionView.frame.width / 3 - 1 ), contentMode: .aspectFill, options: requestOptions) { [weak self]
+                imageManager.requestImage(for: fetchResult.object(at: index) , targetSize: CGSize(width: photoCollectionView.bounds.width / 3  , height: photoCollectionView.bounds.width / 3  ), contentMode: .aspectFill, options: requestOptions) { [weak self]
                     image, error in
                   
                     guard let self = self else { return }
@@ -258,26 +255,16 @@ class PhotoPickingCollectionViewController: UIViewController
         
         return images.count
     }
+    var count =  0
+    var selectedImages = [UIImage]()
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+        let image = images[indexPath.row]
+        selectedImages.append(image)
+        print(selectedImages.count)
+    }
    
-    
-//    func collectionView(_ collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: IndexPath) {
-//       let cell = collectionView.cellForItem(at: indexPath)  as! PhotoPickingCollectionViewCell
-//
-////        cell!.layer.borderWidth = 2
-////        cell!.layer.borderColor = UIColor.clear.cgColor
-////        cell.isSelected = false
-//    }
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//       
-//        let cell = collectionView.cellForItem(at: indexPath) as! PhotoPickingCollectionViewCell
-////        cell.isSelected = true
-////            cell?.layer.borderWidth = 2
-////            cell?.layer.borderColor = UIColor.red.cgColor
-//           
-//      
-//       
-//        print(indexPath.row)
-//    }
+
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = photoCollectionView.dequeueReusableCell(withReuseIdentifier: "Hello", for: indexPath) as? PhotoPickingCollectionViewCell else { return UICollectionViewCell() }
     
@@ -291,26 +278,25 @@ class PhotoPickingCollectionViewController: UIViewController
         return cell
         
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        let width = collectionView.frame.width / 4
+        let width = collectionView.bounds.width / 3
 
         return CGSize(width: width, height: width)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         
-        
-        return UIEdgeInsets(top: 10, left: 20.0, bottom: 10, right: 20.0)
-        
-        
+        return UIEdgeInsets.zero
+      
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 40
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat { // horizontal
+        return 0.0
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 20
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat { // vertical
+        return 0.0
     }
 
         

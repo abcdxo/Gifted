@@ -12,29 +12,27 @@ class PhotoPickingCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     
+    @IBOutlet weak var checkMark: UIImageView!
+    
+    
+    
      var reuseCount: Int = 0
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-//        clipsToBounds = true
-//        layer.borderColor = UIColor.gray.cgColor
-//        layer.borderWidth = 10
-//
+
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        clipsToBounds = true
-//        layer.borderColor = UIColor.gray.cgColor
-//        layer.borderWidth = 10
+
     }
     override var isSelected: Bool {
         didSet {
             if isSelected {
-                layer.borderWidth = 5
-                layer.borderColor = UIColor.green.cgColor
+                checkMark.image = UIImage(systemName: "checkmark")?.withTintColor(.green)
             } else {
-                layer.borderWidth = 0
+                checkMark.image = UIImage(systemName: "")
             }
         }
     }
