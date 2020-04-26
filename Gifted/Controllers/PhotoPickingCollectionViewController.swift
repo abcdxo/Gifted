@@ -100,7 +100,7 @@ class PhotoPickingCollectionViewController: UIViewController
         didSet {
             photoCollectionView.delegate = self
             photoCollectionView.dataSource = self
-            photoCollectionView.backgroundColor = .secondarySystemBackground
+            photoCollectionView.backgroundColor = .white
         }
     }
     
@@ -200,8 +200,6 @@ class PhotoPickingCollectionViewController: UIViewController
   
     func grabPhotos() {
    
-      
-        
         let fetchOptions = PHFetchOptions()
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
         
@@ -231,29 +229,35 @@ class PhotoPickingCollectionViewController: UIViewController
         
         return images.count
     }
-  var isSelected = false
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        let cell = collectionView.cellForItem(at: indexPath)
-        if isSelected == false {
-            cell?.layer.borderWidth = 2
-            cell?.layer.borderColor = UIColor.red.cgColor
-            isSelected = true
-        } else {
-            
-            cell?.layer.borderWidth = 0
-            cell?.layer.borderColor = UIColor.clear.cgColor
-            isSelected = false
-        }
-       
-        print(indexPath.row)
-    }
+   
+    
+//    func collectionView(_ collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: IndexPath) {
+//       let cell = collectionView.cellForItem(at: indexPath)  as! PhotoPickingCollectionViewCell
+//
+////        cell!.layer.borderWidth = 2
+////        cell!.layer.borderColor = UIColor.clear.cgColor
+////        cell.isSelected = false
+//    }
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//       
+//        let cell = collectionView.cellForItem(at: indexPath) as! PhotoPickingCollectionViewCell
+////        cell.isSelected = true
+////            cell?.layer.borderWidth = 2
+////            cell?.layer.borderColor = UIColor.red.cgColor
+//           
+//      
+//       
+//        print(indexPath.row)
+//    }
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = photoCollectionView.dequeueReusableCell(withReuseIdentifier: "Hello", for: indexPath) as? PhotoPickingCollectionViewCell else { return UICollectionViewCell() }
     
         
         let image = images[indexPath.item]
-        cell.imageView.image = image
+        DispatchQueue.main.async {
+               cell.imageView.image = image
+        }
+     
      
         return cell
         
@@ -273,11 +277,11 @@ class PhotoPickingCollectionViewController: UIViewController
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
+        return 40
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 1.0
+        return 20
     }
 
         

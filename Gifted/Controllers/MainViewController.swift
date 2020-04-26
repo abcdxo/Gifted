@@ -135,7 +135,27 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 let menu = menuOptions[indexPath.row]
                 let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: "MenuCell", for: indexPath) as! BottomCollectionViewCell
                 cell.menuLabel.text = menu
-                
+                switch indexPath.row {
+                    case 0: // photo
+                        cell.menuImage.image = UIImage(systemName: "photo")
+                    case 1: // video
+                        cell.menuImage.image = UIImage(systemName: "video")
+                    case 2: // AR
+                        cell.menuImage.image = UIImage(systemName: "square.stack.3d.up")
+                    case 3: // Camera
+                        cell.menuImage.image = UIImage(systemName: "camera")
+                    case 4: // Gif edit
+                        cell.menuImage.image = UIImage(systemName: "scissors")
+                    case 5: // timelapse
+                        cell.menuImage.image = UIImage(systemName: "timer")
+                    case 6: // slowmotion
+                        cell.menuImage.image = UIImage(systemName: "slowmo")
+                    case 7: // livephoto
+                        cell.menuImage.image = UIImage(systemName: "livephoto")
+                    default:
+                        
+                        break
+                }
                 return cell
             default: // top collection view
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopCell", for: indexPath) as! TopCollectionViewCell

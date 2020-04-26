@@ -135,7 +135,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1042.0289855072465" y="137.94642857142856"/>
+            <point key="canvasLocation" x="920" y="138"/>
         </scene>
         <!--Photo Picking Collection View Controller-->
         <scene sceneID="e9Z-KR-pFF">
@@ -145,8 +145,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Ffq-TO-HMI">
-                                <rect key="frame" x="0.0" y="88" width="414" height="727"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Ffq-TO-HMI">
+                                <rect key="frame" x="0.0" y="88" width="414" height="714"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="921-ig-oWo">
                                     <size key="itemSize" width="128" height="128"/>
@@ -184,10 +184,15 @@
                                 </connections>
                             </collectionView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="r4e-jE-u4Q">
-                                <rect key="frame" x="16" y="831" width="382" height="32"/>
+                                <rect key="frame" x="0.0" y="802" width="414" height="61"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="tZe-Q9-4xh"/>
+                                </constraints>
                                 <segments>
                                     <segment title="Photo"/>
                                     <segment title="Videos"/>
+                                    <segment title="AR"/>
+                                    <segment title="Burst"/>
                                 </segments>
                             </segmentedControl>
                         </subviews>
@@ -196,10 +201,10 @@
                             <constraint firstItem="v2b-rO-yVk" firstAttribute="trailing" secondItem="Ffq-TO-HMI" secondAttribute="trailing" id="2BP-ix-dAg"/>
                             <constraint firstItem="Ffq-TO-HMI" firstAttribute="top" secondItem="v2b-rO-yVk" secondAttribute="top" id="9wP-nw-1EU"/>
                             <constraint firstItem="v2b-rO-yVk" firstAttribute="bottom" secondItem="r4e-jE-u4Q" secondAttribute="bottom" id="HiJ-Bk-gyk"/>
-                            <constraint firstItem="v2b-rO-yVk" firstAttribute="trailing" secondItem="r4e-jE-u4Q" secondAttribute="trailing" constant="16" id="Oty-NY-OR8"/>
+                            <constraint firstItem="v2b-rO-yVk" firstAttribute="trailing" secondItem="r4e-jE-u4Q" secondAttribute="trailing" id="Oty-NY-OR8"/>
                             <constraint firstItem="Ffq-TO-HMI" firstAttribute="leading" secondItem="v2b-rO-yVk" secondAttribute="leading" id="enm-SY-gjL"/>
-                            <constraint firstItem="r4e-jE-u4Q" firstAttribute="top" secondItem="Ffq-TO-HMI" secondAttribute="bottom" constant="16" id="o34-B1-2Yn"/>
-                            <constraint firstItem="r4e-jE-u4Q" firstAttribute="leading" secondItem="v2b-rO-yVk" secondAttribute="leading" constant="16" id="qXH-gv-q3F"/>
+                            <constraint firstItem="r4e-jE-u4Q" firstAttribute="top" secondItem="Ffq-TO-HMI" secondAttribute="bottom" id="o34-B1-2Yn"/>
+                            <constraint firstItem="r4e-jE-u4Q" firstAttribute="leading" secondItem="v2b-rO-yVk" secondAttribute="leading" id="qXH-gv-q3F"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="v2b-rO-yVk"/>
                     </view>
@@ -210,7 +215,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nze-SW-Va7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2594.202898550725" y="-597.32142857142856"/>
+            <point key="canvasLocation" x="2433" y="-597"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="diZ-Iw-SwW">
@@ -247,7 +252,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZsF-yE-5lq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1849" y="-597"/>
+            <point key="canvasLocation" x="1739" y="-597"/>
         </scene>
     </scenes>
     <resources>

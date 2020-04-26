@@ -17,19 +17,27 @@ class PhotoPickingCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
 //        clipsToBounds = true
-//        layer.borderColor = UIColor.link.cgColor
-//        layer.borderWidth = 2
-//        layer.cornerRadius = 16
+//        layer.borderColor = UIColor.gray.cgColor
+//        layer.borderWidth = 10
+//
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        clipsToBounds = true
-        layer.borderColor = UIColor.link.cgColor
-        layer.borderWidth = 2
-        layer.cornerRadius = 16
+//        clipsToBounds = true
+//        layer.borderColor = UIColor.gray.cgColor
+//        layer.borderWidth = 10
     }
-    
+    override var isSelected: Bool {
+        didSet {
+            if isSelected {
+                layer.borderWidth = 2
+                layer.borderColor = UIColor.red.cgColor
+            } else {
+                layer.borderWidth = 0
+            }
+        }
+    }
     
     
 }
