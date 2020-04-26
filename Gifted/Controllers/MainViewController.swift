@@ -57,10 +57,10 @@ class MainViewController: UIViewController
     }
     
     
-    private var menuOptions = ["Photo to Gif",
-                               "Video to Gif",
+    private var menuOptions = ["Photo to GIF",
+                               "Video to GIF",
                                "AR","Camera",
-                               "Gif Editor",
+                               "GIF Editor",
                                "Timelapse",
                                "Slowmotion",
                                "Live Photo to GIF"]
@@ -223,13 +223,21 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath.row)
         switch indexPath.row {
+            
             case 0:
-                performSegue(withIdentifier: "PhotoToGif", sender: indexPath)
-//                print(indexPath.row)
+                if  let vc = ( storyboard?.instantiateViewController(identifier: "PhotoSelection")) {
+                    vc.modalPresentationStyle = .fullScreen
+                        present(vc, animated: true, completion: nil)
+                }
+              
+
           
             default:
-                print(indexPath.row)
+           
+                let vc = (storyboard?.instantiateViewController(identifier: "Detail"))!
+                present(vc, animated: true)
         }
     }
 }

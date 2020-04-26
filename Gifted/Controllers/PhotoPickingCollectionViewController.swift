@@ -6,6 +6,9 @@
 //  Copyright © 2020 Nick Nguyen. All rights reserved.
 //
 
+// TODO: - Checkmark picked photos
+
+
 import UIKit
 import Photos // access photos
 
@@ -141,6 +144,25 @@ class PhotoPickingCollectionViewController: UIViewController
         grabPhotos()
         
     }
+    
+    
+    
+    @IBAction func segmentValueChanged(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+            case 0:
+                navigationItem.title = "Select Photos"
+            default:
+                
+                UIView.animate(withDuration: 0.5, delay: 0.5, options: .curveEaseOut, animations: {
+                    self.view.setNeedsLayout()
+                    self.navigationItem.title = "Select Videos"
+                    
+                }, completion: nil)
+               
+        }
+    }
+    
+    
   
     func fetchCollections() {
         if let albums = PHCollectionList.fetchTopLevelUserCollections(with: nil) as? PHFetchResult<PHAssetCollection> {
@@ -178,18 +200,22 @@ class PhotoPickingCollectionViewController: UIViewController
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Select Photos"
         let appearance = UINavigationBarAppearance()
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-        appearance.backgroundColor = .black
+        appearance.titleTextAttributes = [.foregroundColor: #colorLiteral(red: 0.2470482588, green: 0.239345789, blue: 0.3378213048, alpha: 1)]
+        appearance.largeTitleTextAttributes = [.foregroundColor: #colorLiteral(red: 0.2470482588, green: 0.239345789, blue: 0.3378213048, alpha: 1)]
+        appearance.backgroundColor = .white
         navigationItem.standardAppearance = appearance
         navigationItem.scrollEdgeAppearance = appearance
        
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: #selector(handleBack))
-        navigationItem.leftBarButtonItem?.tintColor = .white
+        navigationItem.leftBarButtonItem?.tintColor = #colorLiteral(red: 0.2470482588, green: 0.239345789, blue: 0.3378213048, alpha: 1)
         view.backgroundColor = .secondarySystemBackground
        
 
     }
+    
+    
+   
+    
     
     @objc func handleBack() {
         dismiss(animated: true, completion: nil)
@@ -204,13 +230,16 @@ class PhotoPickingCollectionViewController: UIViewController
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
         
         let fetchResult: PHFetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+        
         if fetchResult.count > 0 {
             for index in 0 ..< fetchResult.count {
-                imageManager.requestImage(for: fetchResult.object(at: index) , targetSize: CGSize(width: photoCollectionView.frame.width / 3 - 1 , height: photoCollectionView.frame.width / 3 - 1 ), contentMode: .aspectFit, options: requestOptions) { [weak self]
+                imageManager.requestImage(for: fetchResult.object(at: index) , targetSize: CGSize(width: photoCollectionView.frame.width / 3 - 1 , height: photoCollectionView.frame.width / 3 - 1 ), contentMode: .aspectFill, options: requestOptions) { [weak self]
                     image, error in
+                  
                     guard let self = self else { return }
                     guard let image = image else { return }
                     self.images.append(image)
+                    
                     DispatchQueue.main.async {
                          self.photoCollectionView.reloadData()
                     }

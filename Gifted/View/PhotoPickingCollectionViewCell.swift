@@ -31,8 +31,8 @@ class PhotoPickingCollectionViewCell: UICollectionViewCell {
     override var isSelected: Bool {
         didSet {
             if isSelected {
-                layer.borderWidth = 2
-                layer.borderColor = UIColor.red.cgColor
+                layer.borderWidth = 5
+                layer.borderColor = UIColor.green.cgColor
             } else {
                 layer.borderWidth = 0
             }
