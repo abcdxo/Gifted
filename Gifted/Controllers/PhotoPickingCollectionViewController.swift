@@ -145,14 +145,15 @@ class PhotoPickingCollectionViewController: UIViewController
         let visibleCells = photoCollectionView.visibleCells as! [PhotoPickingCollectionViewCell]
         visibleCells.forEach { (cell) in
             cell.isSelected = false
-           
             selectedImages.removeAll()
-             photoCollectionView.reloadData()
+           
         }
+        
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
             
         }
+          photoCollectionView.reloadData()
     }
     
     deinit {
@@ -296,18 +297,27 @@ class PhotoPickingCollectionViewController: UIViewController
    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-         
+
         showContainerViewController()
         let image = images[indexPath.row]
         selectedImages.append(image)
         let userInfo = ["Photos":selectedImages]
         NotificationCenter.default.post(name: NSNotification.Name("NewPhoto"), object: nil, userInfo: userInfo)
-        print(selectedImages.count)
+        print("Selected images is \(selectedImages.count)")
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-
-        selectedImages.remove(at: indexPath.row)
-        print(selectedImages.count)
+//        print("Deselect indexPath is \(indexPath.row)")
+//        if let index = selectedImages.firstIndex(of: selectedImages[indexPath.row]) {
+//            selectedImages.remove(at: index)
+//        }
+//        selectedImages.remove(at: indexPath.row)
+//        let image = selectedImages[indexPath.row]
+//        let imageToRemove = selectedImages.firstIndex(of: image)
+//        selectedImages.remove(at: imageToRemove!)
+//        collectionView.reloadItems(at: [ind])
+  //TODO:remove item of arrays when deselect a row 
+      
+        print("Selected images after DESELECT is \(selectedImages.count)")
         if selectedImages.count == 0 {
             self.containerHeightConstraint.constant = 0
             
