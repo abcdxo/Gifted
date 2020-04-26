@@ -53,7 +53,10 @@ class ContainerViewController: UIViewController
     
     
     @IBAction func nextStepButtonPressed(_ sender: UIButton) {
-        print("nextstep")
+        print("nextstep \(String(describing: images!.count))")
+        let vc = (storyboard!.instantiateViewController(identifier: "sd")) as! CustomizeViewController
+        vc.imagesToMakeGIF = images
+        navigationController!.pushViewController(vc, animated: true)
     }
     
     
@@ -61,6 +64,7 @@ class ContainerViewController: UIViewController
     @objc func didGetPhotos(_ notification: Notification) {
         guard let userInfo = notification.userInfo,  let photos = userInfo["Photos"] as? [UIImage] else { return }
         self.images = photos
+        
         countLabel.text = "(\(photos.count))"
         containerCollectionView.reloadData()
        

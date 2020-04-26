@@ -24,6 +24,7 @@
 		B66F784E2453850200E0727E /* GiftedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F784D2453850200E0727E /* GiftedTests.swift */; };
 		B66F78562453864100E0727E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B66F78552453864100E0727E /* Default-568h@2x.png */; };
 		B66F785A2453961B00E0727E /* TopCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F78592453961B00E0727E /* TopCollectionViewCell.swift */; };
+		B688B4B4245628AD00377CBF /* CustomizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B4B3245628AD00377CBF /* CustomizeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		B66F784F2453850200E0727E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B66F78552453864100E0727E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		B66F78592453961B00E0727E /* TopCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCollectionViewCell.swift; sourceTree = "<group>"; };
+		B688B4B3245628AD00377CBF /* CustomizeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +201,7 @@
 				B66F782024537AF400E0727E /* MainViewController.swift */,
 				B6567F6D2454A11E009E4E03 /* PhotoPickingCollectionViewController.swift */,
 				B6567F712455C606009E4E03 /* ContainerViewController.swift */,
+				B688B4B3245628AD00377CBF /* CustomizeViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 			files = (
 				B6567F6E2454A11E009E4E03 /* PhotoPickingCollectionViewController.swift in Sources */,
 				B6567F742455D7F3009E4E03 /* HorizontalBottomCollectionViewCell.swift in Sources */,
+				B688B4B4245628AD00377CBF /* CustomizeViewController.swift in Sources */,
 				B66F782124537AF400E0727E /* MainViewController.swift in Sources */,
 				B6567F6B2453BBFF009E4E03 /* UIColor.swift in Sources */,
 				B66F781D24537AF400E0727E /* AppDelegate.swift in Sources */,

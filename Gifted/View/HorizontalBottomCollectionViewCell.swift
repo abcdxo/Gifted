@@ -8,7 +8,8 @@
 
 import UIKit
 
-class HorizontalBottomCollectionViewCell: UICollectionViewCell {
+class HorizontalBottomCollectionViewCell: UICollectionViewCell
+{
     
       @IBOutlet weak var imageView: UIImageView!
     

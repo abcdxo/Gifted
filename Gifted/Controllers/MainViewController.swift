@@ -8,6 +8,7 @@
 
 import UIKit
 import Photos
+
 extension MainViewController: PHPhotoLibraryChangeObserver {
     
     func photoLibraryDidChange(_ changeInstance: PHChange) {
