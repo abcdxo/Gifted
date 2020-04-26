@@ -130,12 +130,18 @@ class PhotoPickingCollectionViewController: UIViewController
         return option
     }()
     
+    
+    @IBOutlet weak var containerView: UIView!
+    
+    
+    @IBOutlet weak var containerHeightConstraint: NSLayoutConstraint!
+    
 
       let imageManager = PHImageManager.default()
     //MARK:- Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        containerHeightConstraint.constant = -1000
         setUpNavBar()
 
     }
@@ -257,11 +263,37 @@ class PhotoPickingCollectionViewController: UIViewController
     }
     var count =  0
     var selectedImages = [UIImage]()
+    
+    private func showContainerViewController() {
+        self.containerHeightConstraint.constant = 140
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+            
+        }
+    }
+    
+   
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+         
+        showContainerViewController()
         let image = images[indexPath.row]
         selectedImages.append(image)
+        let userInfo = ["Photos":selectedImages]
+        NotificationCenter.default.post(name: NSNotification.Name("NewPhoto"), object: nil, userInfo: userInfo)
         print(selectedImages.count)
+    }
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        selectedImages.remove(at:indexPath.row)
+//        collectionView.deleteItems(at: [indexPath])
+        
+        print(selectedImages.count)
+//        self.containerHeightConstraint.constant = 0
+//
+//        UIView.animate(withDuration: 0.2) {
+//            self.view.layoutIfNeeded()
+//
+//        }
     }
    
 

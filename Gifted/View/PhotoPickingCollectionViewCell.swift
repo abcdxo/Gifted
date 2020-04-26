@@ -10,13 +10,11 @@ import UIKit
 
 class PhotoPickingCollectionViewCell: UICollectionViewCell {
     
+    //MARK:- Outlets
     @IBOutlet weak var imageView: UIImageView!
-    
     @IBOutlet weak var checkMark: UIImageView!
     
-    
-    
-     var reuseCount: Int = 0
+ //MARK:- Init
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -27,15 +25,28 @@ class PhotoPickingCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
 
     }
+    
+    //MARK:- Properties
+    
     override var isSelected: Bool {
         didSet {
-            if isSelected {
-                checkMark.image = UIImage(systemName: "checkmark")?.withTintColor(.green)
-            } else {
-                checkMark.image = UIImage(systemName: "")
-            }
+            checkMark.image = isSelected ?  UIImage(systemName: "checkmark.circle")!.withTintColor(.green) : UIImage(systemName: "")
+           
         }
     }
     
+    override var isHighlighted: Bool {
+        didSet {
+            toggleIsHighlighted()
+        }
+    }
     
+   private func toggleIsHighlighted() {
+        
+        UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseOut,.transitionFlipFromLeft], animations: {
+            self.alpha = self.isHighlighted ? 0.9 : 5.0
+            self.transform = self.isHighlighted ? CGAffineTransform.identity.scaledBy(x: 2.0, y: 2.0) : CGAffineTransform.identity
+          
+        })
+    }
 }
