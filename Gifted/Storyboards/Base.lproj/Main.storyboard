@@ -336,23 +336,38 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="100" translatesAutoresizingMaskIntoConstraints="NO" id="ron-UO-vQj">
-                                <rect key="frame" x="8" y="94" width="398" height="30"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="ron-UO-vQj">
+                                <rect key="frame" x="16" y="94" width="382" height="30"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jrf-uQ-J7O">
-                                        <rect key="frame" x="0.0" y="0.0" width="149" height="30"/>
-                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
-                                        <state key="normal" title="Deselect All">
-                                            <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="deSelectAllButtonPressed:" destination="9b9-62-WDQ" eventType="touchUpInside" id="l2Z-Df-0oE"/>
-                                        </connections>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="qyd-ef-dPZ">
+                                        <rect key="frame" x="0.0" y="0.0" width="223.5" height="30"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jrf-uQ-J7O">
+                                                <rect key="frame" x="0.0" y="0.0" width="111.5" height="30"/>
+                                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                                <state key="normal" title="Deselect All">
+                                                    <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="deSelectAllButtonPressed:" destination="9b9-62-WDQ" eventType="touchUpInside" id="l2Z-Df-0oE"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(7)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FWl-Pw-wkr">
+                                                <rect key="frame" x="111.5" y="5" width="112" height="20.5"/>
+                                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="highlightedColor" systemColor="systemGray5Color" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="FWl-Pw-wkr" firstAttribute="centerY" secondItem="Jrf-uQ-J7O" secondAttribute="centerY" id="4GV-Iz-inx"/>
+                                            <constraint firstItem="FWl-Pw-wkr" firstAttribute="height" secondItem="Jrf-uQ-J7O" secondAttribute="height" multiplier="0.683333" id="Tz0-hK-p8G"/>
+                                        </constraints>
+                                    </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2FT-Oe-Bzk">
-                                        <rect key="frame" x="249" y="0.0" width="149" height="30"/>
+                                        <rect key="frame" x="273.5" y="0.0" width="108.5" height="30"/>
                                         <color key="backgroundColor" red="0.2618669569" green="0.21434932949999999" blue="0.83926403520000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="17"/>
                                         <state key="normal" title="Next Step">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -368,16 +383,15 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="398" id="2lW-TR-r2r"/>
                                     <constraint firstAttribute="height" constant="30" id="H7i-gy-xkI"/>
                                 </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="hWA-oK-odg" firstAttribute="trailing" secondItem="ron-UO-vQj" secondAttribute="trailing" constant="8" id="0uL-4T-gzN"/>
+                            <constraint firstItem="hWA-oK-odg" firstAttribute="trailing" secondItem="ron-UO-vQj" secondAttribute="trailing" constant="16" id="0uL-4T-gzN"/>
                             <constraint firstItem="ron-UO-vQj" firstAttribute="top" secondItem="kMO-Qz-oYm" secondAttribute="bottom" constant="8" id="1Qk-ET-Ufj"/>
-                            <constraint firstItem="ron-UO-vQj" firstAttribute="leading" secondItem="hWA-oK-odg" secondAttribute="leading" constant="8" id="Suz-29-gxs"/>
+                            <constraint firstItem="ron-UO-vQj" firstAttribute="leading" secondItem="hWA-oK-odg" secondAttribute="leading" constant="16" id="Suz-29-gxs"/>
                             <constraint firstItem="kMO-Qz-oYm" firstAttribute="leading" secondItem="eqF-hc-FHm" secondAttribute="leading" id="X3R-hy-gsi"/>
                             <constraint firstAttribute="trailing" secondItem="kMO-Qz-oYm" secondAttribute="trailing" id="eKQ-Tb-iFb"/>
                             <constraint firstItem="kMO-Qz-oYm" firstAttribute="top" secondItem="eqF-hc-FHm" secondAttribute="top" id="lXE-UY-mW1"/>
@@ -387,6 +401,7 @@
                     <navigationItem key="navigationItem" id="Jbq-vh-hmR"/>
                     <connections>
                         <outlet property="containerCollectionView" destination="kMO-Qz-oYm" id="D4H-ze-DGM"/>
+                        <outlet property="countLabel" destination="FWl-Pw-wkr" id="4M0-V1-m7A"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n74-m9-2ux" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -181,10 +181,10 @@ class PhotoPickingCollectionViewController: UIViewController
             case 0:
                 navigationItem.title = "Select Photos"
             default:
-                
+                  self.navigationItem.title = "Select Videos"
                 UIView.animate(withDuration: 0.5, delay: 0.5, options: .curveEaseOut, animations: {
                     self.view.setNeedsLayout()
-                    self.navigationItem.title = "Select Videos"
+                  
                     
                 }, completion: nil)
                
@@ -327,7 +327,7 @@ class PhotoPickingCollectionViewController: UIViewController
    
 
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = photoCollectionView.dequeueReusableCell(withReuseIdentifier: "Hello", for: indexPath) as? PhotoPickingCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = photoCollectionView.dequeueReusableCell(withReuseIdentifier: Cell.photoPickingCell.rawValue, for: indexPath) as? PhotoPickingCollectionViewCell else { return UICollectionViewCell() }
     
         
         let image = images[indexPath.item]

@@ -43,6 +43,7 @@ class HorizontalBottomCollectionViewCell: UICollectionViewCell {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "xmark.circle",withConfiguration: UIImage.SymbolConfiguration( weight: .heavy))!, for: .normal)
+       
         button.tintColor = .red
         button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
         return button

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B64F777524561A4E0061AC49 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64F777424561A4E0061AC49 /* Cell.swift */; };
 		B6567F6B2453BBFF009E4E03 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6567F6A2453BBFF009E4E03 /* UIColor.swift */; };
 		B6567F6E2454A11E009E4E03 /* PhotoPickingCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6567F6D2454A11E009E4E03 /* PhotoPickingCollectionViewController.swift */; };
 		B6567F702454BBA9009E4E03 /* PhotoPickingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6567F6F2454BBA9009E4E03 /* PhotoPickingCollectionViewCell.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B64F777424561A4E0061AC49 /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
 		B6567F6A2453BBFF009E4E03 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		B6567F6D2454A11E009E4E03 /* PhotoPickingCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickingCollectionViewController.swift; sourceTree = "<group>"; };
 		B6567F6F2454BBA9009E4E03 /* PhotoPickingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickingCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -92,6 +94,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B64F777324561A330061AC49 /* Constant */ = {
+			isa = PBXGroup;
+			children = (
+				B64F777424561A4E0061AC49 /* Cell.swift */,
+			);
+			path = Constant;
+			sourceTree = "<group>";
+		};
 		B6567F692453BBDB009E4E03 /* Convenience + Ext */ = {
 			isa = PBXGroup;
 			children = (
@@ -132,6 +142,7 @@
 		B66F781B24537AF400E0727E /* Gifted */ = {
 			isa = PBXGroup;
 			children = (
+				B64F777324561A330061AC49 /* Constant */,
 				B6567F692453BBDB009E4E03 /* Convenience + Ext */,
 				B66F78582453885B00E0727E /* Controllers */,
 				B66F78572453885500E0727E /* View */,
@@ -332,6 +343,7 @@
 				B66F785A2453961B00E0727E /* TopCollectionViewCell.swift in Sources */,
 				B6567F702454BBA9009E4E03 /* PhotoPickingCollectionViewCell.swift in Sources */,
 				B66F7836245380F100E0727E /* BottomCollectionViewCell.swift in Sources */,
+				B64F777524561A4E0061AC49 /* Cell.swift in Sources */,
 				B6567F722455C606009E4E03 /* ContainerViewController.swift in Sources */,
 				B66F781F24537AF400E0727E /* SceneDelegate.swift in Sources */,
 			);

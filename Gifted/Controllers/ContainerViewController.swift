@@ -15,7 +15,8 @@ class ContainerViewController: UIViewController
     
     var images: [UIImage]?
     
-
+    @IBOutlet weak var countLabel: UILabel!
+    
     @IBOutlet weak var containerCollectionView: UICollectionView! {
         didSet {
             containerCollectionView.delegate = self
@@ -60,7 +61,7 @@ class ContainerViewController: UIViewController
     @objc func didGetPhotos(_ notification: Notification) {
         guard let userInfo = notification.userInfo,  let photos = userInfo["Photos"] as? [UIImage] else { return }
         self.images = photos
-      
+        countLabel.text = "(\(photos.count))"
         containerCollectionView.reloadData()
        
     }
@@ -98,7 +99,7 @@ extension ContainerViewController: UICollectionViewDelegateFlowLayout,UICollecti
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! HorizontalBottomCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.containerCollectionViewCell.rawValue, for: indexPath) as! HorizontalBottomCollectionViewCell
         
         let image = images![indexPath.row]
         DispatchQueue.main.async {  cell.imageView.image = image }
