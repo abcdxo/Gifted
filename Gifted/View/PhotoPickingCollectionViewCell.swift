@@ -10,18 +10,25 @@ import UIKit
 
 class PhotoPickingCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var imageView: UIImageView!
+    
      var reuseCount: Int = 0
-    @IBOutlet weak var photoImageView: UIImageView!
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+//        clipsToBounds = true
+//        layer.borderColor = UIColor.link.cgColor
+//        layer.borderWidth = 2
+//        layer.cornerRadius = 16
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        clipsToBounds = true
+        layer.borderColor = UIColor.link.cgColor
+        layer.borderWidth = 2
+        layer.cornerRadius = 16
     }
-    
     
     
     

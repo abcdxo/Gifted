@@ -41,3 +41,33 @@ extension UIImageView {
         }
     }
 }
+//    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotoPickingCollectionViewCell
+//        let image = images[indexPath.item]
+//        cell.photoImageView.image = image
+//          return cell
+////        print(cell)
+////        cell.reuseCount = cell.reuseCount + 1
+////        let reuseCount = cell.reuseCount
+////        let photo = (photos?.firstObject)!
+////        print(photo)
+////        imageManager.requestImage(for: photo, targetSize: CGSize(width: collectionView.frame.width / 3 - 1, height: collectionView.frame.width / 3 - 1), contentMode: .aspectFill, options: requestOptions) { (image, _) in
+////            cell.photoImageView.image = image
+////        }
+//
+////        imageManager2.requestImage(for: (photos?.object(at: indexPath.row))!, targetSize: CGSize(width: collectionView.frame.width / 3 - 1, height: collectionView.frame.width / 3 - 1), contentMode: .aspectFit, options: requestOptions) { (image, _) in
+////            print(image?.size)
+////            print(self.photos?.object(at: indexPath.row) as Any)
+////            cell.photoImageView.image = image
+////        }
+////        let asset = currentAssetAtIndex(indexPath.item)
+////        userAlbums?.object(at: indexPath.row)
+////        imageManager.requestImage(for: asset, targetSize: CGSize(width: collectionView.frame.width / 3 - 1, height: collectionView.frame.width / 3 - 1), contentMode: .aspectFill, options: requestOptions) { (image, metadata) in
+////            if reuseCount == cell.reuseCount {
+////                cell.photoImageView.image = image
+////            }
+////        }
+//
+//
+//    }
