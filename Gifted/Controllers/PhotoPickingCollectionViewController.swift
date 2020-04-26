@@ -306,17 +306,13 @@ class PhotoPickingCollectionViewController: UIViewController
         print("Selected images is \(selectedImages.count)")
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-//        print("Deselect indexPath is \(indexPath.row)")
-//        if let index = selectedImages.firstIndex(of: selectedImages[indexPath.row]) {
-//            selectedImages.remove(at: index)
-//        }
-//        selectedImages.remove(at: indexPath.row)
-//        let image = selectedImages[indexPath.row]
-//        let imageToRemove = selectedImages.firstIndex(of: image)
-//        selectedImages.remove(at: imageToRemove!)
-//        collectionView.reloadItems(at: [ind])
-  //TODO:remove item of arrays when deselect a row 
+
       
+       
+
+  //FIXME:remove item of arrays when deselect a row
+        selectedImages.remove(at: indexPath.row)
+        
         print("Selected images after DESELECT is \(selectedImages.count)")
         if selectedImages.count == 0 {
             self.containerHeightConstraint.constant = 0

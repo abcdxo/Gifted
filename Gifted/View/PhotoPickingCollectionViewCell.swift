@@ -12,7 +12,12 @@ class PhotoPickingCollectionViewCell: UICollectionViewCell {
     
     //MARK:- Outlets
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var checkMark: UIImageView!
+    @IBOutlet weak var checkMark: UIImageView! {
+        didSet {
+            checkMark.layer.masksToBounds = true
+            checkMark.layer.cornerRadius = checkMark.frame.size.width / 2
+        }
+    }
     
  //MARK:- Init
     
@@ -30,7 +35,9 @@ class PhotoPickingCollectionViewCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            checkMark.image = isSelected ?  UIImage(systemName: "checkmark.circle")!.withTintColor(.green) : UIImage(systemName: "")
+            checkMark.image = isSelected ?  UIImage(systemName: "checkmark.circle.fill")!.withTintColor(.green) : UIImage(systemName: "")
+            checkMark.backgroundColor = isSelected ? .white : .none
+            
            
         }
     }

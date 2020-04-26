@@ -177,9 +177,9 @@
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0Mh-Iv-N4r">
                                                     <rect key="frame" x="-56" y="0.0" width="240" height="128"/>
                                                 </imageView>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IpZ-tZ-uYZ">
+                                                <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IpZ-tZ-uYZ">
                                                     <rect key="frame" x="94" y="0.0" width="30" height="30"/>
-                                                    <color key="tintColor" red="0.2618669569" green="0.21434932949999999" blue="0.83926403520000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <color key="tintColor" red="0.3882825077" green="0.67118060589999995" blue="0.54511564970000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="30" id="Cyg-kt-1ag"/>
                                                         <constraint firstAttribute="height" constant="30" id="SLc-jn-3AX"/>
