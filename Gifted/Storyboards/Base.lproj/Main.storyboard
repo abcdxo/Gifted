@@ -158,7 +158,6 @@
                                     <segment title="Videos"/>
                                 </segments>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="selectedSegmentTintColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="segmentValueChanged:" destination="vSc-ZW-88f" eventType="valueChanged" id="T38-rv-nbb"/>
                                 </connections>
