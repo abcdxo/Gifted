@@ -159,7 +159,8 @@ class PhotoPickingCollectionViewController: UIViewController
         NotificationCenter.default.removeObserver(self)
     }
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         grabPhotos()
         containerHeightConstraint.constant = 0
@@ -170,7 +171,8 @@ class PhotoPickingCollectionViewController: UIViewController
  
     
     
-    @IBAction func segmentValueChanged(_ sender: UISegmentedControl) {
+    @IBAction func segmentValueChanged(_ sender: UISegmentedControl)
+    {
         switch sender.selectedSegmentIndex {
             case 0:
                 navigationItem.title = "Select Photos"
@@ -219,7 +221,8 @@ class PhotoPickingCollectionViewController: UIViewController
         }
     }
     
-    private func setUpNavBar() {
+    private func setUpNavBar()
+    {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Select Photos"
         let appearance = UINavigationBarAppearance()

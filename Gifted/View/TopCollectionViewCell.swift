@@ -11,11 +11,7 @@ import UIKit
 class TopCollectionViewCell: UICollectionViewCell
 {
     
-    
     @IBOutlet weak var imageView: UIImageView! 
-    
-    
-    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
        

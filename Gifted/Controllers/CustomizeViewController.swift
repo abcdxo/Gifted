@@ -19,7 +19,8 @@ class CustomizeViewController: UIViewController
     //MARK:- Outlets
     
     @IBOutlet weak var gif: UIImageView!
-    @IBOutlet weak var optionCollectionView: UICollectionView! {
+    @IBOutlet weak var optionCollectionView: UICollectionView!
+        {
         didSet {
             optionCollectionView.delegate = self
             optionCollectionView.dataSource = self
@@ -62,7 +63,8 @@ class CustomizeViewController: UIViewController
     //MARK:- Actions
     
     
-    @IBAction func saveTapped(_ sender: UIBarButtonItem) {
+    @IBAction func saveTapped(_ sender: UIBarButtonItem)
+    {
        print("Stopp")
       
         gif.stopAnimating()

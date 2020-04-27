@@ -22,19 +22,21 @@ class PhotoPickingCollectionViewCell: UICollectionViewCell
     
  //MARK:- Init
     
-    required init?(coder: NSCoder) {
+    required init?(coder: NSCoder)
+    {
         super.init(coder: coder)
-
     }
     
-    override init(frame: CGRect) {
+    override init(frame: CGRect)
+    {
         super.init(frame: frame)
 
     }
     
     //MARK:- Properties
     
-    override var isSelected: Bool {
+    override var isSelected: Bool
+        {
         didSet {
             checkMark.image = isSelected ?  UIImage(systemName: "checkmark.circle.fill")!: UIImage(systemName: "")
             checkMark.backgroundColor = isSelected ? .white : .none

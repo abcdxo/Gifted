@@ -14,7 +14,8 @@ class HorizontalBottomCollectionViewCell: UICollectionViewCell
       @IBOutlet weak var imageView: UIImageView!
     
     
-    override init(frame: CGRect) {
+    override init(frame: CGRect)
+    {
         super.init(frame: frame)
         addSubview(redCancelButton)
         setUpButtons()
@@ -22,7 +23,8 @@ class HorizontalBottomCollectionViewCell: UICollectionViewCell
     }
     
     
-    required init?(coder: NSCoder) {
+    required init?(coder: NSCoder)
+    {
         super.init(coder: coder)
         addSubview(redCancelButton)
         layer.cornerRadius = 8
