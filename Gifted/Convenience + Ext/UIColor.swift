@@ -123,9 +123,6 @@ extension UIImage
         }
     }
     
-}
-extension UIImage
-{
     func imageWithImage(image:UIImage, scaledToSize newSize:CGSize) -> UIImage
     {
         UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0);
@@ -134,4 +131,6 @@ extension UIImage
         UIGraphicsEndImageContext()
         return newImage
     }
+    
 }
+

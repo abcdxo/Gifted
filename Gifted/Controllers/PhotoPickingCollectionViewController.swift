@@ -109,8 +109,7 @@ class PhotoPickingCollectionViewController: UIViewController
    
     @IBOutlet weak var photoCollectionView: UICollectionView!
         {
-        didSet
-        {
+        didSet {
             photoCollectionView.delegate = self
             photoCollectionView.dataSource = self
             photoCollectionView.backgroundColor = .white
@@ -142,8 +141,6 @@ class PhotoPickingCollectionViewController: UIViewController
     
     
     @IBOutlet weak var containerView: UIView!
-    
-    
     @IBOutlet weak var containerHeightConstraint: NSLayoutConstraint!
     
 
@@ -197,9 +194,7 @@ class PhotoPickingCollectionViewController: UIViewController
                
         }
     }
-    
-    
-  
+
     func fetchCollections() {
         if let albums = PHCollectionList.fetchTopLevelUserCollections(with: nil) as? PHFetchResult<PHAssetCollection> {
             userAlbums = albums
@@ -327,7 +322,8 @@ class PhotoPickingCollectionViewController: UIViewController
         if selectedImages.count == 0 {
             self.containerHeightConstraint.constant = 0
             
-            UIView.animate(withDuration: 0.2) {
+            UIView.animate(withDuration: 0.2)
+            {
                 self.view.layoutIfNeeded()
                 
             }
@@ -361,11 +357,13 @@ class PhotoPickingCollectionViewController: UIViewController
       
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat { // horizontal
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat
+    { // horizontal
         return 0.0
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat { // vertical
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat
+    { // vertical
         return 0.0
     }
 

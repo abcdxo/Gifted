@@ -13,16 +13,36 @@ class CustomizeViewController: UIViewController, ARSessionDelegate
 {
     //MARK:- Properties
     
-    let options = ["Speed","Boomerang","Canvas","Reorder","Filter","Stickers","Text","Tune"]
+    let options = ["Speed" ,
+                   "Boomerang",
+                   "AR",
+                   "Canvas"  ,
+                   "Reorder" ,
+                   "Filters" ,
+                   "Stickers",
+                   "Text",
+                   "Tune" ]
+    
+    let optionImages = [
+        UIImage(systemName: "waveform"),
+        UIImage(systemName: "lasso"),
+        UIImage(systemName: "square.stack.3d.down.right"),
+        UIImage(systemName: "aspectratio"),
+        UIImage(systemName: "arrow.clockwise.circle"),
+        UIImage(systemName: "pencil"),
+        UIImage(systemName: "smiley"),
+        UIImage(systemName: "textformat.size"),
+        UIImage(systemName: "radiowaves.left")
+        
+    ]
+    
     var imagesToMakeGIF: [UIImage]?
     
     //MARK:- Outlets
     
     @IBOutlet weak var gif: UIImageView!
-    @IBOutlet weak var optionCollectionView: UICollectionView!
-        {
-        didSet
-        {
+    @IBOutlet weak var optionCollectionView: UICollectionView! {
+        didSet {
             optionCollectionView.delegate = self
             optionCollectionView.dataSource = self
         }
@@ -63,7 +83,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate
         ])
         
         DispatchQueue.main.async {   self.gif = imageView  }
-        print(gif.animationDuration)
+        
         
     }
  
@@ -72,7 +92,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate
     
     @IBAction func saveTapped(_ sender: UIBarButtonItem)
     {
-       print("Stopp")
+       print("Trying to Stop the GIF")
       
         gif.stopAnimating()
     }
@@ -89,11 +109,13 @@ extension CustomizeViewController : UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.editCell.rawValue, for: indexPath) as! EditOptionCell
-        
+        cell.optionLabel.text = options[indexPath.row]
+        cell.optionImageView.image = optionImages[indexPath.row]
+
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 200, height: 200)
+        return CGSize(width: 80, height: 80)
     }
 }

@@ -8,42 +8,16 @@
 
 import UIKit
 import Photos
+// TODO: Scroll to bottom
+// Fix logic deselect row 
 
-extension MainViewController: PHPhotoLibraryChangeObserver
-{
-    
-    func photoLibraryDidChange(_ changeInstance: PHChange)
-    {
-        DispatchQueue.main.async
-            {
-            var updatedFetchResults = false
-            if let userAlbums = self.userAlbums,
-                let changes = changeInstance.changeDetails(for: userAlbums)
-            {
-                self.userAlbums = changes.fetchResultAfterChanges
-                updatedFetchResults = true
-            }
-            if let userFavorites = self.userFavorites,
-                let changes = changeInstance.changeDetails(for: userFavorites)
-            {
-                self.userFavorites = changes.fetchResultAfterChanges
-                updatedFetchResults = true
-            }
-            if updatedFetchResults
-            {
-                self.bottomCollectionView.reloadData()
-            }
-        }
-    }
-}
 class MainViewController: UIViewController
 {
 // My thinking make me make this app.
     
     @IBOutlet weak var pageView: UIPageControl!
         {
-        didSet
-        {
+        didSet {
             pageView.numberOfPages = photos.count
             pageView.currentPage = 0
             pageView.pageIndicatorTintColor = .black
@@ -52,8 +26,7 @@ class MainViewController: UIViewController
     
     @IBOutlet weak var topCollectionView: UICollectionView!
         {
-        didSet
-        {
+        didSet {
             topCollectionView.delegate = self
             topCollectionView.dataSource = self
         }
@@ -62,8 +35,7 @@ class MainViewController: UIViewController
  
     @IBOutlet weak var bottomCollectionView: UICollectionView!
         {
-        didSet
-        {
+        didSet {
             bottomCollectionView.delegate = self
             bottomCollectionView.dataSource = self
         }
@@ -107,13 +79,9 @@ class MainViewController: UIViewController
     {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
-      
-        
-        DispatchQueue.main.async
-            {
+        DispatchQueue.main.async {
             self.timer = Timer.scheduledTimer(timeInterval: 1.2, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
         }
-       
     }
     
     @objc func changeImage() {
@@ -252,6 +220,33 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             default:
                 let vc = (storyboard?.instantiateViewController(identifier: "Detail"))!
                 present(vc, animated: true)
+        }
+    }
+}
+extension MainViewController: PHPhotoLibraryChangeObserver
+{
+    
+    func photoLibraryDidChange(_ changeInstance: PHChange)
+    {
+        DispatchQueue.main.async
+            {
+                var updatedFetchResults = false
+                if let userAlbums = self.userAlbums,
+                    let changes = changeInstance.changeDetails(for: userAlbums)
+                {
+                    self.userAlbums = changes.fetchResultAfterChanges
+                    updatedFetchResults = true
+                }
+                if let userFavorites = self.userFavorites,
+                    let changes = changeInstance.changeDetails(for: userFavorites)
+                {
+                    self.userFavorites = changes.fetchResultAfterChanges
+                    updatedFetchResults = true
+                }
+                if updatedFetchResults
+                {
+                    self.bottomCollectionView.reloadData()
+                }
         }
     }
 }
