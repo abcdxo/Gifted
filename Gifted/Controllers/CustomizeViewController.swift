@@ -8,28 +8,17 @@
 
 import UIKit
 
-class CustomizeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+
+class CustomizeViewController: UIViewController
+{
+    //MARK:- Properties
     
     let options = ["Speed","Boomerang","Canvas","Reorder","Filter","Stickers","Text","Tune"]
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return options.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.editCell.rawValue, for: indexPath) as! EditOptionCell
-        cell.optionLabel.text = options[indexPath.row]
-        cell.optionImageView.image = UIImage(named: "sit")
-        cell.backgroundColor = .red
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 200, height: 200)
-    }
     var imagesToMakeGIF: [UIImage]?
     
+    //MARK:- Outlets
     
+    @IBOutlet weak var gif: UIImageView!
     @IBOutlet weak var optionCollectionView: UICollectionView! {
         didSet {
             optionCollectionView.delegate = self
@@ -37,13 +26,7 @@ class CustomizeViewController: UIViewController, UICollectionViewDelegate, UICol
         }
     }
     
-    
-    
-    
-    
-    
-    
-    @IBOutlet weak var gif: UIImageView!
+    //MARK:- Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,6 +59,9 @@ class CustomizeViewController: UIViewController, UICollectionViewDelegate, UICol
         
     }
  
+    //MARK:- Actions
+    
+    
     @IBAction func saveTapped(_ sender: UIBarButtonItem) {
        print("Stopp")
       
@@ -84,4 +70,19 @@ class CustomizeViewController: UIViewController, UICollectionViewDelegate, UICol
     
  
 
+}
+extension CustomizeViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return options.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.editCell.rawValue, for: indexPath) as! EditOptionCell
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 200, height: 200)
+    }
 }
