@@ -15,7 +15,8 @@ class PhotoPickingCollectionViewCell: UICollectionViewCell
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var checkMark: UIImageView!
         {
-        didSet {
+        didSet
+        {
             checkMark.layer.masksToBounds = true
             checkMark.layer.cornerRadius = checkMark.frame.size.width / 2
         }
@@ -38,7 +39,8 @@ class PhotoPickingCollectionViewCell: UICollectionViewCell
     
     override var isSelected: Bool
         {
-        didSet {
+        didSet
+        {
             checkMark.image = isSelected ?  UIImage(systemName: "checkmark.circle.fill")!: UIImage(systemName: "")
             checkMark.backgroundColor = isSelected ? .white : .none
         }
@@ -51,7 +53,6 @@ class PhotoPickingCollectionViewCell: UICollectionViewCell
     
     private func toggleIsHighlighted()
     {
-        
         UIView.animate(withDuration: 0.5,
                        delay: 0,
                        options: [.curveEaseOut,.transitionFlipFromLeft],

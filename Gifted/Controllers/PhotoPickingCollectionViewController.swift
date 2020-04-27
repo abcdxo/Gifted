@@ -294,9 +294,11 @@ class PhotoPickingCollectionViewController: UIViewController
     var count =  0
     var selectedImages = [UIImage]()
     
-    private func showContainerViewController() {
+    private func showContainerViewController()
+    {
         self.containerHeightConstraint.constant = 140
-        UIView.animate(withDuration: 0.2) {
+        UIView.animate(withDuration: 0.2)
+        {
             self.view.layoutIfNeeded()
             
         }
@@ -304,7 +306,8 @@ class PhotoPickingCollectionViewController: UIViewController
     
    
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+    {
 
         showContainerViewController()
         let image = images[indexPath.row]
@@ -313,7 +316,8 @@ class PhotoPickingCollectionViewController: UIViewController
         NotificationCenter.default.post(name: NSNotification.Name("NewPhoto"), object: nil, userInfo: userInfo)
         print("Selected images is \(selectedImages.count)")
     }
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath)
+    {
 
       
        

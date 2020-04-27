@@ -14,19 +14,23 @@ extension MainViewController: PHPhotoLibraryChangeObserver
     
     func photoLibraryDidChange(_ changeInstance: PHChange)
     {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async
+            {
             var updatedFetchResults = false
             if let userAlbums = self.userAlbums,
-                let changes = changeInstance.changeDetails(for: userAlbums) {
+                let changes = changeInstance.changeDetails(for: userAlbums)
+            {
                 self.userAlbums = changes.fetchResultAfterChanges
                 updatedFetchResults = true
             }
             if let userFavorites = self.userFavorites,
-                let changes = changeInstance.changeDetails(for: userFavorites) {
+                let changes = changeInstance.changeDetails(for: userFavorites)
+            {
                 self.userFavorites = changes.fetchResultAfterChanges
                 updatedFetchResults = true
             }
-            if updatedFetchResults {
+            if updatedFetchResults
+            {
                 self.bottomCollectionView.reloadData()
             }
         }
@@ -36,24 +40,30 @@ class MainViewController: UIViewController
 {
 // My thinking make me make this app.
     
-    @IBOutlet weak var pageView: UIPageControl! {
-        didSet {
+    @IBOutlet weak var pageView: UIPageControl!
+        {
+        didSet
+        {
             pageView.numberOfPages = photos.count
             pageView.currentPage = 0
             pageView.pageIndicatorTintColor = .black
         }
     }
     
-    @IBOutlet weak var topCollectionView: UICollectionView! {
-        didSet {
+    @IBOutlet weak var topCollectionView: UICollectionView!
+        {
+        didSet
+        {
             topCollectionView.delegate = self
             topCollectionView.dataSource = self
         }
     }
     
  
-    @IBOutlet weak var bottomCollectionView: UICollectionView! {
-        didSet {
+    @IBOutlet weak var bottomCollectionView: UICollectionView!
+        {
+        didSet
+        {
             bottomCollectionView.delegate = self
             bottomCollectionView.dataSource = self
         }
@@ -86,18 +96,21 @@ class MainViewController: UIViewController
     private var userFavorites: PHFetchResult<PHAssetCollection>?
     //MARK:- Outlets
     func fetchCollections() {
-        if let albums = PHCollectionList.fetchTopLevelUserCollections(with: nil) as? PHFetchResult<PHAssetCollection> {
+        if let albums = PHCollectionList.fetchTopLevelUserCollections(with: nil) as? PHFetchResult<PHAssetCollection>
+        {
             userAlbums = albums
         }
         userFavorites = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumFavorites, options: nil)
     }
 
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
       
         
-        DispatchQueue.main.async {
+        DispatchQueue.main.async
+            {
             self.timer = Timer.scheduledTimer(timeInterval: 1.2, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
         }
        

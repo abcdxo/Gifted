@@ -27,7 +27,8 @@ extension UIImage
             if let destination = CGImageDestinationCreateWithURL(url, kUTTypeGIF, images.count, nil)
             {
                 CGImageDestinationSetProperties(destination, fileProperties)
-                for image in images {
+                for image in images
+                {
                     if let cgImage = image.cgImage
                     {
                         CGImageDestinationAddImage(destination, cgImage, frameProperties)

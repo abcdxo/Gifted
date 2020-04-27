@@ -15,8 +15,10 @@ class ContainerViewController: UIViewController
     
     @IBOutlet weak var countLabel: UILabel!
     
-    @IBOutlet weak var containerCollectionView: UICollectionView! {
-        didSet {
+    @IBOutlet weak var containerCollectionView: UICollectionView!
+        {
+        didSet
+        {
             containerCollectionView.delegate = self
             containerCollectionView.dataSource = self
           
@@ -24,9 +26,11 @@ class ContainerViewController: UIViewController
     }
     // MARK:- Life Cycle
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
-        if let flowLayout = self.containerCollectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
+        if let flowLayout = self.containerCollectionView?.collectionViewLayout as? UICollectionViewFlowLayout
+        {
             flowLayout.estimatedItemSize = CGSize(width: 1, height: 1)
         }
         NotificationCenter.default.addObserver(self, selector: #selector(didGetPhotos(_:)), name: NSNotification.Name("NewPhoto"), object: nil)
@@ -40,7 +44,8 @@ class ContainerViewController: UIViewController
     
    
   
-    @IBAction func deSelectAllButtonPressed(_ sender: UIButton) {
+    @IBAction func deSelectAllButtonPressed(_ sender: UIButton)
+    {
         print("deselect")
         images?.removeAll()
         containerCollectionView.reloadData()
@@ -49,7 +54,8 @@ class ContainerViewController: UIViewController
     
     
     
-    @IBAction func nextStepButtonPressed(_ sender: UIButton) {
+    @IBAction func nextStepButtonPressed(_ sender: UIButton)
+    {
         print("nextstep \(String(describing: images!.count))")
         let vc = (storyboard!.instantiateViewController(identifier: "sd")) as! CustomizeViewController
         vc.imagesToMakeGIF = images
@@ -58,7 +64,8 @@ class ContainerViewController: UIViewController
     
     
     
-    @objc func didGetPhotos(_ notification: Notification) {
+    @objc func didGetPhotos(_ notification: Notification)
+    {
         guard let userInfo = notification.userInfo,  let photos = userInfo["Photos"] as? [UIImage] else { return }
         self.images = photos
         
@@ -67,7 +74,8 @@ class ContainerViewController: UIViewController
        
     }
     
-    deinit {
+    deinit
+    {
         NotificationCenter.default.removeObserver(self)
     }
    
@@ -78,28 +86,34 @@ class ContainerViewController: UIViewController
 extension ContainerViewController: UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UICollectionViewDataSource
 {
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
+    {
         
         return CGSize(width: 50, height: 50)
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
+    {
         return images?.count ?? 0
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets
+    {
         return UIEdgeInsets(top: 0, left: 5.0, bottom: 0, right: 0)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat
+    {
         return 5.0
     }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat
+    {
         return 1.0
     }
     
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
+    {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.containerCollectionViewCell.rawValue, for: indexPath) as! HorizontalBottomCollectionViewCell
         
         let image = images![indexPath.row]
