@@ -12,7 +12,8 @@ import Photos
 extension MainViewController: PHPhotoLibraryChangeObserver
 {
     
-    func photoLibraryDidChange(_ changeInstance: PHChange) {
+    func photoLibraryDidChange(_ changeInstance: PHChange)
+    {
         DispatchQueue.main.async {
             var updatedFetchResults = false
             if let userAlbums = self.userAlbums,

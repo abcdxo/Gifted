@@ -13,7 +13,8 @@ class PhotoPickingCollectionViewCell: UICollectionViewCell
     
     //MARK:- Outlets
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var checkMark: UIImageView! {
+    @IBOutlet weak var checkMark: UIImageView!
+        {
         didSet {
             checkMark.layer.masksToBounds = true
             checkMark.layer.cornerRadius = checkMark.frame.size.width / 2
@@ -43,11 +44,13 @@ class PhotoPickingCollectionViewCell: UICollectionViewCell
         }
     }
     
-    override var isHighlighted: Bool {
+    override var isHighlighted: Bool
+        {
         didSet {  toggleIsHighlighted()  }
     }
     
-    private func toggleIsHighlighted() {
+    private func toggleIsHighlighted()
+    {
         
         UIView.animate(withDuration: 0.5,
                        delay: 0,

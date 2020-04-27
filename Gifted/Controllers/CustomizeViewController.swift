@@ -21,7 +21,8 @@ class CustomizeViewController: UIViewController
     @IBOutlet weak var gif: UIImageView!
     @IBOutlet weak var optionCollectionView: UICollectionView!
         {
-        didSet {
+        didSet
+        {
             optionCollectionView.delegate = self
             optionCollectionView.dataSource = self
         }
@@ -29,14 +30,16 @@ class CustomizeViewController: UIViewController
     
     //MARK:- Life Cycle
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         guard let images = imagesToMakeGIF else  { return }
         print("images to make GIF : \(images.count)")
       
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool)
+    {
         super.viewWillAppear(animated)
         guard let images = imagesToMakeGIF else  { return }
         let animatedImage = UIImage.animatedImage(with: images, duration: 1.0)

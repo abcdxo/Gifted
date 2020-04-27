@@ -12,7 +12,8 @@
 import UIKit
 import Photos // access photos
 
-extension PhotoPickingCollectionViewController {
+extension PhotoPickingCollectionViewController
+{
 //    func updateCache() {
 //        let currentFrameCenter = collectionView.bounds.minY
 //        let height = collectionView.bounds.height
@@ -50,7 +51,8 @@ extension PhotoPickingCollectionViewController {
 //        imageManager.stopCachingImages(for: assetsAtIndexPaths(indexesToStopCaching), targetSize: cellSize, contentMode: .aspectFill, options: requestOptions)
 //    }
     
-    func assetsAtIndexPaths(_ indexPaths: [IndexPath]) -> [PHAsset] {
+    func assetsAtIndexPaths(_ indexPaths: [IndexPath]) -> [PHAsset]
+    {
         return indexPaths.map { (indexPath) -> PHAsset in
             return self.currentAssetAtIndex(indexPath.item)
         }
@@ -62,16 +64,22 @@ extension PhotoPickingCollectionViewController {
         lastCacheFrameCenter = 0
     }
 }
-extension PhotoPickingCollectionViewController: PHPhotoLibraryChangeObserver {
-    func photoLibraryDidChange(_ changeInstance: PHChange)  {
-        DispatchQueue.main.async {
+extension PhotoPickingCollectionViewController: PHPhotoLibraryChangeObserver
+{
+    func photoLibraryDidChange(_ changeInstance: PHChange)
+    {
+        DispatchQueue.main.async
+            {
             if let assetsFetchResults = self.assetsFetchResults,
-                let collectionChanges = changeInstance.changeDetails(for: assetsFetchResults) {
+                let collectionChanges = changeInstance.changeDetails(for: assetsFetchResults)
+            {
                 self.assetsFetchResults = collectionChanges.fetchResultAfterChanges
-                if collectionChanges.hasMoves || !collectionChanges.hasIncrementalChanges {
+                if collectionChanges.hasMoves || !collectionChanges.hasIncrementalChanges
+                {
                     self.photoCollectionView.reloadData()
-                } else {
-                    self.photoCollectionView.performBatchUpdates({
+                } else
+                {   self.photoCollectionView.performBatchUpdates(
+                    {
                         if let removedIndexes = collectionChanges.removedIndexes, removedIndexes.count > 0 {
                             self.photoCollectionView.deleteItems(at: removedIndexes.indexPaths(for: 0))
                         }
@@ -99,8 +107,10 @@ class PhotoPickingCollectionViewController: UIViewController
 {
     
    
-    @IBOutlet weak var photoCollectionView: UICollectionView! {
-        didSet {
+    @IBOutlet weak var photoCollectionView: UICollectionView!
+        {
+        didSet
+        {
             photoCollectionView.delegate = self
             photoCollectionView.dataSource = self
             photoCollectionView.backgroundColor = .white
@@ -140,7 +150,8 @@ class PhotoPickingCollectionViewController: UIViewController
       let imageManager = PHImageManager.default()
     //MARK:- Life Cycle
     
-    @objc func closeScrene(_ notification: Notification) {
+    @objc func closeScrene(_ notification: Notification)
+    {
         containerHeightConstraint.constant = 0
         let visibleCells = photoCollectionView.visibleCells as! [PhotoPickingCollectionViewCell]
         visibleCells.forEach { (cell) in
@@ -148,14 +159,16 @@ class PhotoPickingCollectionViewController: UIViewController
             selectedImages.removeAll()
         }
         
-        UIView.animate(withDuration: 0.2) {
+        UIView.animate(withDuration: 0.2)
+        {
             self.view.layoutIfNeeded()
             
         }
           photoCollectionView.reloadData()
     }
     
-    deinit {
+    deinit
+    {
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -169,8 +182,6 @@ class PhotoPickingCollectionViewController: UIViewController
         
     }
  
-    
-    
     @IBAction func segmentValueChanged(_ sender: UISegmentedControl)
     {
         switch sender.selectedSegmentIndex {

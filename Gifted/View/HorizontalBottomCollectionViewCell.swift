@@ -31,7 +31,8 @@ class HorizontalBottomCollectionViewCell: UICollectionViewCell
         setUpButtons()
     }
  
-    private func setUpButtons() {
+    private func setUpButtons()
+    {
         redCancelButton.trailingAnchor.constraint(equalTo: trailingAnchor,constant: -2).isActive = true
         redCancelButton.topAnchor.constraint(equalTo:topAnchor,constant: 2).isActive = true
         redCancelButton.heightAnchor.constraint(equalToConstant: 15).isActive = true
@@ -49,7 +50,8 @@ class HorizontalBottomCollectionViewCell: UICollectionViewCell
         return button
     }()
     
-    @objc func handleCancel() {
+    @objc func handleCancel()
+    {
         print("Cancel")
         // delegate
     }
