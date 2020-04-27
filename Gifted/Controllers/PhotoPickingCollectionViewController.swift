@@ -287,7 +287,8 @@ class PhotoPickingCollectionViewController: UIViewController
      
     }
     
-     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
+     {
         
         return images.count
     }
@@ -319,9 +320,6 @@ class PhotoPickingCollectionViewController: UIViewController
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath)
     {
 
-      
-       
-
   //FIXME:remove item of arrays when deselect a row
 //        selectedImages.remove(at: indexPath.row)
         
@@ -338,7 +336,8 @@ class PhotoPickingCollectionViewController: UIViewController
     }
    
 
-     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
+     {
         guard let cell = photoCollectionView.dequeueReusableCell(withReuseIdentifier: Cell.photoPickingCell.rawValue, for: indexPath) as? PhotoPickingCollectionViewCell else { return UICollectionViewCell() }
     
         let image = images[indexPath.item]
@@ -349,14 +348,15 @@ class PhotoPickingCollectionViewController: UIViewController
      
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
+    {
 
         let width = collectionView.bounds.width / 3
 
         return CGSize(width: width, height: width)
     }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets
+    {
         return UIEdgeInsets.zero
       
     }

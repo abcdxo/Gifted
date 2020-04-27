@@ -7,9 +7,9 @@
 //
 
 import UIKit
+import ARKit
 
-
-class CustomizeViewController: UIViewController
+class CustomizeViewController: UIViewController, ARSessionDelegate
 {
     //MARK:- Properties
     
@@ -33,6 +33,10 @@ class CustomizeViewController: UIViewController
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        let session = ARSession()
+        
+        session.delegate = self
+        
         guard let images = imagesToMakeGIF else  { return }
         print("images to make GIF : \(images.count)")
       
