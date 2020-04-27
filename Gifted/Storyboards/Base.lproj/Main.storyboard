@@ -454,39 +454,48 @@
                                 <rect key="frame" x="0.0" y="528.33333333333337" width="414" height="111.66666666666663"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="150" translatesAutoresizingMaskIntoConstraints="NO" id="xW0-OT-MPX">
-                                        <rect key="frame" x="8" y="16" width="398" height="79.666666666666671"/>
+                                        <rect key="frame" x="8" y="15.999999999999996" width="398" height="63.666666666666657"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7dR-rs-S3z">
-                                                <rect key="frame" x="0.0" y="0.0" width="124" height="79.666666666666671"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="124" height="63.666666666666664"/>
                                                 <color key="backgroundColor" red="0.2618669569" green="0.21434932949999999" blue="0.83926403520000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <state key="normal" image="play" catalog="system">
+                                                <state key="normal" image="pause.fill" catalog="system">
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                                 </state>
-                                                <state key="selected" image="pause" catalog="system"/>
+                                                <state key="selected" image="play.fill" catalog="system"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                         <integer key="value" value="8"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="pauseTapped:" destination="yJi-vv-vyF" eventType="touchUpInside" id="G8o-Hg-Xng"/>
+                                                </connections>
                                             </button>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kcq-jV-Sz9">
-                                                <rect key="frame" x="274" y="0.0" width="124" height="79.666666666666671"/>
+                                                <rect key="frame" x="274" y="0.0" width="124" height="63.666666666666664"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="tK1-ib-dEJ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="124" height="79.666666666666671"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="124" height="63.666666666666664"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g8L-kU-Jeb">
-                                                                <rect key="frame" x="0.0" y="0.0" width="62" height="79.666666666666671"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="62" height="63.666666666666664"/>
                                                                 <color key="backgroundColor" red="0.2618669569" green="0.21434932949999999" blue="0.83926403520000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <state key="normal" image="backward" catalog="system"/>
+                                                                <connections>
+                                                                    <action selector="reversePressed:" destination="yJi-vv-vyF" eventType="touchUpInside" id="upI-YV-FvP"/>
+                                                                </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5oe-6b-ewp">
-                                                                <rect key="frame" x="62" y="0.0" width="62" height="79.666666666666671"/>
+                                                                <rect key="frame" x="62" y="0.0" width="62" height="63.666666666666664"/>
                                                                 <color key="backgroundColor" red="0.2618669569" green="0.21434932949999999" blue="0.83926403520000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <state key="normal" image="arrow.2.circlepath" catalog="system"/>
+                                                                <connections>
+                                                                    <action selector="repeatPressed:" destination="yJi-vv-vyF" eventType="touchUpInside" id="3fW-zS-Wzt"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <userDefinedRuntimeAttributes>
@@ -517,7 +526,7 @@
                                     <constraint firstAttribute="trailing" secondItem="xW0-OT-MPX" secondAttribute="trailing" constant="8" id="L56-1n-yF8"/>
                                     <constraint firstItem="xW0-OT-MPX" firstAttribute="top" secondItem="6KP-Tp-Eb8" secondAttribute="top" constant="16" id="Pc1-9a-fYP"/>
                                     <constraint firstItem="xW0-OT-MPX" firstAttribute="leading" secondItem="6KP-Tp-Eb8" secondAttribute="leading" constant="8" id="ckr-sK-tyl"/>
-                                    <constraint firstAttribute="bottom" secondItem="xW0-OT-MPX" secondAttribute="bottom" constant="16" id="tRc-59-j5T"/>
+                                    <constraint firstAttribute="bottom" secondItem="xW0-OT-MPX" secondAttribute="bottom" constant="32" id="tRc-59-j5T"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -545,8 +554,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="gif" destination="GNj-Rn-VuV" id="eKy-7g-oNV"/>
+                        <outlet property="gifImageView" destination="GNj-Rn-VuV" id="eKy-7g-oNV"/>
                         <outlet property="optionCollectionView" destination="xJ3-p9-Zsw" id="l2W-7n-erv"/>
+                        <outlet property="stopButton" destination="7dR-rs-S3z" id="MQy-EU-nKZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rZT-LU-gNd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -575,8 +585,8 @@
     <resources>
         <image name="arrow.2.circlepath" catalog="system" width="128" height="101"/>
         <image name="backward" catalog="system" width="128" height="79"/>
-        <image name="pause" catalog="system" width="88" height="128"/>
+        <image name="pause.fill" catalog="system" width="116" height="128"/>
         <image name="photo" catalog="system" width="128" height="93"/>
-        <image name="play" catalog="system" width="120" height="128"/>
+        <image name="play.fill" catalog="system" width="116" height="128"/>
     </resources>
 </document>

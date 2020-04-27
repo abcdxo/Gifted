@@ -172,7 +172,8 @@ class PhotoPickingCollectionViewController: UIViewController
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        grabPhotos()
+        
+        self.grabPhotos()
         containerHeightConstraint.constant = 0
         setUpNavBar()
         NotificationCenter.default.addObserver(self, selector: #selector(closeScrene(_:)), name: NSNotification.Name("Close"), object: nil)
@@ -258,12 +259,15 @@ class PhotoPickingCollectionViewController: UIViewController
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
         
         let fetchResult: PHFetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+        let scale = UIScreen.main.scale
+        let numberOfPhotos: CGFloat = 3
+        let thumbnailWidth = (photoCollectionView.bounds.width / numberOfPhotos) * scale
         
         if fetchResult.count > 0 {
             for index in 0 ..< fetchResult.count {
-                imageManager.requestImage(for: fetchResult.object(at: index) , targetSize: CGSize(width: photoCollectionView.bounds.width / 3  , height: photoCollectionView.bounds.width / 3  ), contentMode: .aspectFill, options: requestOptions) { [weak self]
+                imageManager.requestImage(for: fetchResult.object(at: index) , targetSize: CGSize(width: thumbnailWidth, height: thumbnailWidth), contentMode: .aspectFill, options: requestOptions) { [weak self]
                     image, error in
-                  
+//                  print(thumbnailWidth)
                     guard let self = self else { return }
                     guard let image = image else { return }
                     self.images.append(image)
@@ -316,6 +320,7 @@ class PhotoPickingCollectionViewController: UIViewController
     {
 
   //FIXME:remove item of arrays when deselect a row
+//        selectedImages.firstIndex(of: selectedImages[indexPath.row])
 //        selectedImages.remove(at: indexPath.row)
         
         print("Selected images after DESELECT is \(selectedImages.count)")
@@ -337,7 +342,7 @@ class PhotoPickingCollectionViewController: UIViewController
         guard let cell = photoCollectionView.dequeueReusableCell(withReuseIdentifier: Cell.photoPickingCell.rawValue, for: indexPath) as? PhotoPickingCollectionViewCell else { return UICollectionViewCell() }
     
         let image = images[indexPath.item]
-        DispatchQueue.main.async {  cell.imageView.image = image  }
+         cell.imageView.image = image  
               
         return cell
     

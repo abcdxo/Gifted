@@ -40,7 +40,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate
     
     //MARK:- Outlets
     
-    @IBOutlet weak var gif: UIImageView!
+    @IBOutlet weak var gifImageView: UIImageView!
     @IBOutlet weak var optionCollectionView: UICollectionView! {
         didSet {
             optionCollectionView.delegate = self
@@ -65,36 +65,87 @@ class CustomizeViewController: UIViewController, ARSessionDelegate
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
-        guard let images = imagesToMakeGIF else  { return }
-        let animatedImage = UIImage.animatedImage(with: images, duration: 1.0)
+       startGif()
+     
+    }
+    
+//    lazy var imageViewForGif: UIImageView = {
+//
+//
+//        let animatedImage = UIImage.animatedImage(with: self.imagesToMakeGIF!, duration: 0.5 * Double(self.imagesToMakeGIF!.count) ) // Create GIF
+//
+//        let imageView = UIImageView(image: animatedImage)
+//        imageView.animationRepeatCount = 1
+//        imageView.translatesAutoresizingMaskIntoConstraints = false
+//        return imageView
+//    }()
+    func createGifImage(with images: [UIImage]) -> UIImageView {
+        let animatedImage = UIImage.animatedImage(with:images, duration: 0.5 * Double(images.count) ) // Create GIF
         
         let imageView = UIImageView(image: animatedImage)
-        imageView.animationRepeatCount = 2
+        imageView.animationRepeatCount = 1
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.startAnimating()
+        return imageView
+    }
+    
+    private func startGif() {
+      
+        let imageViewForGif = createGifImage(with: imagesToMakeGIF!)
         
-        view.addSubview(imageView)
+        view.addSubview(imageViewForGif)
         
         NSLayoutConstraint.activate([
-            imageView.leadingAnchor.constraint(equalTo: gif.leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: gif.trailingAnchor),
-            imageView.topAnchor.constraint(equalTo: gif.topAnchor),
-            imageView.bottomAnchor.constraint(equalTo: gif.bottomAnchor)
+            imageViewForGif.leadingAnchor.constraint(equalTo: gifImageView.leadingAnchor),
+            imageViewForGif.trailingAnchor.constraint(equalTo: gifImageView.trailingAnchor),
+            imageViewForGif.topAnchor.constraint(equalTo: gifImageView.topAnchor),
+            imageViewForGif.bottomAnchor.constraint(equalTo: gifImageView.bottomAnchor)
         ])
         
-        DispatchQueue.main.async {   self.gif = imageView  }
+        self.gifImageView = imageViewForGif
+    }
+    @IBOutlet weak var stopButton: UIButton!
+    
+    @IBAction func pauseTapped(_ sender: UIButton) {
+//
+        if !sender.isSelected {
+            gifImageView.image = imagesToMakeGIF?.last
+            sender.isSelected = true
+        } else {
+            sender.isSelected = false
+            startGif()
+        }
+      
+    }
+    
+    
+    
+    @IBAction func reversePressed(_ sender: UIButton) {
+        let reversedImages = Array(imagesToMakeGIF!.reversed())
+        let imageViewForGif = createGifImage(with: reversedImages)
         
+        view.addSubview(imageViewForGif)
+        
+        NSLayoutConstraint.activate([
+            imageViewForGif.leadingAnchor.constraint(equalTo: gifImageView.leadingAnchor),
+            imageViewForGif.trailingAnchor.constraint(equalTo: gifImageView.trailingAnchor),
+            imageViewForGif.topAnchor.constraint(equalTo: gifImageView.topAnchor),
+            imageViewForGif.bottomAnchor.constraint(equalTo: gifImageView.bottomAnchor)
+        ])
+        
+        self.gifImageView = imageViewForGif
+    }
+    
+    
+    @IBAction func repeatPressed(_ sender: UIButton) {
         
     }
- 
+    
     //MARK:- Actions
     
     
     @IBAction func saveTapped(_ sender: UIBarButtonItem)
     {
-       print("Trying to Stop the GIF")
-      
-        gif.stopAnimating()
+       print("Trying to Save the GIF")
     }
     
  
@@ -104,6 +155,10 @@ extension CustomizeViewController : UICollectionViewDelegate, UICollectionViewDa
 {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return options.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath.item)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
