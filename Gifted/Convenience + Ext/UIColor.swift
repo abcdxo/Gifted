@@ -8,8 +8,38 @@
 
 import UIKit
 import Photos
+import ImageIO
+import MobileCoreServices
 
-extension IndexSet {
+extension UIImage
+{
+    // create gif
+    static func animatedGif(from images: [UIImage]) {
+        let fileProperties: CFDictionary = [kCGImagePropertyGIFDictionary as String: [kCGImagePropertyGIFLoopCount as String: 0]]  as CFDictionary
+        let frameProperties: CFDictionary = [kCGImagePropertyGIFDictionary as String: [(kCGImagePropertyGIFDelayTime as String): 1.0]] as CFDictionary
+        
+        let documentsDirectoryURL: URL? = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        let fileURL: URL? = documentsDirectoryURL?.appendingPathComponent("animated.gif")
+        
+        if let url = fileURL as CFURL? {
+            if let destination = CGImageDestinationCreateWithURL(url, kUTTypeGIF, images.count, nil) {
+                CGImageDestinationSetProperties(destination, fileProperties)
+                for image in images {
+                    if let cgImage = image.cgImage {
+                        CGImageDestinationAddImage(destination, cgImage, frameProperties)
+                    }
+                }
+                if !CGImageDestinationFinalize(destination) {
+                    print("Failed to finalize the image destination")
+                }
+                print("Url = \(String(describing: fileURL))")
+            }
+        }
+    }
+}
+
+extension IndexSet
+{
     // Create an array of index paths from an index set
     func indexPaths(for section: Int) -> [IndexPath] {
         let indexPaths = map { (i) -> IndexPath in
@@ -71,3 +101,21 @@ extension UIImageView {
 //
 //
 //    }
+extension UIImage {
+    
+    func resize(targetSize: CGSize) -> UIImage {
+        return UIGraphicsImageRenderer(size:targetSize).image { _ in
+            self.draw(in: CGRect(origin: .zero, size: targetSize))
+        }
+    }
+    
+}
+extension UIImage {
+    func imageWithImage(image:UIImage, scaledToSize newSize:CGSize) -> UIImage{
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0);
+        image.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
+        let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+}

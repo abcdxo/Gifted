@@ -8,12 +8,13 @@
 
 import UIKit
 
-public enum Cell : String {
+public enum Cell : String
+{
     
     case menuCell = "MenuCell"
     case topCell = "TopCell"
     case photoPickingCell = "Hello"
     case containerCollectionViewCell = "Cell"
-    
+    case editCell = "EditCell"
     
 }

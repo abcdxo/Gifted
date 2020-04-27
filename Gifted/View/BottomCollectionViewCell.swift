@@ -8,7 +8,8 @@
 
 import UIKit
 
-class BottomCollectionViewCell: UICollectionViewCell {
+class BottomCollectionViewCell: UICollectionViewCell
+{
     
     
     @IBOutlet weak var menuLabel: UILabel!

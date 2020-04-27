@@ -34,10 +34,9 @@ class ContainerViewController: UIViewController
         NotificationCenter.default.addObserver(self, selector: #selector(didGetPhotos(_:)), name: NSNotification.Name("NewPhoto"), object: nil)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool)
+    {
         super.viewWillAppear(animated)
-      
-        
      
     }
     

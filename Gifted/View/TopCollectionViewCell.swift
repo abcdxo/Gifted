@@ -8,10 +8,13 @@
 
 import UIKit
 
-class TopCollectionViewCell: UICollectionViewCell {
+class TopCollectionViewCell: UICollectionViewCell
+{
     
     
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var imageView: UIImageView! 
+    
+    
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)

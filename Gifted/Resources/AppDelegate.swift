@@ -17,7 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
-      
+        
+        UIBarButtonItem.appearance().tintColor =  #colorLiteral(red: 0.2470482588, green: 0.239345789, blue: 0.3378213048, alpha: 1)
+        //Since iOS 7.0 UITextAttributeTextColor was replaced by NSForegroundColorAttributeName
+//        UINavigationBar.appearance().titleTextAttributes = [UITextAttributeTextColor: UIColor.black]
+     
         return true
     }
 

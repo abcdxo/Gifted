@@ -9,7 +9,8 @@
 import UIKit
 import Photos
 
-extension MainViewController: PHPhotoLibraryChangeObserver {
+extension MainViewController: PHPhotoLibraryChangeObserver
+{
     
     func photoLibraryDidChange(_ changeInstance: PHChange) {
         DispatchQueue.main.async {
@@ -96,7 +97,7 @@ class MainViewController: UIViewController
       
         
         DispatchQueue.main.async {
-            self.timer = Timer.scheduledTimer(timeInterval: 1.4523, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
+            self.timer = Timer.scheduledTimer(timeInterval: 1.2, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
         }
        
     }
@@ -187,11 +188,11 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 let numberOfItemsInOneRow = Int(totalUsableWidth / minWidth)
                 totalUsableWidth -= CGFloat(numberOfItemsInOneRow - 1) * flowLayout.minimumInteritemSpacing
                 let width = totalUsableWidth / CGFloat(numberOfItemsInOneRow)
-                return CGSize(width: width, height: width)
+                return CGSize(width: width, height: width / 2)
             default:
                 let size = topCollectionView.frame.size
                 
-                return CGSize(width: size.width, height: size.height  )
+                return CGSize(width: size.width, height: size.height )
         }
         
     }
@@ -231,13 +232,9 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             case 0:
                 if  let vc = ( storyboard?.instantiateViewController(identifier: "PhotoSelection")) {
                     vc.modalPresentationStyle = .fullScreen
-                        present(vc, animated: true, completion: nil)
-                }
-              
-
-          
+                        present(vc, animated: true, completion: nil)  }
+        
             default:
-           
                 let vc = (storyboard?.instantiateViewController(identifier: "Detail"))!
                 present(vc, animated: true)
         }

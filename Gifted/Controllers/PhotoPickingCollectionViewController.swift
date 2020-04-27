@@ -119,13 +119,13 @@ class PhotoPickingCollectionViewController: UIViewController
     private var userAlbums: PHFetchResult<PHAssetCollection>?
     private var userFavorites: PHFetchResult<PHAssetCollection>?
     
-    let requestOptions: PHImageRequestOptions = {
-       let option = PHImageRequestOptions()
+    private let requestOptions: PHImageRequestOptions = {
+        let option = PHImageRequestOptions()
         option.isNetworkAccessAllowed = false
         option.deliveryMode = .highQualityFormat
         option.resizeMode = .exact
-        
-        option.isSynchronous = true
+        option.version = .original
+        option.isSynchronous = false
         
         return option
     }()
@@ -146,7 +146,6 @@ class PhotoPickingCollectionViewController: UIViewController
         visibleCells.forEach { (cell) in
             cell.isSelected = false
             selectedImages.removeAll()
-           
         }
         
         UIView.animate(withDuration: 0.2) {
@@ -162,18 +161,13 @@ class PhotoPickingCollectionViewController: UIViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        grabPhotos()
         containerHeightConstraint.constant = 0
         setUpNavBar()
-          NotificationCenter.default.addObserver(self, selector: #selector(closeScrene(_:)), name: NSNotification.Name("Close"), object: nil)
-
-    }
-    override func viewWillAppear(_ animated: Bool)  {
-        super.viewWillAppear(animated)
-        
-        grabPhotos()
+        NotificationCenter.default.addObserver(self, selector: #selector(closeScrene(_:)), name: NSNotification.Name("Close"), object: nil)
         
     }
-    
+ 
     
     
     @IBAction func segmentValueChanged(_ sender: UISegmentedControl) {
@@ -329,15 +323,12 @@ class PhotoPickingCollectionViewController: UIViewController
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = photoCollectionView.dequeueReusableCell(withReuseIdentifier: Cell.photoPickingCell.rawValue, for: indexPath) as? PhotoPickingCollectionViewCell else { return UICollectionViewCell() }
     
-        
         let image = images[indexPath.item]
-        DispatchQueue.main.async {
-               cell.imageView.image = image
-        }
-     
-     
+        DispatchQueue.main.async {  cell.imageView.image = image  }
+              
         return cell
-        
+    
+     
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -360,7 +351,6 @@ class PhotoPickingCollectionViewController: UIViewController
         return 0.0
     }
 
-        
-    }
+}
     
 

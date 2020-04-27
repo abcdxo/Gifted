@@ -28,10 +28,7 @@ class HorizontalBottomCollectionViewCell: UICollectionViewCell
         layer.cornerRadius = 8
         setUpButtons()
     }
-    
-  
-    
-    
+ 
     private func setUpButtons() {
         redCancelButton.trailingAnchor.constraint(equalTo: trailingAnchor,constant: -2).isActive = true
         redCancelButton.topAnchor.constraint(equalTo:topAnchor,constant: 2).isActive = true

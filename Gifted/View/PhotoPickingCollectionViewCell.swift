@@ -8,7 +8,8 @@
 
 import UIKit
 
-class PhotoPickingCollectionViewCell: UICollectionViewCell {
+class PhotoPickingCollectionViewCell: UICollectionViewCell
+{
     
     //MARK:- Outlets
     @IBOutlet weak var imageView: UIImageView!
@@ -35,25 +36,24 @@ class PhotoPickingCollectionViewCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            checkMark.image = isSelected ?  UIImage(systemName: "checkmark.circle.fill")!.withTintColor(.green) : UIImage(systemName: "")
+            checkMark.image = isSelected ?  UIImage(systemName: "checkmark.circle.fill")!: UIImage(systemName: "")
             checkMark.backgroundColor = isSelected ? .white : .none
-            
-           
         }
     }
     
     override var isHighlighted: Bool {
-        didSet {
-            toggleIsHighlighted()
-        }
+        didSet {  toggleIsHighlighted()  }
     }
     
-   private func toggleIsHighlighted() {
+    private func toggleIsHighlighted() {
         
-        UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseOut,.transitionFlipFromLeft], animations: {
-            self.alpha = self.isHighlighted ? 0.9 : 5.0
-            self.transform = self.isHighlighted ? CGAffineTransform.identity.scaledBy(x: 2.0, y: 2.0) : CGAffineTransform.identity
-          
+        UIView.animate(withDuration: 0.5,
+                       delay: 0,
+                       options: [.curveEaseOut,.transitionFlipFromLeft],
+                       animations: {
+                        self.alpha = self.isHighlighted ? 0.9 : 5.0
+                        self.transform = self.isHighlighted ? CGAffineTransform.identity.scaledBy(x: 2.0, y: 2.0) : CGAffineTransform.identity
+                        
         })
     }
 }
