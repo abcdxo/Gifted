@@ -458,7 +458,7 @@
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7dR-rs-S3z">
                                                 <rect key="frame" x="0.0" y="0.0" width="124" height="63.666666666666664"/>
-                                                <color key="backgroundColor" red="0.2618669569" green="0.21434932949999999" blue="0.83926403520000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <color key="backgroundColor" red="0.69093185660000001" green="0.76783806089999995" blue="0.87022429700000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" image="pause.fill" catalog="system">
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
@@ -481,7 +481,7 @@
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g8L-kU-Jeb">
                                                                 <rect key="frame" x="0.0" y="0.0" width="62" height="63.666666666666664"/>
-                                                                <color key="backgroundColor" red="0.2618669569" green="0.21434932949999999" blue="0.83926403520000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                <color key="backgroundColor" red="0.69093185660000001" green="0.76783806089999995" blue="0.87022429700000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <state key="normal" image="backward" catalog="system"/>
                                                                 <connections>
@@ -490,7 +490,7 @@
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5oe-6b-ewp">
                                                                 <rect key="frame" x="62" y="0.0" width="62" height="63.666666666666664"/>
-                                                                <color key="backgroundColor" red="0.2618669569" green="0.21434932949999999" blue="0.83926403520000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                <color key="backgroundColor" red="0.64245301489999995" green="0.53557014469999997" blue="0.67739921810000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <state key="normal" image="arrow.2.circlepath" catalog="system"/>
                                                                 <connections>

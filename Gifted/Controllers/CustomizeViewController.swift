@@ -8,6 +8,9 @@
 
 import UIKit
 import ARKit
+import Photos
+import ImageIO
+import MobileCoreServices
 
 class CustomizeViewController: UIViewController, ARSessionDelegate
 {
@@ -35,13 +38,17 @@ class CustomizeViewController: UIViewController, ARSessionDelegate
         UIImage(systemName: "radiowaves.left")
         
     ]
-    
+    private var gifURL: URL {
+        let documentsURL = FileManager.default.urls( for: .documentDirectory,in: .userDomainMask).first
+        let imageURL = documentsURL!.appendingPathComponent("MyImage.gif")
+        return imageURL
+    }
     var imagesToMakeGIF: [UIImage]?
     
     //MARK:- Outlets
     
     @IBOutlet weak var gifImageView: UIImageView!
-    @IBOutlet weak var optionCollectionView: UICollectionView! {
+    @IBOutlet weak var optionCollectionView: UICollectionView!  {
         didSet {
             optionCollectionView.delegate = self
             optionCollectionView.dataSource = self
@@ -53,37 +60,48 @@ class CustomizeViewController: UIViewController, ARSessionDelegate
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        let session = ARSession()
-        
-        session.delegate = self
         
         guard let images = imagesToMakeGIF else  { return }
         print("images to make GIF : \(images.count)")
-      
     }
     
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
-       startGif()
-     
+        startGif()
+        
     }
     
-//    lazy var imageViewForGif: UIImageView = {
-//
-//
-//        let animatedImage = UIImage.animatedImage(with: self.imagesToMakeGIF!, duration: 0.5 * Double(self.imagesToMakeGIF!.count) ) // Create GIF
-//
-//        let imageView = UIImageView(image: animatedImage)
-//        imageView.animationRepeatCount = 1
-//        imageView.translatesAutoresizingMaskIntoConstraints = false
-//        return imageView
-//    }()
-    func createGifImage(with images: [UIImage]) -> UIImageView {
+    
+    private func createGIF(with images: [UIImage], name: URL, loopCount: Int = 0, frameDelay: Double) {
+        
+        let destinationURL = name
+        let destinationGIF = CGImageDestinationCreateWithURL(destinationURL as CFURL, kUTTypeGIF, images.count, nil)!
+        
+        // This dictionary controls the delay between frames
+        // If you don't specify this, CGImage will apply a default delay
+        let properties = [
+            (kCGImagePropertyGIFDictionary as String): [(kCGImagePropertyGIFDelayTime as String): frameDelay]
+        ]
+        
+        
+        for img in images {
+            // Convert an UIImage to CGImage, fitting within the specified rect
+            let cgImage = img.cgImage
+            // Add the frame to the GIF image
+            CGImageDestinationAddImage(destinationGIF, cgImage!, properties as CFDictionary?)
+        }
+        
+        // Write the GIF file to disk
+        CGImageDestinationFinalize(destinationGIF)
+    }
+  
+    
+    private func createGifImage(with images: [UIImage]) -> UIImageView {
         let animatedImage = UIImage.animatedImage(with:images, duration: 0.5 * Double(images.count) ) // Create GIF
         
         let imageView = UIImageView(image: animatedImage)
-        imageView.animationRepeatCount = 1
+        imageView.animationRepeatCount = 2
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }
@@ -103,10 +121,23 @@ class CustomizeViewController: UIViewController, ARSessionDelegate
         
         self.gifImageView = imageViewForGif
     }
+    
+ 
+    
+    @IBAction func saveTapped(_ sender: UIBarButtonItem)
+    {
+    // Save as gif,live photo or video, show activity controller to share to friend
+        createGIF(with: imagesToMakeGIF!, name: gifURL, frameDelay: 0.2 * Double(imagesToMakeGIF!.count))
+        
+        PHPhotoLibrary.shared().performChanges({ PHAssetChangeRequest.creationRequestForAssetFromImage(
+            atFileURL: self.gifURL)})
+  
+    }
+    
     @IBOutlet weak var stopButton: UIButton!
     
     @IBAction func pauseTapped(_ sender: UIButton) {
-//
+
         if !sender.isSelected {
             gifImageView.image = imagesToMakeGIF?.last
             sender.isSelected = true
@@ -114,6 +145,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate
             sender.isSelected = false
             startGif()
         }
+    
       
     }
     
@@ -143,12 +175,20 @@ class CustomizeViewController: UIViewController, ARSessionDelegate
     //MARK:- Actions
     
     
-    @IBAction func saveTapped(_ sender: UIBarButtonItem)
-    {
-       print("Trying to Save the GIF")
-    }
+  
     
- 
+    
+    @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        
+        if let error = error {
+            
+            print(error.localizedDescription)
+            
+        } else {
+            
+            print("Success")
+        }
+    }
 
 }
 extension CustomizeViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout

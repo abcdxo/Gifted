@@ -26,6 +26,7 @@
 		B66F785A2453961B00E0727E /* TopCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F78592453961B00E0727E /* TopCollectionViewCell.swift */; };
 		B688B4B4245628AD00377CBF /* CustomizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B4B3245628AD00377CBF /* CustomizeViewController.swift */; };
 		B688B4B6245655D400377CBF /* EditOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B4B5245655D400377CBF /* EditOptionCell.swift */; };
+		B688B4B924575A7100377CBF /* Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B4B824575A7100377CBF /* Gif.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		B66F78592453961B00E0727E /* TopCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCollectionViewCell.swift; sourceTree = "<group>"; };
 		B688B4B3245628AD00377CBF /* CustomizeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizeViewController.swift; sourceTree = "<group>"; };
 		B688B4B5245655D400377CBF /* EditOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditOptionCell.swift; sourceTree = "<group>"; };
+		B688B4B824575A7100377CBF /* Gif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gif.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 		B66F781B24537AF400E0727E /* Gifted */ = {
 			isa = PBXGroup;
 			children = (
+				B688B4B724575A6000377CBF /* Model */,
 				B64F777324561A330061AC49 /* Constant */,
 				B6567F692453BBDB009E4E03 /* Convenience + Ext */,
 				B66F78582453885B00E0727E /* Controllers */,
@@ -207,6 +210,14 @@
 				B688B4B3245628AD00377CBF /* CustomizeViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		B688B4B724575A6000377CBF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B688B4B824575A7100377CBF /* Gif.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -353,6 +364,7 @@
 				B66F7836245380F100E0727E /* BottomCollectionViewCell.swift in Sources */,
 				B64F777524561A4E0061AC49 /* Cell.swift in Sources */,
 				B6567F722455C606009E4E03 /* ContainerViewController.swift in Sources */,
+				B688B4B924575A7100377CBF /* Gif.swift in Sources */,
 				B66F781F24537AF400E0727E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
