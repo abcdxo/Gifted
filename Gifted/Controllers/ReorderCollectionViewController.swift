@@ -10,6 +10,10 @@ import UIKit
 
 private let reuseIdentifier = "ReorderCell"
 
+protocol ReorderCollectionViewControllerDelegate: class {
+    func didReorder(images: [UIImage])
+}
+
 extension ReorderCollectionViewController:UICollectionViewDragDelegate,UICollectionViewDropDelegate {
     
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
@@ -43,7 +47,7 @@ extension ReorderCollectionViewController:UICollectionViewDragDelegate,UICollect
 }
 
 class ReorderCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIDropInteractionDelegate {
-  
+    weak var delegate : ReorderCollectionViewControllerDelegate?
     
     fileprivate func reorderItems(coordinator: UICollectionViewDropCoordinator, destinationIndexPath: IndexPath, collectionView: UICollectionView) {
         if let item = coordinator.items.first, let sourceIndexPath = item.sourceIndexPath {
@@ -95,6 +99,7 @@ class ReorderCollectionViewController: UICollectionViewController, UICollectionV
     }
     @objc func handleCheck() {
         print("check")
+        delegate?.didReorder(images: images!)
          navigationController?.popViewController(animated: true)
     }
 

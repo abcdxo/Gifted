@@ -16,13 +16,9 @@ import Photos // access photos
 
 class PhotoPickingCollectionViewController: UIViewController
 {
-    
+    //MARK:- Outlets
+     
     @IBOutlet weak var segmentControl: UISegmentedControl!
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        segmentControl.selectedSegmentIndex = 1
-    }
     @IBOutlet weak var photoCollectionView: UICollectionView! {
         didSet {
             photoCollectionView.delegate = self
@@ -31,6 +27,11 @@ class PhotoPickingCollectionViewController: UIViewController
             photoCollectionView.allowsMultipleSelection = true
         }
     }
+    
+    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var containerHeightConstraint: NSLayoutConstraint!
+    
+    //MARK:- Properties
     
     var assetsFetchResults: PHFetchResult<PHAsset>?
     var selectedAssets : [PHAsset] = []
@@ -42,7 +43,10 @@ class PhotoPickingCollectionViewController: UIViewController
     var photos : PHFetchResult<PHAsset>?
     private var userAlbums: PHFetchResult<PHAssetCollection>?
     private var userFavorites: PHFetchResult<PHAssetCollection>?
-    
+    var count =  0
+    static var selectedImages = [UIImage]()
+    var images: [UIImage] = []
+    let imageManager = PHImageManager.default()
     private let requestOptions: PHImageRequestOptions = {
         let option = PHImageRequestOptions()
         option.isNetworkAccessAllowed = false
@@ -53,56 +57,9 @@ class PhotoPickingCollectionViewController: UIViewController
         
         return option
     }()
-    
-    
-    @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var containerHeightConstraint: NSLayoutConstraint!
-    var count =  0
-    static var selectedImages = [UIImage]()
-    var images: [UIImage] = []
-    
-    
-    
-
-      let imageManager = PHImageManager.default()
     //MARK:- Life Cycle
     
-    @objc func closeContainerView(_ notification: Notification) {
-      
-        let visibleCells = photoCollectionView.visibleCells as! [PhotoPickingCollectionViewCell]
-        visibleCells.forEach { (cell) in
-            cell.isSelected = false
-            PhotoPickingCollectionViewController.selectedImages.removeAll()
-        }
-          containerHeightConstraint.constant = 0
-        
-        UIView.animate(withDuration: 0.2) {
-            self.view.layoutIfNeeded()
-        }
-          photoCollectionView.reloadData()
-    }
-    
-    deinit  {
-        NotificationCenter.default.removeObserver(self)
-    }
-    @objc func zero(_ notification: Notification) {
-        guard let userInfo = notification.userInfo, let indexPath = userInfo["IndexPath"] as? IndexPath else { return }
-        
-        let cell = photoCollectionView.cellForItem(at: indexPath)
-        #warning("FIXME:Logic with IndexPath not sync")
-        cell?.isSelected = false
-//        PhotoPickingCollectionViewController.selectedImages.firstIndex(of: position)
-        
-        if PhotoPickingCollectionViewController.selectedImages.count == 0 {
-            
-                    containerHeightConstraint.constant = 0
-                    UIView.animate(withDuration: 0.2) {
-                        self.view.layoutIfNeeded()
-                    }
-        }
-
-        photoCollectionView.reloadItems(at: [indexPath])
-    }
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
           NotificationCenter.default.addObserver(self, selector: #selector(zero(_:)), name: NSNotification.Name("Zero"), object: nil)
@@ -114,6 +71,13 @@ class PhotoPickingCollectionViewController: UIViewController
         NotificationCenter.default.addObserver(self, selector: #selector(closeContainerView(_:)), name: NSNotification.Name("Close"), object: nil)
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //        segmentControl.selectedSegmentIndex = 1
+    }
+    
+    
  
     @IBAction func segmentValueChanged(_ sender: UISegmentedControl)
     {
@@ -145,6 +109,44 @@ class PhotoPickingCollectionViewController: UIViewController
             return selectedAssets[index]
         }
     }
+    
+    @objc func closeContainerView(_ notification: Notification) {
+        
+        let visibleCells = photoCollectionView.visibleCells as! [PhotoPickingCollectionViewCell]
+        visibleCells.forEach { (cell) in
+            cell.isSelected = false
+            PhotoPickingCollectionViewController.selectedImages.removeAll()
+        }
+        containerHeightConstraint.constant = 0
+        
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+        }
+        photoCollectionView.reloadData()
+    }
+    
+    deinit  {
+        NotificationCenter.default.removeObserver(self)
+    }
+    @objc func zero(_ notification: Notification) {
+        guard let userInfo = notification.userInfo, let indexPath = userInfo["IndexPath"] as? IndexPath else { return }
+        
+        let cell = photoCollectionView.cellForItem(at: indexPath)
+        #warning("FIXME:Logic with IndexPath not sync")
+        cell?.isSelected = false
+        //        PhotoPickingCollectionViewController.selectedImages.firstIndex(of: position)
+        
+        if PhotoPickingCollectionViewController.selectedImages.count == 0 {
+            
+            containerHeightConstraint.constant = 0
+            UIView.animate(withDuration: 0.2) {
+                self.view.layoutIfNeeded()
+            }
+        }
+        
+        photoCollectionView.reloadItems(at: [indexPath])
+    }
+    
     
     func updateSelectedItems() {
         if let fetchResult = assetsFetchResults {
@@ -226,15 +228,13 @@ class PhotoPickingCollectionViewController: UIViewController
     
     private func showContainerViewController() {
         self.containerHeightConstraint.constant = 140
-        UIView.animate(withDuration: 0.2)
-        {
+        UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
-            
         }
     }
     
    
-    
+    //MARK:- Collection Datasource & Delegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         showContainerViewController()
@@ -355,20 +355,14 @@ extension PhotoPickingCollectionViewController
 }
 extension PhotoPickingCollectionViewController: PHPhotoLibraryChangeObserver
 {
-    func photoLibraryDidChange(_ changeInstance: PHChange)
-    {
-        DispatchQueue.main.async
-            {
+    func photoLibraryDidChange(_ changeInstance: PHChange) {
+        DispatchQueue.main.async {
                 if let assetsFetchResults = self.assetsFetchResults,
-                    let collectionChanges = changeInstance.changeDetails(for: assetsFetchResults)
-                {
+                    let collectionChanges = changeInstance.changeDetails(for: assetsFetchResults) {
                     self.assetsFetchResults = collectionChanges.fetchResultAfterChanges
-                    if collectionChanges.hasMoves || !collectionChanges.hasIncrementalChanges
-                    {
+                    if collectionChanges.hasMoves || !collectionChanges.hasIncrementalChanges {
                         self.photoCollectionView.reloadData()
-                    } else
-                    {   self.photoCollectionView.performBatchUpdates(
-                        {
+                    } else {   self.photoCollectionView.performBatchUpdates( {
                             if let removedIndexes = collectionChanges.removedIndexes, removedIndexes.count > 0 {
                                 self.photoCollectionView.deleteItems(at: removedIndexes.indexPaths(for: 0))
                             }

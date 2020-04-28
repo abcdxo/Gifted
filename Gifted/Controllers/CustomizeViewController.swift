@@ -19,8 +19,11 @@ import MobileCoreServices
 
 // TODO: Drag and Drop
 
-class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityItemSource
-{
+class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityItemSource, ReorderCollectionViewControllerDelegate {
+    func didReorder(images: [UIImage]) {
+     imagesToMakeGIF = images
+    }
+    
     func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
        return "Hello"
     }
@@ -402,8 +405,9 @@ extension CustomizeViewController : UICollectionViewDelegate, UICollectionViewDa
                 }
             case 4:
                 let vc = storyboard?.instantiateViewController(withIdentifier: "312") as! ReorderCollectionViewController
-           
+                
                 vc.images = imagesToMakeGIF!
+                vc.delegate = self 
                 navigationController?.pushViewController(vc, animated: true)
               
             default:
