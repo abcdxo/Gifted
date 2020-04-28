@@ -13,10 +13,8 @@ class PhotoPickingCollectionViewCell: UICollectionViewCell
     
     //MARK:- Outlets
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var checkMark: UIImageView!
-        {
-        didSet
-        {
+    @IBOutlet weak var checkMark: UIImageView! {
+        didSet {
             checkMark.layer.masksToBounds = true
             checkMark.layer.cornerRadius = checkMark.frame.size.width / 2
         }

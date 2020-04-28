@@ -27,6 +27,8 @@
 		B688B4B4245628AD00377CBF /* CustomizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B4B3245628AD00377CBF /* CustomizeViewController.swift */; };
 		B688B4B6245655D400377CBF /* EditOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B4B5245655D400377CBF /* EditOptionCell.swift */; };
 		B688B4B924575A7100377CBF /* Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B4B824575A7100377CBF /* Gif.swift */; };
+		B688B4BB2458959900377CBF /* ReorderCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B4BA2458959800377CBF /* ReorderCollectionViewController.swift */; };
+		B688B4BD24589D1A00377CBF /* ReorderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B4BC24589D1A00377CBF /* ReorderCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +75,8 @@
 		B688B4B3245628AD00377CBF /* CustomizeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizeViewController.swift; sourceTree = "<group>"; };
 		B688B4B5245655D400377CBF /* EditOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditOptionCell.swift; sourceTree = "<group>"; };
 		B688B4B824575A7100377CBF /* Gif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gif.swift; sourceTree = "<group>"; };
+		B688B4BA2458959800377CBF /* ReorderCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReorderCollectionViewController.swift; sourceTree = "<group>"; };
+		B688B4BC24589D1A00377CBF /* ReorderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReorderCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +201,7 @@
 				B6567F6F2454BBA9009E4E03 /* PhotoPickingCollectionViewCell.swift */,
 				B6567F732455D7F3009E4E03 /* HorizontalBottomCollectionViewCell.swift */,
 				B688B4B5245655D400377CBF /* EditOptionCell.swift */,
+				B688B4BC24589D1A00377CBF /* ReorderCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -208,6 +213,7 @@
 				B6567F6D2454A11E009E4E03 /* PhotoPickingCollectionViewController.swift */,
 				B6567F712455C606009E4E03 /* ContainerViewController.swift */,
 				B688B4B3245628AD00377CBF /* CustomizeViewController.swift */,
+				B688B4BA2458959800377CBF /* ReorderCollectionViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -356,10 +362,12 @@
 				B6567F6E2454A11E009E4E03 /* PhotoPickingCollectionViewController.swift in Sources */,
 				B6567F742455D7F3009E4E03 /* HorizontalBottomCollectionViewCell.swift in Sources */,
 				B688B4B4245628AD00377CBF /* CustomizeViewController.swift in Sources */,
+				B688B4BD24589D1A00377CBF /* ReorderCollectionViewCell.swift in Sources */,
 				B66F782124537AF400E0727E /* MainViewController.swift in Sources */,
 				B6567F6B2453BBFF009E4E03 /* UIColor.swift in Sources */,
 				B66F781D24537AF400E0727E /* AppDelegate.swift in Sources */,
 				B66F785A2453961B00E0727E /* TopCollectionViewCell.swift in Sources */,
+				B688B4BB2458959900377CBF /* ReorderCollectionViewController.swift in Sources */,
 				B6567F702454BBA9009E4E03 /* PhotoPickingCollectionViewCell.swift in Sources */,
 				B66F7836245380F100E0727E /* BottomCollectionViewCell.swift in Sources */,
 				B64F777524561A4E0061AC49 /* Cell.swift in Sources */,

@@ -12,103 +12,18 @@
 import UIKit
 import Photos // access photos
 
-extension PhotoPickingCollectionViewController
-{
-//    func updateCache() {
-//        let currentFrameCenter = collectionView.bounds.minY
-//        let height = collectionView.bounds.height
-//        let visibleIndexes = collectionView.indexPathsForVisibleItems.sorted { (a, b) -> Bool in
-//            return a.item < b.item
-//        }
-//        guard abs(currentFrameCenter - lastCacheFrameCenter) >= height/3.0,
-//            visibleIndexes.count > 0 else {
-//                return
-//        }
-//        lastCacheFrameCenter = currentFrameCenter
-//        
-//        let totalItemCount = assetsFetchResults?.count ?? selectedAssets.count
-//        let firstItemToCache = max(visibleIndexes[0].item - numOffscreenAssetsToCache / 2, 0)
-//        let lastItemToCache = min(visibleIndexes[visibleIndexes.count - 1].item + numOffscreenAssetsToCache / 2, totalItemCount - 1)
-//        
-//        var indexesToStartCaching: [IndexPath] = []
-//        for i in firstItemToCache..<lastItemToCache {
-//            let indexPath = IndexPath(item: i, section: 0)
-//            if !cachedIndexes.contains(indexPath) {
-//                indexesToStartCaching.append(indexPath)
-//            }
-//        }
-//        cachedIndexes += indexesToStartCaching
-//        imageManager.startCachingImages(for: assetsAtIndexPaths(indexesToStartCaching), targetSize: cellSize, contentMode: .aspectFill, options: requestOptions)
-//        
-//        var indexesToStopCaching: [IndexPath] = []
-//        cachedIndexes = cachedIndexes.filter({ (indexPath) -> Bool in
-//            if indexPath.item < firstItemToCache || indexPath.item > lastItemToCache {
-//                indexesToStopCaching.append(indexPath)
-//                return false
-//            }
-//            return true
-//        })
-//        imageManager.stopCachingImages(for: assetsAtIndexPaths(indexesToStopCaching), targetSize: cellSize, contentMode: .aspectFill, options: requestOptions)
-//    }
-    
-    func assetsAtIndexPaths(_ indexPaths: [IndexPath]) -> [PHAsset]
-    {
-        return indexPaths.map { (indexPath) -> PHAsset in
-            return self.currentAssetAtIndex(indexPath.item)
-        }
-    }
-    
-    func resetCache() {
-        imageCachingManager.stopCachingImagesForAllAssets()
-        cachedIndexes = []
-        lastCacheFrameCenter = 0
-    }
-}
-extension PhotoPickingCollectionViewController: PHPhotoLibraryChangeObserver
-{
-    func photoLibraryDidChange(_ changeInstance: PHChange)
-    {
-        DispatchQueue.main.async
-            {
-            if let assetsFetchResults = self.assetsFetchResults,
-                let collectionChanges = changeInstance.changeDetails(for: assetsFetchResults)
-            {
-                self.assetsFetchResults = collectionChanges.fetchResultAfterChanges
-                if collectionChanges.hasMoves || !collectionChanges.hasIncrementalChanges
-                {
-                    self.photoCollectionView.reloadData()
-                } else
-                {   self.photoCollectionView.performBatchUpdates(
-                    {
-                        if let removedIndexes = collectionChanges.removedIndexes, removedIndexes.count > 0 {
-                            self.photoCollectionView.deleteItems(at: removedIndexes.indexPaths(for: 0))
-                        }
-                        if let insertedIndexes = collectionChanges.insertedIndexes, insertedIndexes.count > 0 {
-                            self.photoCollectionView.insertItems(at: insertedIndexes.indexPaths(for: 0))
-                        }
-                        if let changedIndexes = collectionChanges.changedIndexes, changedIndexes.count > 0 {
-                            self.photoCollectionView.reloadItems(at: changedIndexes.indexPaths(for: 0))
-                        }
-                    })
-                }
-            }
-        }
-    }
-    
-    
-}
 
-extension PhotoPickingCollectionViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource
-{
-    
-}
 
 class PhotoPickingCollectionViewController: UIViewController
 {
     
-   
-    @IBOutlet weak var photoCollectionView: UICollectionView!
-        {
+    @IBOutlet weak var segmentControl: UISegmentedControl!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        segmentControl.selectedSegmentIndex = 1
+    }
+    @IBOutlet weak var photoCollectionView: UICollectionView! {
         didSet {
             photoCollectionView.delegate = self
             photoCollectionView.dataSource = self
@@ -142,15 +57,17 @@ class PhotoPickingCollectionViewController: UIViewController
     
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var containerHeightConstraint: NSLayoutConstraint!
-     
+    var count =  0
+    static var selectedImages = [UIImage]()
+    var images: [UIImage] = []
+    
     
     
 
       let imageManager = PHImageManager.default()
     //MARK:- Life Cycle
     
-    @objc func closeScrene(_ notification: Notification)
-    {
+    @objc func closeContainerView(_ notification: Notification) {
       
         let visibleCells = photoCollectionView.visibleCells as! [PhotoPickingCollectionViewCell]
         visibleCells.forEach { (cell) in
@@ -177,26 +94,24 @@ class PhotoPickingCollectionViewController: UIViewController
 //        PhotoPickingCollectionViewController.selectedImages.firstIndex(of: position)
         
         if PhotoPickingCollectionViewController.selectedImages.count == 0 {
+            
                     containerHeightConstraint.constant = 0
-            
-            
-                    UIView.animate(withDuration: 0.2)
-                    {
+                    UIView.animate(withDuration: 0.2) {
                         self.view.layoutIfNeeded()
-            
                     }
         }
 
         photoCollectionView.reloadItems(at: [indexPath])
     }
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
         super.viewDidLoad()
           NotificationCenter.default.addObserver(self, selector: #selector(zero(_:)), name: NSNotification.Name("Zero"), object: nil)
+        
         self.grabPhotos()
         containerHeightConstraint.constant = 0
         setUpNavBar()
-        NotificationCenter.default.addObserver(self, selector: #selector(closeScrene(_:)), name: NSNotification.Name("Close"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(closeContainerView(_:)), name: NSNotification.Name("Close"), object: nil)
         
     }
  
@@ -248,8 +163,7 @@ class PhotoPickingCollectionViewController: UIViewController
         }
     }
     
-    private func setUpNavBar()
-    {
+    private func setUpNavBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Select Photos"
         let appearance = UINavigationBarAppearance()
@@ -270,10 +184,8 @@ class PhotoPickingCollectionViewController: UIViewController
         dismiss(animated: true, completion: nil)
     }
     
-    var images: [UIImage] = []
-    
-  
-    func grabPhotos() {
+   
+    private func grabPhotos() {
    
         let fetchOptions = PHFetchOptions()
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
@@ -306,16 +218,13 @@ class PhotoPickingCollectionViewController: UIViewController
      
     }
     
-     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
-     {
+     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return images.count
     }
-    var count =  0
-    static var selectedImages = [UIImage]()
+
     
-    private func showContainerViewController()
-    {
+    private func showContainerViewController() {
         self.containerHeightConstraint.constant = 140
         UIView.animate(withDuration: 0.2)
         {
@@ -326,8 +235,7 @@ class PhotoPickingCollectionViewController: UIViewController
     
    
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
-    {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         showContainerViewController()
         
@@ -337,8 +245,7 @@ class PhotoPickingCollectionViewController: UIViewController
         NotificationCenter.default.post(name: NSNotification.Name("NewPhoto"), object: nil, userInfo: userInfo)
         print("Selected images is \(PhotoPickingCollectionViewController.selectedImages.count)")
     }
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath)
-    {
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
 
   //FIXME:remove item of arrays when deselect a row
 //        selectedImages.firstIndex(of: selectedImages[indexPath.row])
@@ -361,8 +268,7 @@ class PhotoPickingCollectionViewController: UIViewController
     }
    
 
-     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
-     {
+     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = photoCollectionView.dequeueReusableCell(withReuseIdentifier: Cell.photoPickingCell.rawValue, for: indexPath) as? PhotoPickingCollectionViewCell else { return UICollectionViewCell() }
     
         let image = images[indexPath.item]
@@ -373,29 +279,115 @@ class PhotoPickingCollectionViewController: UIViewController
      
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
-    {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
         let width = collectionView.bounds.width / 3
 
         return CGSize(width: width, height: width)
     }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets
-    {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets.zero
       
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat
-    { // horizontal
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat { // horizontal
         return 0.0
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat
-    { // vertical
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat { // vertical
         return 0.0
     }
 
 }
     
 
+extension PhotoPickingCollectionViewController
+{
+    //    func updateCache() {
+    //        let currentFrameCenter = collectionView.bounds.minY
+    //        let height = collectionView.bounds.height
+    //        let visibleIndexes = collectionView.indexPathsForVisibleItems.sorted { (a, b) -> Bool in
+    //            return a.item < b.item
+    //        }
+    //        guard abs(currentFrameCenter - lastCacheFrameCenter) >= height/3.0,
+    //            visibleIndexes.count > 0 else {
+    //                return
+    //        }
+    //        lastCacheFrameCenter = currentFrameCenter
+    //
+    //        let totalItemCount = assetsFetchResults?.count ?? selectedAssets.count
+    //        let firstItemToCache = max(visibleIndexes[0].item - numOffscreenAssetsToCache / 2, 0)
+    //        let lastItemToCache = min(visibleIndexes[visibleIndexes.count - 1].item + numOffscreenAssetsToCache / 2, totalItemCount - 1)
+    //
+    //        var indexesToStartCaching: [IndexPath] = []
+    //        for i in firstItemToCache..<lastItemToCache {
+    //            let indexPath = IndexPath(item: i, section: 0)
+    //            if !cachedIndexes.contains(indexPath) {
+    //                indexesToStartCaching.append(indexPath)
+    //            }
+    //        }
+    //        cachedIndexes += indexesToStartCaching
+    //        imageManager.startCachingImages(for: assetsAtIndexPaths(indexesToStartCaching), targetSize: cellSize, contentMode: .aspectFill, options: requestOptions)
+    //
+    //        var indexesToStopCaching: [IndexPath] = []
+    //        cachedIndexes = cachedIndexes.filter({ (indexPath) -> Bool in
+    //            if indexPath.item < firstItemToCache || indexPath.item > lastItemToCache {
+    //                indexesToStopCaching.append(indexPath)
+    //                return false
+    //            }
+    //            return true
+    //        })
+    //        imageManager.stopCachingImages(for: assetsAtIndexPaths(indexesToStopCaching), targetSize: cellSize, contentMode: .aspectFill, options: requestOptions)
+    //    }
+    
+    func assetsAtIndexPaths(_ indexPaths: [IndexPath]) -> [PHAsset]
+    {
+        return indexPaths.map { (indexPath) -> PHAsset in
+            return self.currentAssetAtIndex(indexPath.item)
+        }
+    }
+    
+    func resetCache() {
+        imageCachingManager.stopCachingImagesForAllAssets()
+        cachedIndexes = []
+        lastCacheFrameCenter = 0
+    }
+}
+extension PhotoPickingCollectionViewController: PHPhotoLibraryChangeObserver
+{
+    func photoLibraryDidChange(_ changeInstance: PHChange)
+    {
+        DispatchQueue.main.async
+            {
+                if let assetsFetchResults = self.assetsFetchResults,
+                    let collectionChanges = changeInstance.changeDetails(for: assetsFetchResults)
+                {
+                    self.assetsFetchResults = collectionChanges.fetchResultAfterChanges
+                    if collectionChanges.hasMoves || !collectionChanges.hasIncrementalChanges
+                    {
+                        self.photoCollectionView.reloadData()
+                    } else
+                    {   self.photoCollectionView.performBatchUpdates(
+                        {
+                            if let removedIndexes = collectionChanges.removedIndexes, removedIndexes.count > 0 {
+                                self.photoCollectionView.deleteItems(at: removedIndexes.indexPaths(for: 0))
+                            }
+                            if let insertedIndexes = collectionChanges.insertedIndexes, insertedIndexes.count > 0 {
+                                self.photoCollectionView.insertItems(at: insertedIndexes.indexPaths(for: 0))
+                            }
+                            if let changedIndexes = collectionChanges.changedIndexes, changedIndexes.count > 0 {
+                                self.photoCollectionView.reloadItems(at: changedIndexes.indexPaths(for: 0))
+                            }
+                    })
+                    }
+                }
+        }
+    }
+    
+    
+}
+
+extension PhotoPickingCollectionViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource
+{
+    
+}

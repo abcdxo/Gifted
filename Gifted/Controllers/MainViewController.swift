@@ -256,8 +256,13 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
                         present(vc, animated: true, completion: nil)  }
         
             default:
-                let vc = (storyboard?.instantiateViewController(identifier: "Detail"))!
-                present(vc, animated: true)
+                if  let vc = ( storyboard?.instantiateViewController(identifier: "PhotoSelection")) {
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true, completion: nil)
+                    
+            }
+
+            
         }
     }
 }

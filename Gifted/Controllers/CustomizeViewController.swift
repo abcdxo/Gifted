@@ -14,6 +14,10 @@ import MobileCoreServices
 
 // STUCK: Share gif to Twitter
 // STUCK: Slider to adjust speed
+// STUCK: scroll to bottom
+// STUCK: Progress view repeate over and over
+
+// TODO: Drag and Drop
 
 class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityItemSource
 {
@@ -26,7 +30,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     }
     
     //MARK:- Properties
-    
+
     private let progressView: UIProgressView = {
         let pg = UIProgressView()
         pg.translatesAutoresizingMaskIntoConstraints = false
@@ -88,23 +92,8 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     
     
     @objc func sliderValueChanged(sender: UISlider) {
-//        gifImageView.layer.speed = sender.value
-//
-//
-//        gifImageView.removeFromSuperview()
-//        let imageViewForGif = createGifImage(with: imagesToMakeGIF!)
-//        //
-//
-//        view.addSubview(imageViewForGif)
-////
-//        NSLayoutConstraint.activate([
-//            imageViewForGif.leadingAnchor.constraint(equalTo: gifImageView.leadingAnchor),
-//            imageViewForGif.trailingAnchor.constraint(equalTo: gifImageView.trailingAnchor),
-//            imageViewForGif.topAnchor.constraint(equalTo: gifImageView.topAnchor),
-//            imageViewForGif.bottomAnchor.constraint(equalTo: gifImageView.bottomAnchor)
-//        ])
-//
-//        self.gifImageView = imageViewForGif
+//STUCK:
+        print(sender.value)
       
     }
     
@@ -224,6 +213,8 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
+           navigationController?.navigationBar.isHidden = false
+        navigationController?.isToolbarHidden = true
         startGif()
         
     }
@@ -293,14 +284,18 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     }
     
     private func saveGifToPhotoLibrary(action: UIAlertAction) {
-        createGIF(with: imagesToMakeGIF!, url: gifURL, frameDelay: 0.5 )
-        
-        PHPhotoLibrary.shared().performChanges({ PHAssetChangeRequest.creationRequestForAssetFromImage(
-            atFileURL: self.gifURL)})
+        let ac = UIAlertController(title: "GIF Saved!", message: nil, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) in
+            self.createGIF(with: self.imagesToMakeGIF!, url: self.gifURL, frameDelay: 0.5 )
+            
+            PHPhotoLibrary.shared().performChanges({ PHAssetChangeRequest.creationRequestForAssetFromImage(
+                atFileURL: self.gifURL)})
+            
+           UIApplication.shared.open(URL(string:"photos-redirect://")!)
+        }))
+        present(ac, animated: true, completion: nil)
+       
     }
-    
-    
-    
     
     private func startGif() {
       
@@ -405,11 +400,17 @@ extension CustomizeViewController : UICollectionViewDelegate, UICollectionViewDa
                 UIView.animate(withDuration: 0.3) {
                     self.view.layoutIfNeeded()
                 }
+            case 4:
+                let vc = storyboard?.instantiateViewController(withIdentifier: "312") as! ReorderCollectionViewController
+           
+                vc.images = imagesToMakeGIF!
+                navigationController?.pushViewController(vc, animated: true)
               
             default:
             break
         }
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     {
