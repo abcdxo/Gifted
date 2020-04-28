@@ -142,6 +142,8 @@ class PhotoPickingCollectionViewController: UIViewController
     
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var containerHeightConstraint: NSLayoutConstraint!
+     
+    
     
 
       let imageManager = PHImageManager.default()
@@ -149,30 +151,48 @@ class PhotoPickingCollectionViewController: UIViewController
     
     @objc func closeScrene(_ notification: Notification)
     {
-        containerHeightConstraint.constant = 0
+      
         let visibleCells = photoCollectionView.visibleCells as! [PhotoPickingCollectionViewCell]
         visibleCells.forEach { (cell) in
             cell.isSelected = false
-            selectedImages.removeAll()
+            PhotoPickingCollectionViewController.selectedImages.removeAll()
         }
+          containerHeightConstraint.constant = 0
         
-        UIView.animate(withDuration: 0.2)
-        {
+        UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
-            
         }
           photoCollectionView.reloadData()
     }
     
-    deinit
-    {
+    deinit  {
         NotificationCenter.default.removeObserver(self)
     }
-    
+    @objc func zero(_ notification: Notification) {
+        guard let userInfo = notification.userInfo, let indexPath = userInfo["IndexPath"] as? IndexPath else { return }
+        
+        let cell = photoCollectionView.cellForItem(at: indexPath)
+        #warning("Logic with IndexPath not sync")
+        cell?.isSelected = false
+//        PhotoPickingCollectionViewController.selectedImages.firstIndex(of: position)
+        
+        if PhotoPickingCollectionViewController.selectedImages.count == 0 {
+                    containerHeightConstraint.constant = 0
+            
+            
+                    UIView.animate(withDuration: 0.2)
+                    {
+                        self.view.layoutIfNeeded()
+            
+                    }
+        }
+
+        photoCollectionView.reloadItems(at: [indexPath])
+    }
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
+          NotificationCenter.default.addObserver(self, selector: #selector(zero(_:)), name: NSNotification.Name("Zero"), object: nil)
         self.grabPhotos()
         containerHeightConstraint.constant = 0
         setUpNavBar()
@@ -292,7 +312,7 @@ class PhotoPickingCollectionViewController: UIViewController
         return images.count
     }
     var count =  0
-    var selectedImages = [UIImage]()
+    static var selectedImages = [UIImage]()
     
     private func showContainerViewController()
     {
@@ -310,21 +330,24 @@ class PhotoPickingCollectionViewController: UIViewController
     {
 
         showContainerViewController()
+        
         let image = images[indexPath.row]
-        selectedImages.append(image)
-        let userInfo = ["Photos":selectedImages]
+        PhotoPickingCollectionViewController.selectedImages.append(image)
+        let userInfo = ["Photos":PhotoPickingCollectionViewController.selectedImages]
         NotificationCenter.default.post(name: NSNotification.Name("NewPhoto"), object: nil, userInfo: userInfo)
-        print("Selected images is \(selectedImages.count)")
+        print("Selected images is \(PhotoPickingCollectionViewController.selectedImages.count)")
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath)
     {
 
   //FIXME:remove item of arrays when deselect a row
 //        selectedImages.firstIndex(of: selectedImages[indexPath.row])
-//        selectedImages.remove(at: indexPath.row)
-        
-        print("Selected images after DESELECT is \(selectedImages.count)")
-        if selectedImages.count == 0 {
+//        selectedImages.remove(at: indexPath.item)
+//         searches[indexPath.section].searchResults.remove(at: indexPath.row)
+        print(indexPath.section)
+//        PhotoPickingCollectionViewController.selectedImages.remove(at: indexPath.section)
+        print("Selected images after DESELECT is \(PhotoPickingCollectionViewController.selectedImages.count)")
+        if PhotoPickingCollectionViewController.selectedImages.count == 0 {
             self.containerHeightConstraint.constant = 0
             
             UIView.animate(withDuration: 0.2)

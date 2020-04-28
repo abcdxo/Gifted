@@ -8,12 +8,29 @@
 
 import UIKit
 
-class ContainerViewController: UIViewController
+class ContainerViewController: UIViewController, HorizontalBottomCollectionViewCellDelegate
 {
+    func didRemoveItem(for cell: HorizontalBottomCollectionViewCell) {
+       
+        let item = containerCollectionView.indexPath(for: cell)
+       let position =  PhotoPickingCollectionViewController.selectedImages.firstIndex(of:  PhotoPickingCollectionViewController.selectedImages[item!.item])
+        let userInfo: [String:Any] = ["IndexPath": item!,"Position":position!]
+        PhotoPickingCollectionViewController.selectedImages.remove(at: item!.item)
+        countLabel.text = "(\(PhotoPickingCollectionViewController.selectedImages.count))"
+    
+            NotificationCenter.default.post(name: NSNotification.Name("Zero"), object: nil,userInfo:userInfo )
+        
+        containerCollectionView.reloadData()
+    }
+    
     
     var images: [UIImage]?
     
-    @IBOutlet weak var countLabel: UILabel!
+    @IBOutlet weak var countLabel: UILabel! {
+        didSet {
+            countLabel.text = "\(String(describing: images?.count))"
+        }
+    }
     
     @IBOutlet weak var containerCollectionView: UICollectionView!
         {
@@ -25,7 +42,7 @@ class ContainerViewController: UIViewController
         }
     }
     // MARK:- Life Cycle
-    
+   
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -33,11 +50,15 @@ class ContainerViewController: UIViewController
         {
             flowLayout.estimatedItemSize = CGSize(width: 1, height: 1)
         }
+        
+    
+        
         NotificationCenter.default.addObserver(self, selector: #selector(didGetPhotos(_:)), name: NSNotification.Name("NewPhoto"), object: nil)
     }
     
-    override func viewWillAppear(_ animated: Bool)
-    {
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
      
     }
@@ -94,7 +115,7 @@ extension ContainerViewController: UICollectionViewDelegateFlowLayout,UICollecti
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
-        return images?.count ?? 0
+        return PhotoPickingCollectionViewController.selectedImages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets
@@ -115,9 +136,9 @@ extension ContainerViewController: UICollectionViewDelegateFlowLayout,UICollecti
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.containerCollectionViewCell.rawValue, for: indexPath) as! HorizontalBottomCollectionViewCell
-        
-        let image = images![indexPath.row]
-        DispatchQueue.main.async {  cell.imageView.image = image }
+        cell.delegate = self
+        let image = PhotoPickingCollectionViewController.selectedImages[indexPath.row]
+         cell.imageView.image = image 
         
         return cell
     }

@@ -6,8 +6,11 @@
 //  Copyright © 2020 Nick Nguyen. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
 struct Gif
 {
+    let thumbnail: UIImage
+    let highResolutionImage: UIImage
     
 }

@@ -8,12 +8,16 @@
 
 import UIKit
 
+protocol HorizontalBottomCollectionViewCellDelegate : class {
+    func didRemoveItem(for cell: HorizontalBottomCollectionViewCell)
+}
+
 class HorizontalBottomCollectionViewCell: UICollectionViewCell
 {
     
-      @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var imageView: UIImageView!
     
-    
+    weak var delegate: HorizontalBottomCollectionViewCellDelegate?
     override init(frame: CGRect)
     {
         super.init(frame: frame)
@@ -53,6 +57,7 @@ class HorizontalBottomCollectionViewCell: UICollectionViewCell
     @objc func handleCancel()
     {
         print("Cancel")
+        delegate?.didRemoveItem(for: self)
         // delegate
     }
     

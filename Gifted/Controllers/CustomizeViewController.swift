@@ -16,15 +16,16 @@ class CustomizeViewController: UIViewController, ARSessionDelegate
 {
     //MARK:- Properties
     
-    let options = ["Speed" ,
-                   "Boomerang",
-                   "AR",
-                   "Canvas"  ,
-                   "Reorder" ,
-                   "Filters" ,
-                   "Stickers",
-                   "Text",
-                   "Tune" ]
+    private let progressView: UIProgressView = {
+        let pg = UIProgressView()
+        pg.translatesAutoresizingMaskIntoConstraints = false
+        pg.progressViewStyle = .default
+        pg.tintColor = #colorLiteral(red: 0.3882825077, green: 0.6711806059, blue: 0.5451156497, alpha: 1)
+        pg.backgroundColor = .gray
+        return pg
+    }()
+    let options = ["Speed" ,"Boomerang" , "AR","Canvas","Reorder" , "Filters" , "Stickers", "Text", "Tune" ]
+               
     
     let optionImages = [
         UIImage(systemName: "waveform"),
@@ -43,8 +44,15 @@ class CustomizeViewController: UIViewController, ARSessionDelegate
         let imageURL = documentsURL!.appendingPathComponent("MyImage.gif")
         return imageURL
     }
-    var imagesToMakeGIF: [UIImage]?
+    var imagesToMakeGIF: [UIImage]? {
+        didSet {
+            progress = Progress(totalUnitCount: Int64(imagesToMakeGIF!.count))
+            
+        }
+    }
     
+ 
+  
     //MARK:- Outlets
     
     @IBOutlet weak var gifImageView: UIImageView!
@@ -60,6 +68,16 @@ class CustomizeViewController: UIViewController, ARSessionDelegate
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        view.addSubview(progressView)
+        
+        NSLayoutConstraint.activate([
+            progressView.leadingAnchor.constraint(equalTo: gifImageView.leadingAnchor),
+            progressView.trailingAnchor.constraint(equalTo: gifImageView.trailingAnchor),
+            progressView.topAnchor.constraint(equalTo: gifImageView.bottomAnchor),
+            progressView.heightAnchor.constraint(equalToConstant: 10)
+        
+        ])
+      
         
         guard let images = imagesToMakeGIF else  { return }
         print("images to make GIF : \(images.count)")
@@ -73,9 +91,9 @@ class CustomizeViewController: UIViewController, ARSessionDelegate
     }
     
     
-    private func createGIF(with images: [UIImage], name: URL, loopCount: Int = 0, frameDelay: Double) {
+    private func createGIF(with images: [UIImage], url: URL, loopCount: Int = 0, frameDelay: Double) {
         
-        let destinationURL = name
+        let destinationURL = url
         let destinationGIF = CGImageDestinationCreateWithURL(destinationURL as CFURL, kUTTypeGIF, images.count, nil)!
         
         // This dictionary controls the delay between frames
@@ -105,6 +123,10 @@ class CustomizeViewController: UIViewController, ARSessionDelegate
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }
+    var timer = Timer()
+    
+    var progress : Progress!
+      
     
     private func startGif() {
       
@@ -118,16 +140,36 @@ class CustomizeViewController: UIViewController, ARSessionDelegate
             imageViewForGif.topAnchor.constraint(equalTo: gifImageView.topAnchor),
             imageViewForGif.bottomAnchor.constraint(equalTo: gifImageView.bottomAnchor)
         ])
-        
+
         self.gifImageView = imageViewForGif
+        
+   
+      
+        Timer.scheduledTimer(withTimeInterval: 0.25  , repeats: true) { (timer) in
+            
+            guard self.progress.isFinished == false else {
+                timer.invalidate()
+                return
+            }
+            
+            self.progress.completedUnitCount += 1
+            let progressFloat = Float(self.progress.fractionCompleted)
+                self.progressView.setProgress(progressFloat, animated: true)
+                
+            }
+        
+   
     }
     
- 
+    @objc func handle() {
+//        let v = (gifImageView.image!.duration / Double(imagesToMakeGIF!.count))
+        progressView.progress += Float(gifImageView.image!.duration) / Float(imagesToMakeGIF!.count)
+    }
     
     @IBAction func saveTapped(_ sender: UIBarButtonItem)
     {
     // Save as gif,live photo or video, show activity controller to share to friend
-        createGIF(with: imagesToMakeGIF!, name: gifURL, frameDelay: 0.2 * Double(imagesToMakeGIF!.count))
+        createGIF(with: imagesToMakeGIF!, url: gifURL, frameDelay: 0.5 )
         
         PHPhotoLibrary.shared().performChanges({ PHAssetChangeRequest.creationRequestForAssetFromImage(
             atFileURL: self.gifURL)})
@@ -137,16 +179,21 @@ class CustomizeViewController: UIViewController, ARSessionDelegate
     @IBOutlet weak var stopButton: UIButton!
     
     @IBAction func pauseTapped(_ sender: UIButton) {
-
+       
         if !sender.isSelected {
-            gifImageView.image = imagesToMakeGIF?.last
+
+            gifImageView.image = imagesToMakeGIF!.last
+            progressView.progress = 0
             sender.isSelected = true
         } else {
+            progress = Progress(totalUnitCount: Int64(imagesToMakeGIF!.count))
             sender.isSelected = false
             startGif()
+
         }
     
-      
+     
+     
     }
     
     
@@ -174,21 +221,6 @@ class CustomizeViewController: UIViewController, ARSessionDelegate
     
     //MARK:- Actions
     
-    
-  
-    
-    
-    @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
-        
-        if let error = error {
-            
-            print(error.localizedDescription)
-            
-        } else {
-            
-            print("Success")
-        }
-    }
 
 }
 extension CustomizeViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
