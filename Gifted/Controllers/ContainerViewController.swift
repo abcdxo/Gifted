@@ -92,7 +92,13 @@ class ContainerViewController: UIViewController, HorizontalBottomCollectionViewC
         
         countLabel.text = "(\(photos.count))"
         containerCollectionView.reloadData()
-       
+//        let lastSection = containerCollectionView.numberOfSections - 1
+        
+        let lastRow = containerCollectionView.numberOfItems(inSection: 0)
+        
+        let indexPath = IndexPath(row: lastRow - 1, section: 0)
+        
+        self.containerCollectionView.scrollToItem(at: indexPath, at: .right, animated: true)
     }
     
     deinit

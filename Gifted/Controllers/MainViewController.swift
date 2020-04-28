@@ -74,10 +74,48 @@ class MainViewController: UIViewController
         }
         userFavorites = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumFavorites, options: nil)
     }
+    
+    private func goToSettingToTurnPrivacyOn() {
+    
+            let ac = UIAlertController(title: "Your Photo privacy is off", message: "Please go to Settings and turn on photo privacy so I can make a gif for you", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Turn on", style: .default, handler: self.turnOn(action:)))
+            ac.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: askAgain(action:)))
+            self.present(ac, animated: true, completion: nil)
+        
+       
+    }
+    @objc func askAgain(action: UIAlertAction) {
+        PHPhotoLibrary.requestAuthorization { (ac) in
+            print(ac)
+        }
+    }
+ 
+    
+    @objc func turnOn(action: UIAlertAction) {
+        if let url = NSURL(string: UIApplication.openSettingsURLString) as URL? {
+         
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            
+            
+        }
+    }
 
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
+
         super.viewDidLoad()
+        PHPhotoLibrary.requestAuthorization { (status) in
+            switch status {
+                case .authorized :
+                print("Granted")
+                case .denied:
+                    DispatchQueue.main.async {
+                        self.goToSettingToTurnPrivacyOn()
+                    }
+                 
+                default:
+                break
+            }
+        }
         navigationController?.navigationBar.isHidden = true
         DispatchQueue.main.async {
             self.timer = Timer.scheduledTimer(timeInterval: 1.2, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)

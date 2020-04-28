@@ -172,7 +172,7 @@ class PhotoPickingCollectionViewController: UIViewController
         guard let userInfo = notification.userInfo, let indexPath = userInfo["IndexPath"] as? IndexPath else { return }
         
         let cell = photoCollectionView.cellForItem(at: indexPath)
-        #warning("Logic with IndexPath not sync")
+        #warning("FIXME:Logic with IndexPath not sync")
         cell?.isSelected = false
 //        PhotoPickingCollectionViewController.selectedImages.firstIndex(of: position)
         
@@ -344,7 +344,8 @@ class PhotoPickingCollectionViewController: UIViewController
 //        selectedImages.firstIndex(of: selectedImages[indexPath.row])
 //        selectedImages.remove(at: indexPath.item)
 //         searches[indexPath.section].searchResults.remove(at: indexPath.row)
-        print(indexPath.section)
+        #warning("FIXME:Remove correctly the item in collection view ")
+     
 //        PhotoPickingCollectionViewController.selectedImages.remove(at: indexPath.section)
         print("Selected images after DESELECT is \(PhotoPickingCollectionViewController.selectedImages.count)")
         if PhotoPickingCollectionViewController.selectedImages.count == 0 {
