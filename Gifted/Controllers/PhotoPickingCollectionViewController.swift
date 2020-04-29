@@ -47,6 +47,7 @@ class PhotoPickingCollectionViewController: UIViewController
     static var selectedImages = [UIImage]()
     var images: [UIImage] = []
     let imageManager = PHImageManager.default()
+    
     private let requestOptions: PHImageRequestOptions = {
         let option = PHImageRequestOptions()
         option.isNetworkAccessAllowed = false
@@ -314,7 +315,7 @@ class PhotoPickingCollectionViewController: UIViewController
    
 
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = photoCollectionView.dequeueReusableCell(withReuseIdentifier: Cell.photoPickingCell.rawValue, for: indexPath) as? PhotoPickingCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = photoCollectionView.dequeueReusableCell(withReuseIdentifier: CellIdentifier.photoPickingCell.rawValue, for: indexPath) as? PhotoPickingCollectionViewCell else { return UICollectionViewCell() }
     
         let image = images[indexPath.item]
         cell.imageView.image = image

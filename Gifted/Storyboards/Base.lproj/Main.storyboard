@@ -139,6 +139,40 @@
             </objects>
             <point key="canvasLocation" x="918.84057971014499" y="137.94642857142856"/>
         </scene>
+        <!--Videos Collection View Controller-->
+        <scene sceneID="sAf-zW-6ec">
+            <objects>
+                <collectionViewController storyboardIdentifier="Videos" id="eT9-hw-d5i" customClass="VideosCollectionViewController" customModule="Gifted" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="UY0-C8-sHE">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="45n-XH-Mdb">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="VideoCell" id="ZS7-Ui-O8u">
+                                <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="0Aa-fF-Vau">
+                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </collectionViewCellContentView>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="eT9-hw-d5i" id="Kcn-OI-733"/>
+                            <outlet property="delegate" destination="eT9-hw-d5i" id="U6t-LV-792"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iRB-Ql-mkq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1006" y="872"/>
+        </scene>
         <!--Photo Picking Collection View Controller-->
         <scene sceneID="e9Z-KR-pFF">
             <objects>
@@ -247,22 +281,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nze-SW-Va7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1006" y="-617"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="f3Z-1e-0L3">
-            <objects>
-                <viewController storyboardIdentifier="Detail" id="MJV-qU-bod" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="843-Uk-jhb">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="2G7-Zq-mfw"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="b92-Bn-14g"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="czi-f1-zo0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="919" y="903"/>
         </scene>
         <!--Reorder-->
         <scene sceneID="9ha-0K-89h">

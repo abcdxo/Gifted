@@ -8,7 +8,7 @@
 
 import UIKit
 
-public enum Cell: String
+public enum CellIdentifier: String
     
 {
     case menuCell = "MenuCell"

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B64F777524561A4E0061AC49 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64F777424561A4E0061AC49 /* Cell.swift */; };
+		B64F777524561A4E0061AC49 /* CellIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64F777424561A4E0061AC49 /* CellIdentifier.swift */; };
 		B6567F6B2453BBFF009E4E03 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6567F6A2453BBFF009E4E03 /* UIColor.swift */; };
 		B6567F6E2454A11E009E4E03 /* PhotoPickingCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6567F6D2454A11E009E4E03 /* PhotoPickingCollectionViewController.swift */; };
 		B6567F702454BBA9009E4E03 /* PhotoPickingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6567F6F2454BBA9009E4E03 /* PhotoPickingCollectionViewCell.swift */; };
@@ -30,6 +30,7 @@
 		B688B4BB2458959900377CBF /* ReorderCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B4BA2458959800377CBF /* ReorderCollectionViewController.swift */; };
 		B688B4BD24589D1A00377CBF /* ReorderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B4BC24589D1A00377CBF /* ReorderCollectionViewCell.swift */; };
 		B688B4BF2459044700377CBF /* TextTypingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B4BE2459044700377CBF /* TextTypingViewController.swift */; };
+		B688B4C124591FF000377CBF /* VideosCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B4C024591FF000377CBF /* VideosCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +51,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		B64F777424561A4E0061AC49 /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
+		B64F777424561A4E0061AC49 /* CellIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellIdentifier.swift; sourceTree = "<group>"; };
 		B6567F6A2453BBFF009E4E03 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		B6567F6D2454A11E009E4E03 /* PhotoPickingCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickingCollectionViewController.swift; sourceTree = "<group>"; };
 		B6567F6F2454BBA9009E4E03 /* PhotoPickingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickingCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -79,6 +80,7 @@
 		B688B4BA2458959800377CBF /* ReorderCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReorderCollectionViewController.swift; sourceTree = "<group>"; };
 		B688B4BC24589D1A00377CBF /* ReorderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReorderCollectionViewCell.swift; sourceTree = "<group>"; };
 		B688B4BE2459044700377CBF /* TextTypingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTypingViewController.swift; sourceTree = "<group>"; };
+		B688B4C024591FF000377CBF /* VideosCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideosCollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,7 +111,7 @@
 		B64F777324561A330061AC49 /* Constant */ = {
 			isa = PBXGroup;
 			children = (
-				B64F777424561A4E0061AC49 /* Cell.swift */,
+				B64F777424561A4E0061AC49 /* CellIdentifier.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -217,6 +219,7 @@
 				B688B4B3245628AD00377CBF /* CustomizeViewController.swift */,
 				B688B4BA2458959800377CBF /* ReorderCollectionViewController.swift */,
 				B688B4BE2459044700377CBF /* TextTypingViewController.swift */,
+				B688B4C024591FF000377CBF /* VideosCollectionViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -374,9 +377,10 @@
 				B688B4BB2458959900377CBF /* ReorderCollectionViewController.swift in Sources */,
 				B6567F702454BBA9009E4E03 /* PhotoPickingCollectionViewCell.swift in Sources */,
 				B66F7836245380F100E0727E /* BottomCollectionViewCell.swift in Sources */,
-				B64F777524561A4E0061AC49 /* Cell.swift in Sources */,
+				B64F777524561A4E0061AC49 /* CellIdentifier.swift in Sources */,
 				B6567F722455C606009E4E03 /* ContainerViewController.swift in Sources */,
 				B688B4B924575A7100377CBF /* Gif.swift in Sources */,
+				B688B4C124591FF000377CBF /* VideosCollectionViewController.swift in Sources */,
 				B66F781F24537AF400E0727E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

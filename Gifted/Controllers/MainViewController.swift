@@ -157,7 +157,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         switch collectionView {
             case bottomCollectionView:
                 let menu = menuOptions[indexPath.row]
-                let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: Cell.menuCell.rawValue , for: indexPath) as! BottomCollectionViewCell
+                let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: CellIdentifier.menuCell.rawValue , for: indexPath) as! BottomCollectionViewCell
                 cell.menuLabel.text = menu
                 switch indexPath.row {
                     case 0: // photo
@@ -182,7 +182,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 }
                 return cell
             default: // top collection view
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.topCell.rawValue, for: indexPath) as! TopCollectionViewCell
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellIdentifier.topCell.rawValue, for: indexPath) as! TopCollectionViewCell
                 if let onboardingView = cell.viewWithTag(111) as? UIImageView {
                     onboardingView.image = photos[indexPath.row]
                 } else if let pageView = cell.viewWithTag(222) as? UIPageControl {
@@ -255,12 +255,14 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
                     vc.modalPresentationStyle = .fullScreen
                         present(vc, animated: true, completion: nil)  }
         
-            default:
-                if  let vc = ( storyboard?.instantiateViewController(identifier: "PhotoSelection")) {
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true, completion: nil)
+            case 1:
+                if  let vc = ( storyboard?.instantiateViewController(identifier: "Videos")) {
+                    let nav = UINavigationController(rootViewController: vc)
+                    nav.modalPresentationStyle = .fullScreen
+                    present(nav, animated: true, completion: nil)
                     
             }
+            default: break
 
             
         }

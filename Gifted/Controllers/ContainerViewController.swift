@@ -141,7 +141,7 @@ extension ContainerViewController: UICollectionViewDelegateFlowLayout,UICollecti
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.containerCollectionViewCell.rawValue, for: indexPath) as! HorizontalBottomCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellIdentifier.containerCollectionViewCell.rawValue, for: indexPath) as! HorizontalBottomCollectionViewCell
         cell.delegate = self
         let image = PhotoPickingCollectionViewController.selectedImages[indexPath.row]
          cell.imageView.image = image 

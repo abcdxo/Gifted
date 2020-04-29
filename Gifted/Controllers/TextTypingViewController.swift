@@ -14,7 +14,7 @@ class TextTypingViewController: UIViewController {
        let v = UITextView()
         v.translatesAutoresizingMaskIntoConstraints = false
         v.font = UIFont.systemFont(ofSize: 26)
-        v.textAlignment = .right
+        v.textAlignment = .center
         v.becomeFirstResponder()
         return v
     }()
@@ -66,6 +66,7 @@ class TextTypingViewController: UIViewController {
     
     @objc func handleDone() {
         print("Hello")
+         dismiss(animated: true, completion: nil)
     }
     
     
@@ -75,7 +76,7 @@ class TextTypingViewController: UIViewController {
 
         
     @objc func handleCheck() {
-        
+        dismiss(animated: true, completion: nil)
     }
         
     @objc func handleCancel() {
@@ -90,11 +91,6 @@ class TextTypingViewController: UIViewController {
         navigationItem.title = "Hello"
         
         view.backgroundColor = .white
-        
-
-        
-      
-        
        
         navigationItem.rightBarButtonItem =  UIBarButtonItem(image: UIImage(systemName: "checkmark"), style: .done, target: self, action: #selector(handleCheck))
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "multiply"), style: .done, target: self, action: #selector(handleCancel))
@@ -112,7 +108,8 @@ class TextTypingViewController: UIViewController {
             textView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             textView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             textView.heightAnchor.constraint(equalToConstant: 200),
-            textView.widthAnchor.constraint(equalToConstant: 200)
+            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            textView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
         
         view.backgroundColor = .white

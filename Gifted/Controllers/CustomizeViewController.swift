@@ -12,6 +12,27 @@ import Photos
 import ImageIO
 import MobileCoreServices
 
+func textToImage(drawText text: String, inImage image: UIImage, atPoint point: CGPoint) -> UIImage {
+    let textColor = UIColor.white
+    let textFont = UIFont(name: "Helvetica Bold", size: 12)!
+    
+    let scale = UIScreen.main.scale
+    UIGraphicsBeginImageContextWithOptions(image.size, false, scale)
+    
+    let textFontAttributes = [
+        NSAttributedString.Key.font: textFont,
+        NSAttributedString.Key.foregroundColor: textColor,
+        ] as [NSAttributedString.Key : Any]
+    image.draw(in: CGRect(origin: CGPoint.zero, size: image.size))
+    
+    let rect = CGRect(origin: point, size: image.size)
+    text.draw(in: rect, withAttributes: textFontAttributes)
+    
+    let newImage = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    
+    return newImage!
+}
 // STUCK: Share gif to Twitter
 // STUCK: Slider to adjust speed
 // STUCK: scroll to bottom
@@ -69,7 +90,13 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         }
     }
     
-
+    var labelTextFromUser: UIView = {
+       let lb = UIView()
+       
+        lb.backgroundColor = .red
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
     //MARK:- Outlets
     
     @IBOutlet weak var gifImageView: UIImageView!
@@ -212,6 +239,8 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     override func viewDidLoad() {
         super.viewDidLoad()
         
+   
+        gifImageView.image =  textToImage(drawText: "Hello", inImage: UIImage.animatedImage(with: imagesToMakeGIF!, duration: 1.0)!, atPoint: CGPoint(x: 500, y: 500))
         speedSlider.value = 1.25
         
         navigationController?.navigationItem.largeTitleDisplayMode = .never
@@ -288,7 +317,19 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         navigationController?.navigationBar.isHidden = false
         
         navigationController?.isToolbarHidden = true
+        labelTextFromUser.translatesAutoresizingMaskIntoConstraints = false
         
+        gifImageView.addSubview(labelTextFromUser)
+        
+        
+        NSLayoutConstraint.activate([
+            labelTextFromUser.centerXAnchor.constraint(equalTo: gifImageView.centerXAnchor),
+            labelTextFromUser.centerYAnchor.constraint(equalTo: gifImageView.centerYAnchor),
+            labelTextFromUser.heightAnchor.constraint(equalToConstant: 400),
+            labelTextFromUser.widthAnchor.constraint(equalToConstant: 400)
+            
+        ])
+       
         startGif()
         
     }
@@ -526,7 +567,7 @@ extension CustomizeViewController : UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.editCell.rawValue, for: indexPath) as! EditOptionCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellIdentifier.editCell.rawValue, for: indexPath) as! EditOptionCell
         cell.optionLabel.text = options[indexPath.row]
         cell.optionImageView.image = optionImages[indexPath.row]
 
