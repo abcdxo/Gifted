@@ -582,7 +582,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1nJ-Nd-med"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Customize" id="BiR-3z-y1K">
+                    <navigationItem key="navigationItem" title="Customize" largeTitleDisplayMode="never" id="BiR-3z-y1K">
                         <barButtonItem key="rightBarButtonItem" title="Save" id="Mgm-sd-LZE">
                             <connections>
                                 <action selector="saveTapped:" destination="yJi-vv-vyF" id="taf-Vb-f43"/>

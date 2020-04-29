@@ -29,6 +29,7 @@
 		B688B4B924575A7100377CBF /* Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B4B824575A7100377CBF /* Gif.swift */; };
 		B688B4BB2458959900377CBF /* ReorderCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B4BA2458959800377CBF /* ReorderCollectionViewController.swift */; };
 		B688B4BD24589D1A00377CBF /* ReorderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B4BC24589D1A00377CBF /* ReorderCollectionViewCell.swift */; };
+		B688B4BF2459044700377CBF /* TextTypingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688B4BE2459044700377CBF /* TextTypingViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 		B688B4B824575A7100377CBF /* Gif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gif.swift; sourceTree = "<group>"; };
 		B688B4BA2458959800377CBF /* ReorderCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReorderCollectionViewController.swift; sourceTree = "<group>"; };
 		B688B4BC24589D1A00377CBF /* ReorderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReorderCollectionViewCell.swift; sourceTree = "<group>"; };
+		B688B4BE2459044700377CBF /* TextTypingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTypingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,6 +216,7 @@
 				B6567F712455C606009E4E03 /* ContainerViewController.swift */,
 				B688B4B3245628AD00377CBF /* CustomizeViewController.swift */,
 				B688B4BA2458959800377CBF /* ReorderCollectionViewController.swift */,
+				B688B4BE2459044700377CBF /* TextTypingViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -362,6 +365,7 @@
 				B6567F6E2454A11E009E4E03 /* PhotoPickingCollectionViewController.swift in Sources */,
 				B6567F742455D7F3009E4E03 /* HorizontalBottomCollectionViewCell.swift in Sources */,
 				B688B4B4245628AD00377CBF /* CustomizeViewController.swift in Sources */,
+				B688B4BF2459044700377CBF /* TextTypingViewController.swift in Sources */,
 				B688B4BD24589D1A00377CBF /* ReorderCollectionViewCell.swift in Sources */,
 				B66F782124537AF400E0727E /* MainViewController.swift in Sources */,
 				B6567F6B2453BBFF009E4E03 /* UIColor.swift in Sources */,

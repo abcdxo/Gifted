@@ -71,7 +71,7 @@ class ReorderCollectionViewController: UICollectionViewController, UICollectionV
         collectionView.dragDelegate = self
         collectionView.dropDelegate = self
         collectionView.reorderingCadence = .fast
-//        collectionView.reloadData()
+
         
     }
     override func viewDidLoad() {
@@ -79,6 +79,7 @@ class ReorderCollectionViewController: UICollectionViewController, UICollectionV
         print(images!.count)
         collectionView.addInteraction(UIDropInteraction(delegate: self))
         collectionView.addInteraction(UIDropInteraction(delegate: self))
+        
         collectionView.dragInteractionEnabled = true
         collectionView.dragDelegate = self
         collectionView.dropDelegate = self
@@ -90,10 +91,13 @@ class ReorderCollectionViewController: UICollectionViewController, UICollectionV
         
         let button = UIBarButtonItem(image: UIImage(systemName: "multiply"), style: .done, target: self, action: #selector(handleDone))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let title = UIBarButtonItem(title: "Reorder", style: .plain, target: nil, action: nil)
+        title.isEnabled = false
+        let flexibleSpace2 = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let check = UIBarButtonItem(image: UIImage(systemName: "checkmark"), style: .done, target: self, action: #selector(handleCheck))
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleBack))
         
-        self.toolbarItems = [button,flexibleSpace,check] //
+        self.toolbarItems = [button,flexibleSpace,title,flexibleSpace2,check] //
         navigationController?.setToolbarHidden(false, animated: false)
         
     }
@@ -110,6 +114,14 @@ class ReorderCollectionViewController: UICollectionViewController, UICollectionV
       
         return images!.count
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 5.0
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 5.0
+    }
+    
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
@@ -131,6 +143,6 @@ class ReorderCollectionViewController: UICollectionViewController, UICollectionV
         return CGSize(width: collectionViewSize / 6, height: collectionViewSize / 6 )
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 1.0, bottom: 0, right: 1.0)
+        return UIEdgeInsets(top: 0, left: 10.0, bottom: 0, right: 10.0)
     }
 }

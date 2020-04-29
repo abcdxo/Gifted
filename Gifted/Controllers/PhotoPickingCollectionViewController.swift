@@ -74,10 +74,14 @@ class PhotoPickingCollectionViewController: UIViewController
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //        segmentControl.selectedSegmentIndex = 1
+        
+      
     }
-    
-    
+//    
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//         navigationController?.navigationBar.prefersLargeTitles = false
+//    }
  
     @IBAction func segmentValueChanged(_ sender: UISegmentedControl)
     {
@@ -166,17 +170,27 @@ class PhotoPickingCollectionViewController: UIViewController
     }
     
     private func setUpNavBar() {
+        
         navigationController?.navigationBar.prefersLargeTitles = true
+        
         navigationItem.title = "Select Photos"
+        
         let appearance = UINavigationBarAppearance()
+        
         appearance.titleTextAttributes = [.foregroundColor: #colorLiteral(red: 0.2470482588, green: 0.239345789, blue: 0.3378213048, alpha: 1)]
+        
         appearance.largeTitleTextAttributes = [.foregroundColor: #colorLiteral(red: 0.2470482588, green: 0.239345789, blue: 0.3378213048, alpha: 1)]
+        
         appearance.backgroundColor = .white
+        
         navigationItem.standardAppearance = appearance
+        
         navigationItem.scrollEdgeAppearance = appearance
-       
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: #selector(handleBack))
+        
         navigationItem.leftBarButtonItem?.tintColor = #colorLiteral(red: 0.2470482588, green: 0.239345789, blue: 0.3378213048, alpha: 1)
+        
         view.backgroundColor = .secondarySystemBackground
        
 
@@ -218,6 +232,37 @@ class PhotoPickingCollectionViewController: UIViewController
           
         }
      
+    }
+    func drawImageOnCanvas(_ useImage: UIImage, canvasSize: CGSize, canvasColor: UIColor ) -> UIImage {
+        
+        let rect = CGRect(origin: .zero, size: canvasSize)
+        UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
+        
+        // fill the entire image
+        canvasColor.setFill()
+        UIRectFill(rect)
+        
+        // calculate a Rect the size of the image to draw, centered in the canvas rect
+        let centeredImageRect = CGRect(x: (canvasSize.width - useImage.size.width) / 2,
+                                       y: (canvasSize.height - useImage.size.height) / 2,
+                                       width: useImage.size.width,
+                                       height: useImage.size.height)
+        
+        // get a drawing context
+        let context = UIGraphicsGetCurrentContext();
+        
+        // "cut" a transparent rectanlge in the middle of the "canvas" image
+        context?.clear(centeredImageRect)
+        
+        // draw the image into that rect
+        useImage.draw(in: centeredImageRect)
+        
+        // get the new "image in the center of a canvas image"
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return image!
+        
     }
     
      func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -272,7 +317,7 @@ class PhotoPickingCollectionViewController: UIViewController
         guard let cell = photoCollectionView.dequeueReusableCell(withReuseIdentifier: Cell.photoPickingCell.rawValue, for: indexPath) as? PhotoPickingCollectionViewCell else { return UICollectionViewCell() }
     
         let image = images[indexPath.item]
-         cell.imageView.image = image  
+        cell.imageView.image = image
               
         return cell
     

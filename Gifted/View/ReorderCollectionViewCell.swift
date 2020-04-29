@@ -21,12 +21,16 @@ class ReorderCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         layoutContrainsts()
+        layer.borderColor = UIColor.gray.cgColor
+        layer.borderWidth  = 2
     }
     
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         layoutContrainsts()
+          layer.borderColor = UIColor.black.cgColor
+          layer.borderWidth  = 2
     }
     
     
