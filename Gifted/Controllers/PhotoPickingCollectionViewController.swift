@@ -18,7 +18,7 @@ class PhotoPickingCollectionViewController: UIViewController
 {
     //MARK:- Outlets
      
-    @IBOutlet weak var segmentControl: UISegmentedControl!
+  
     @IBOutlet weak var photoCollectionView: UICollectionView! {
         didSet {
             photoCollectionView.delegate = self
@@ -73,32 +73,7 @@ class PhotoPickingCollectionViewController: UIViewController
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-      
-    }
-//    
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//         navigationController?.navigationBar.prefersLargeTitles = false
-//    }
  
-    @IBAction func segmentValueChanged(_ sender: UISegmentedControl)
-    {
-        switch sender.selectedSegmentIndex {
-            case 0:
-                navigationItem.title = "Select Photos"
-            default:
-                  self.navigationItem.title = "Select Videos"
-                UIView.animate(withDuration: 0.5, delay: 0.5, options: .curveEaseOut, animations: {
-                    self.view.setNeedsLayout()
-                  
-                    
-                }, completion: nil)
-               
-        }
-    }
 
     func fetchCollections() {
         if let albums = PHCollectionList.fetchTopLevelUserCollections(with: nil) as? PHFetchResult<PHAssetCollection> {

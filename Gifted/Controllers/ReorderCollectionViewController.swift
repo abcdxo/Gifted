@@ -93,6 +93,7 @@ class ReorderCollectionViewController: UICollectionViewController, UICollectionV
         let title = UIBarButtonItem(title: "Reorder", style: .plain, target: nil, action: nil)
         title.isEnabled = false
         let flexibleSpace2 = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
         let check = UIBarButtonItem(image: UIImage(systemName: "checkmark"), style: .done, target: self, action: #selector(handleCheck))
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleBack))
         

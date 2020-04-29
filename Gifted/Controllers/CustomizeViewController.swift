@@ -36,8 +36,8 @@ func textToImage(drawText text: String, inImage image: UIImage, atPoint point: C
 // STUCK: Share gif to Twitter
 // STUCK: Slider to adjust speed
 // STUCK: scroll to bottom
-// STUCK: Progress view repeate over and over
-
+// STUCK: Progress view repeat over and over
+// STUCK: 
 // TODO: Drag and Drop
 
 class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityItemSource, ReorderCollectionViewControllerDelegate {
@@ -90,16 +90,18 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         }
     }
     
-    private var labelTextFromUser: UIView = {
-       let lb = UIView()
-       
-        lb.backgroundColor = .red
-        lb.translatesAutoresizingMaskIntoConstraints = false
-        return lb
-    }()
+//    private var labelTextFromUser: UIView = {
+//       let lb = UIView()
+//
+//        lb.backgroundColor = .red
+//        lb.translatesAutoresizingMaskIntoConstraints = false
+//        return lb
+//    }()
     //MARK:- Outlets
     
     @IBOutlet weak var gifImageView: UIImageView!
+       
+    
     
     @IBOutlet weak var optionCollectionView: UICollectionView!  {
         didSet {
@@ -146,19 +148,13 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
    private let slowImage: UIImageView = {
     
        let image = UIImageView(image: UIImage(systemName: "hare"))
-    
         image.translatesAutoresizingMaskIntoConstraints = false
-    
         image.contentMode = .scaleAspectFit
-    
         return image
     }()
     private let fastImage: UIImageView = {
-        
         let image = UIImageView(image: UIImage(systemName: "tortoise"))
-        
         image.translatesAutoresizingMaskIntoConstraints = false
-        
         image.contentMode = .scaleAspectFit
         
         return image
@@ -182,6 +178,36 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
       
         return button
     }()
+    
+    // CTRL + 6
+    
+    func createLabelWithText(text:String) {
+      let label = UILabel()
+        label.text =  text
+        label.textColor = .red
+        label.font = UIFont.systemFont(ofSize: 32)
+        label.center = gifImageView.center
+        label.isUserInteractionEnabled = true
+        label.sizeToFit()
+        view.addSubview(label)
+        view.bringSubviewToFront(label)
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        label.addGestureRecognizer(panGesture)
+    }
+    
+    @objc func handlePan(_ panGesture: UIPanGestureRecognizer) {
+        let translation = panGesture.translation(in: gifImageView)
+          guard let label = panGesture.view as? UILabel else { return }
+        switch panGesture.state {
+            case .began,.changed:
+                panGesture.setTranslation(.zero, in: gifImageView)
+                print(translation)
+                label.center = CGPoint(x: label.center.x + translation.x, y: label.center.y + translation.y)
+            default:
+                break
+        }
+      
+    }
     
     private lazy var checkButton: UIButton = {
         let button = UIButton(type: .system)
@@ -238,9 +264,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-   
-//        gifImageView.image =  textToImage(drawText: "Hello", inImage: UIImage.animatedImage(with: imagesToMakeGIF!, duration: 1.0)!, atPoint: CGPoint(x: 500, y: 500))
+     
         speedSlider.value = 1.25
         
         navigationController?.navigationItem.largeTitleDisplayMode = .never
@@ -260,6 +284,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         guard let images = imagesToMakeGIF else  { return }
         
         print("images to make GIF : \(images.count)")
+           startGif()
     }
     
     private func constraintsEverything() {
@@ -295,6 +320,10 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
             horizontalTopStackView.topAnchor.constraint(equalTo: speedingView.topAnchor)
         ])
     }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+     
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -302,27 +331,15 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         navigationController?.navigationBar.isHidden = false
         
         navigationController?.isToolbarHidden = true
-        labelTextFromUser.translatesAutoresizingMaskIntoConstraints = false
+
         
-        gifImageView.addSubview(labelTextFromUser)
-        
-        
-        NSLayoutConstraint.activate([
-            labelTextFromUser.centerXAnchor.constraint(equalTo: gifImageView.centerXAnchor),
-            labelTextFromUser.centerYAnchor.constraint(equalTo: gifImageView.centerYAnchor),
-            labelTextFromUser.heightAnchor.constraint(equalToConstant: 400),
-            labelTextFromUser.widthAnchor.constraint(equalToConstant: 400)
-            
-        ])
-        
-        startGif()
+     
         
     }
+    
     private let speedingView: UIView = {
        let view = UIView()
-        
         view.translatesAutoresizingMaskIntoConstraints = false
-        
         view.backgroundColor = .white
         
         return view
@@ -354,15 +371,13 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     }
   
     
-    private func createGifImage(with images: [UIImage],duration:Double) -> UIImageView {
+    private func createGifImage(with images: [UIImage],duration:Double) -> UIImage? {
       
         let animatedImage = UIImage.animatedImage(with:images, duration: duration ) // Create GIF
-        
-        let imageView = UIImageView(image: animatedImage)
-        
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return imageView
+//        let imageView = UIImageView(image: animatedImage)
+       
+//        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return animatedImage
     }
     
     var timer = Timer()
@@ -371,13 +386,9 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     private func showSavingOptionAlert() {
         
         let ac = UIAlertController(title: "", message: "You are all set", preferredStyle: .actionSheet)
-        
         ac.addAction(UIAlertAction(title: "Save to photo Library", style: .default, handler: saveGifToPhotoLibrary(action:)))
-        
         ac.addAction(UIAlertAction(title: "Share GIF", style: .default, handler: openActivityVC(action:)))
-        
         ac.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
-        
         present(ac, animated: true, completion: nil)
     }
     
@@ -414,18 +425,18 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     
     private func startGif() {
       
-        let imageViewForGif = createGifImage(with: imagesToMakeGIF!, duration: 0.5 * Double(imagesToMakeGIF!.count))
+        let imageForGIF = createGifImage(with: imagesToMakeGIF!, duration: 0.5 * Double(imagesToMakeGIF!.count))
         
-        view.addSubview(imageViewForGif)
-        
-        NSLayoutConstraint.activate([
-            imageViewForGif.leadingAnchor.constraint(equalTo: gifImageView.leadingAnchor),
-            imageViewForGif.trailingAnchor.constraint(equalTo: gifImageView.trailingAnchor),
-            imageViewForGif.topAnchor.constraint(equalTo: gifImageView.topAnchor),
-            imageViewForGif.bottomAnchor.constraint(equalTo: gifImageView.bottomAnchor)
-        ])
-
-        self.gifImageView = imageViewForGif
+//        view.addSubview(imageViewForGif)
+        gifImageView.image = imageForGIF
+//        NSLayoutConstraint.activate([
+//            imageViewForGif.leadingAnchor.constraint(equalTo: gifImageView.leadingAnchor),
+//            imageViewForGif.trailingAnchor.constraint(equalTo: gifImageView.trailingAnchor),
+//            imageViewForGif.topAnchor.constraint(equalTo: gifImageView.topAnchor),
+//            imageViewForGif.bottomAnchor.constraint(equalTo: gifImageView.bottomAnchor)
+//        ])
+//
+//        self.gifImageView = imageViewForGif
         
         Timer.scheduledTimer(withTimeInterval: 0.25  , repeats: true) { (timer) in
             
@@ -438,9 +449,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
             self.progress.completedUnitCount += 1
             let progressFloat = Float(self.progress.fractionCompleted)
             self.progressView.setProgress(progressFloat, animated: true)
-                
-            }
-        
+        }
     }
     
     @objc func handle() {
@@ -481,24 +490,24 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     
     
     @IBAction func reversePressed(_ sender: UIButton) {
-        let reversedImages = Array(imagesToMakeGIF!.reversed())
-        
-        let imageViewForGif = createGifImage(with: reversedImages, duration: Double(speedSlider.value) * Double(reversedImages.count))
-        
-        view.addSubview(imageViewForGif)
-        
-        NSLayoutConstraint.activate([
-            
-            imageViewForGif.leadingAnchor.constraint(equalTo: gifImageView.leadingAnchor),
-            
-            imageViewForGif.trailingAnchor.constraint(equalTo: gifImageView.trailingAnchor),
-            
-            imageViewForGif.topAnchor.constraint(equalTo: gifImageView.topAnchor),
-            
-            imageViewForGif.bottomAnchor.constraint(equalTo: gifImageView.bottomAnchor)
-        ])
-        
-        self.gifImageView = imageViewForGif
+//        let reversedImages = Array(imagesToMakeGIF!.reversed())
+//        
+//        let imageViewForGif = createGifImage(with: reversedImages, duration: Double(speedSlider.value) * Double(reversedImages.count))
+//        
+//        view.addSubview(imageViewForGif)
+//        
+//        NSLayoutConstraint.activate([
+//            
+//            imageViewForGif.leadingAnchor.constraint(equalTo: gifImageView.leadingAnchor),
+//            
+//            imageViewForGif.trailingAnchor.constraint(equalTo: gifImageView.trailingAnchor),
+//            
+//            imageViewForGif.topAnchor.constraint(equalTo: gifImageView.topAnchor),
+//            
+//            imageViewForGif.bottomAnchor.constraint(equalTo: gifImageView.bottomAnchor)
+//        ])
+//        
+//        self.gifImageView = imageViewForGif
     }
     
     
@@ -531,10 +540,15 @@ extension CustomizeViewController : UICollectionViewDelegate, UICollectionViewDa
                 vc.delegate = self 
                 navigationController?.pushViewController(vc, animated: true)
             case 7 :
-                let v = TextTypingViewController()
-                let vc = UINavigationController(rootViewController: v)
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true, completion: nil)
+                
+                let textViewController = TextTypingViewController()
+                let navViewController = UINavigationController(rootViewController: textViewController)
+                textViewController.completion = { text in
+                    guard let text = text else { return }
+                    self.createLabelWithText(text: text)
+                }
+                navViewController.modalPresentationStyle = .fullScreen
+                present(navViewController, animated: true, completion: nil)
               
             default:
             break
@@ -555,3 +569,4 @@ extension CustomizeViewController : UICollectionViewDelegate, UICollectionViewDa
         return CGSize(width: 80, height: 80)
     }
 }
+

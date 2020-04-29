@@ -10,6 +10,8 @@ import UIKit
 
 class TextTypingViewController: UIViewController {
 
+    var completion: ((String?) -> Void)? = nil
+    
     let textView: UITextView = {
        let v = UITextView()
         v.translatesAutoresizingMaskIntoConstraints = false
@@ -69,23 +71,18 @@ class TextTypingViewController: UIViewController {
         return stack
     }()
     
-    @objc func handleDone() {
-        print("Hello")
-         dismiss(animated: true, completion: nil)
+    @objc func addTextButtonPressed() {
+        dismiss(animated: true, completion: nil)
+        if textView.hasText {
+              completion?(textView.text!)
+        } else {
+              completion?(nil)
+        }
     }
     
-    
-    @objc func handleBack() {
-        dismiss(animated: true, completion: nil)
-    }
-
-        
-    @objc func handleCheck() {
-        dismiss(animated: true, completion: nil)
-    }
-        
     @objc func handleCancel() {
         dismiss(animated: true, completion: nil)
+        completion?(nil)
     }
     
     override func viewDidLoad() {
@@ -97,7 +94,7 @@ class TextTypingViewController: UIViewController {
         
         view.backgroundColor = .white
        
-        navigationItem.rightBarButtonItem =  UIBarButtonItem(image: UIImage(systemName: "checkmark"), style: .done, target: self, action: #selector(handleCheck))
+        navigationItem.rightBarButtonItem =  UIBarButtonItem(image: UIImage(systemName: "checkmark"), style: .done, target: self, action: #selector(addTextButtonPressed))
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "multiply"), style: .done, target: self, action: #selector(handleCancel))
 
         

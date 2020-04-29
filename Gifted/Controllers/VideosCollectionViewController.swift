@@ -41,12 +41,9 @@ class VideosCollectionViewController: UICollectionViewController, UICollectionVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "Pick Videos"
+        navigationItem.title = "Pick a Video"
          self.collectionView!.register(VideoCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "multiply"), style: .done, target: self, action: #selector(handleBack))
-      
-        
-    
       
       
     }
@@ -59,29 +56,33 @@ class VideosCollectionViewController: UICollectionViewController, UICollectionVi
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(videoAssets!.count)
+       
         return videoAssets!.count
     }
   
-    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedAsset = videoAssets?.object(at: indexPath.item)
+        print(selectedAsset!.duration)
+    }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
       
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! VideoCell
-        let videoAsset = videoAssets!.object(at: indexPath.row)
+        let videoAsset = videoAssets!.object(at: indexPath.item)
         
         cell.durationLabel.text = timeIntervalFormatter.string(from: videoAsset.duration)
-          let size = collectionView.frame.size.width / 5
-        
+        let size = collectionView.frame.size.width / 5
+     
         videoManager.requestImage(for: videoAsset, targetSize: CGSize(width: size, height: size), contentMode: .aspectFill, options: imageOption) { (image, _) in
             cell.imageRepresentationForVideo.image = image
-            print(image!.size)
+           
         }
      
         // Configure the cell
     
         return cell
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 5.0, left: 5.0, bottom: 5.0, right: 5.0)

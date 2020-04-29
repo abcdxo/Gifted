@@ -181,23 +181,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="yga-tF-fjG">
-                                <rect key="frame" x="0.0" y="617" width="375" height="51"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="SAG-Um-aRB"/>
-                                </constraints>
-                                <segments>
-                                    <segment title="Photos"/>
-                                    <segment title="Videos"/>
-                                </segments>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <action selector="segmentValueChanged:" destination="vSc-ZW-88f" eventType="valueChanged" id="T38-rv-nbb"/>
-                                </connections>
-                            </segmentedControl>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Ffq-TO-HMI">
-                                <rect key="frame" x="0.0" y="44" width="375" height="573"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="921-ig-oWo">
                                     <size key="itemSize" width="128" height="128"/>
@@ -257,16 +242,13 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="v2b-rO-yVk" firstAttribute="trailing" secondItem="Ffq-TO-HMI" secondAttribute="trailing" id="2BP-ix-dAg"/>
-                            <constraint firstItem="yga-tF-fjG" firstAttribute="trailing" secondItem="v2b-rO-yVk" secondAttribute="trailing" id="4U3-QM-A8B"/>
                             <constraint firstAttribute="bottom" secondItem="LR0-NH-b20" secondAttribute="bottom" id="9Zk-dw-rNZ"/>
-                            <constraint firstItem="Ffq-TO-HMI" firstAttribute="top" secondItem="v2b-rO-yVk" secondAttribute="top" id="9wP-nw-1EU"/>
-                            <constraint firstItem="yga-tF-fjG" firstAttribute="top" secondItem="Ffq-TO-HMI" secondAttribute="bottom" id="MvX-b3-kcP"/>
-                            <constraint firstItem="v2b-rO-yVk" firstAttribute="bottom" secondItem="yga-tF-fjG" secondAttribute="bottom" id="O4k-wV-c05"/>
+                            <constraint firstItem="Ffq-TO-HMI" firstAttribute="trailing" secondItem="v2b-rO-yVk" secondAttribute="trailing" id="TXD-26-5XV"/>
+                            <constraint firstItem="Ffq-TO-HMI" firstAttribute="top" secondItem="v2b-rO-yVk" secondAttribute="top" id="Vrw-Sz-kBI"/>
                             <constraint firstItem="LR0-NH-b20" firstAttribute="trailing" secondItem="v2b-rO-yVk" secondAttribute="trailing" id="dgf-p9-bB2"/>
-                            <constraint firstItem="Ffq-TO-HMI" firstAttribute="leading" secondItem="v2b-rO-yVk" secondAttribute="leading" id="enm-SY-gjL"/>
+                            <constraint firstItem="Ffq-TO-HMI" firstAttribute="bottom" secondItem="13G-Od-s0f" secondAttribute="bottom" id="fsl-0F-Ixq"/>
+                            <constraint firstItem="Ffq-TO-HMI" firstAttribute="leading" secondItem="v2b-rO-yVk" secondAttribute="leading" id="iVV-sN-T5v"/>
                             <constraint firstItem="LR0-NH-b20" firstAttribute="leading" secondItem="v2b-rO-yVk" secondAttribute="leading" id="lnT-4M-ox4"/>
-                            <constraint firstItem="yga-tF-fjG" firstAttribute="leading" secondItem="v2b-rO-yVk" secondAttribute="leading" id="ygQ-pw-cAk"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="v2b-rO-yVk"/>
                     </view>
@@ -275,7 +257,6 @@
                         <outlet property="containerHeightConstraint" destination="CcZ-FD-xh6" id="Ey5-zW-NBi"/>
                         <outlet property="containerView" destination="LR0-NH-b20" id="C5L-SZ-ndV"/>
                         <outlet property="photoCollectionView" destination="Ffq-TO-HMI" id="OaU-IC-aec"/>
-                        <outlet property="segmentControl" destination="yga-tF-fjG" id="l9I-xb-Cx8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nze-SW-Va7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -583,12 +564,6 @@
                                     <constraint firstAttribute="bottom" secondItem="xW0-OT-MPX" secondAttribute="bottom" constant="32" id="tRc-59-j5T"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CXM-qv-pCU">
-                                <rect key="frame" x="166.5" y="323.5" width="42" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -598,9 +573,7 @@
                             <constraint firstItem="6KP-Tp-Eb8" firstAttribute="top" secondItem="GNj-Rn-VuV" secondAttribute="bottom" id="NYZ-Dn-Yqz"/>
                             <constraint firstItem="6KP-Tp-Eb8" firstAttribute="trailing" secondItem="1nJ-Nd-med" secondAttribute="trailing" id="OA9-lm-Tbn"/>
                             <constraint firstItem="GNj-Rn-VuV" firstAttribute="top" secondItem="1nJ-Nd-med" secondAttribute="top" id="hyf-cE-4fn"/>
-                            <constraint firstItem="CXM-qv-pCU" firstAttribute="centerX" secondItem="RQg-07-whC" secondAttribute="centerX" id="kGP-Ha-eOg"/>
                             <constraint firstItem="1nJ-Nd-med" firstAttribute="trailing" secondItem="GNj-Rn-VuV" secondAttribute="trailing" id="kWw-Eh-GDk"/>
-                            <constraint firstItem="CXM-qv-pCU" firstAttribute="centerY" secondItem="RQg-07-whC" secondAttribute="centerY" id="lcc-iH-ZDw"/>
                             <constraint firstItem="xJ3-p9-Zsw" firstAttribute="top" secondItem="6KP-Tp-Eb8" secondAttribute="bottom" id="nL1-ZM-A36"/>
                             <constraint firstItem="1nJ-Nd-med" firstAttribute="bottom" secondItem="xJ3-p9-Zsw" secondAttribute="bottom" constant="42" id="oBg-26-Auy"/>
                             <constraint firstItem="xJ3-p9-Zsw" firstAttribute="leading" secondItem="1nJ-Nd-med" secondAttribute="leading" id="ogu-Na-udt"/>
