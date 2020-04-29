@@ -70,7 +70,7 @@ class ReorderCollectionViewController: UICollectionViewController, UICollectionV
         collectionView.dragInteractionEnabled = true
         collectionView.dragDelegate = self
         collectionView.dropDelegate = self
-        collectionView.reorderingCadence = .fast
+
 
         
     }
@@ -83,7 +83,6 @@ class ReorderCollectionViewController: UICollectionViewController, UICollectionV
         collectionView.dragInteractionEnabled = true
         collectionView.dragDelegate = self
         collectionView.dropDelegate = self
-        collectionView.reorderingCadence = .fast
         self.collectionView!.register(ReorderCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
         navigationController?.isToolbarHidden = false

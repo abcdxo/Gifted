@@ -18,9 +18,11 @@ class TextTypingViewController: UIViewController {
         v.becomeFirstResponder()
         return v
     }()
+    
     @objc func handleLeftAlignment() {
         textView.textAlignment = .left
     }
+    
     lazy var leftButton: UIButton = {
         let b = UIButton(type: .system)
         b.translatesAutoresizingMaskIntoConstraints = false
@@ -28,9 +30,11 @@ class TextTypingViewController: UIViewController {
         b.addTarget(self, action: #selector(handleLeftAlignment), for: .touchUpInside)
         return b
     }()
+    
     @objc func hanldleRightAlignment() {
         textView.textAlignment = .right
     }
+    
     lazy var  rightButton: UIButton = {
         let b = UIButton(type: .system)
         b.translatesAutoresizingMaskIntoConstraints = false
@@ -38,6 +42,7 @@ class TextTypingViewController: UIViewController {
           b.addTarget(self, action: #selector(hanldleRightAlignment), for: .touchUpInside)
         return b
     }()
+    
     @objc func handleCenterAlignment() {
         textView.textAlignment = .center
     }

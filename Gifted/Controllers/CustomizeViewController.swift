@@ -63,10 +63,10 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         pg.backgroundColor = .gray
         return pg
     }()
-    let options = ["Speed" ,"Boomerang" , "AR","Canvas","Reorder" , "Filters" , "Stickers", "Text", "Tune" ]
+    private let options = ["Speed" ,"Boomerang" , "AR","Canvas","Reorder" , "Filters" , "Stickers", "Text", "Tune" ]
                
     
-    let optionImages = [
+   private let optionImages = [
         UIImage(systemName: "waveform"),
         UIImage(systemName: "lasso"),
         UIImage(systemName: "square.stack.3d.down.right"),
@@ -90,7 +90,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         }
     }
     
-    var labelTextFromUser: UIView = {
+    private var labelTextFromUser: UIView = {
        let lb = UIView()
        
         lb.backgroundColor = .red
@@ -110,7 +110,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     
     //MARK:- Life Cycle
     
-    private let speedSlider: UISlider = {
+    private lazy var  speedSlider: UISlider = {
        let slide = UISlider()
         slide.translatesAutoresizingMaskIntoConstraints = false
         slide.minimumValue = 0.05
@@ -119,7 +119,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         return slide
     }()
     
-    @objc func sliderValueChanged(sender: UISlider) {
+    @objc private func sliderValueChanged(sender: UISlider) {
         //STUCK:
 //        print(sender.value)
 //
@@ -240,21 +240,17 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         super.viewDidLoad()
         
    
-        gifImageView.image =  textToImage(drawText: "Hello", inImage: UIImage.animatedImage(with: imagesToMakeGIF!, duration: 1.0)!, atPoint: CGPoint(x: 500, y: 500))
+//        gifImageView.image =  textToImage(drawText: "Hello", inImage: UIImage.animatedImage(with: imagesToMakeGIF!, duration: 1.0)!, atPoint: CGPoint(x: 500, y: 500))
         speedSlider.value = 1.25
         
         navigationController?.navigationItem.largeTitleDisplayMode = .never
         
         view.addSubview(progressView)
-        
         view.addSubview(speedingView)
         
         speedingView.addSubview(horizontalStackView)
-        
         speedingView.addSubview(horizontalTopStackView)
-        
         speedSlider.isContinuous = true
-        
         speedSlider.addTarget(self, action: #selector(valueChaned), for: .valueChanged)
         
         self.speedingViewHeight = speedingView.heightAnchor.constraint(equalToConstant: 200)
@@ -270,9 +266,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         NSLayoutConstraint.activate([
             
             speedingView.leadingAnchor.constraint(equalTo: gifImageView.leadingAnchor),
-            
             speedingView.trailingAnchor.constraint(equalTo: gifImageView.trailingAnchor),
-            
             speedingView.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: 16),
             
             
@@ -281,11 +275,8 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         NSLayoutConstraint.activate([
             
             progressView.leadingAnchor.constraint(equalTo: gifImageView.leadingAnchor),
-            
             progressView.trailingAnchor.constraint(equalTo: gifImageView.trailingAnchor),
-            
             progressView.topAnchor.constraint(equalTo: gifImageView.bottomAnchor),
-            
             progressView.heightAnchor.constraint(equalToConstant: 5)
             
         ])
@@ -293,27 +284,21 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         NSLayoutConstraint.activate([
             
             horizontalStackView.centerXAnchor.constraint(equalTo: speedingView.centerXAnchor),
-            
             horizontalStackView.centerYAnchor.constraint(equalTo: speedingView.centerYAnchor),
-            
             horizontalStackView.leadingAnchor.constraint(equalTo: speedingView.leadingAnchor,constant: 16),
-            
             horizontalStackView.trailingAnchor.constraint(equalTo: speedingView.trailingAnchor,constant: -16),
             
             
             horizontalTopStackView.leadingAnchor.constraint(equalTo: speedingView.leadingAnchor, constant: 16),
-            
             horizontalTopStackView.trailingAnchor.constraint(equalTo: speedingView.trailingAnchor, constant: -16),
-            
             horizontalTopStackView.heightAnchor.constraint(equalToConstant: 50),
-            
             horizontalTopStackView.topAnchor.constraint(equalTo: speedingView.topAnchor)
         ])
     }
     
-    override func viewWillAppear(_ animated: Bool){
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-      
+        
         navigationController?.navigationBar.isHidden = false
         
         navigationController?.isToolbarHidden = true
@@ -329,7 +314,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
             labelTextFromUser.widthAnchor.constraint(equalToConstant: 400)
             
         ])
-       
+        
         startGif()
         
     }
@@ -379,8 +364,8 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         
         return imageView
     }
-    var timer = Timer()
     
+    var timer = Timer()
     var progress : Progress!
       
     private func showSavingOptionAlert() {
@@ -414,7 +399,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         
         let ac = UIAlertController(title: "GIF Saved!", message: nil, preferredStyle: .alert)
         
-        ac.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) in
+        ac.addAction(UIAlertAction(title: "Go check it out", style: .default, handler: { (action) in
             self.createGIF(with: self.imagesToMakeGIF!, url: self.gifURL, frameDelay: Double(self.speedSlider.value) )
             
             PHPhotoLibrary.shared().performChanges({ PHAssetChangeRequest.creationRequestForAssetFromImage(
@@ -422,7 +407,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
             
            UIApplication.shared.open(URL(string:"photos-redirect://")!)
         }))
-        
+        ac.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
         present(ac, animated: true, completion: nil)
        
     }
@@ -434,13 +419,9 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         view.addSubview(imageViewForGif)
         
         NSLayoutConstraint.activate([
-            
             imageViewForGif.leadingAnchor.constraint(equalTo: gifImageView.leadingAnchor),
-            
             imageViewForGif.trailingAnchor.constraint(equalTo: gifImageView.trailingAnchor),
-            
             imageViewForGif.topAnchor.constraint(equalTo: gifImageView.topAnchor),
-            
             imageViewForGif.bottomAnchor.constraint(equalTo: gifImageView.bottomAnchor)
         ])
 
@@ -449,19 +430,14 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         Timer.scheduledTimer(withTimeInterval: 0.25  , repeats: true) { (timer) in
             
             guard self.progress.isFinished == false else {
-                
                 self.progressView.setProgress(0, animated: true)
-                
                 self.progress = Progress(totalUnitCount: Int64(self.imagesToMakeGIF!.count))
-                
                 return
             }
             
             self.progress.completedUnitCount += 1
-            
             let progressFloat = Float(self.progress.fractionCompleted)
-            
-                self.progressView.setProgress(progressFloat, animated: true)
+            self.progressView.setProgress(progressFloat, animated: true)
                 
             }
         
@@ -487,10 +463,11 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         if !sender.isSelected {
 
             gifImageView.image = imagesToMakeGIF!.last
-            
+            progress = Progress(totalUnitCount: 0)
             progressView.progress = 0
-            
+            progressView.setProgress(Float(progress.fractionCompleted), animated: true)
             sender.isSelected = true
+            timer.invalidate()
         } else {
             progress = Progress(totalUnitCount: Int64(imagesToMakeGIF!.count))
             

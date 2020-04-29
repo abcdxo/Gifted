@@ -21,21 +21,23 @@ class ReorderCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         layoutContrainsts()
-        layer.borderColor = UIColor.gray.cgColor
+        layer.borderColor = UIColor.black.cgColor
         layer.borderWidth  = 2
     }
     
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        
         layoutContrainsts()
-          layer.borderColor = UIColor.black.cgColor
-          layer.borderWidth  = 2
+        layer.borderColor = UIColor.black.cgColor
+        layer.borderWidth  = 2
     }
     
     
     private func layoutContrainsts() {
         addSubview(imageView)
+        
         NSLayoutConstraint.activate([
             imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: trailingAnchor),

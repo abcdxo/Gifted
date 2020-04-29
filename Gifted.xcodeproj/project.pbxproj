@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B6280E3F2459DE9400C313B3 /* VideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6280E3E2459DE9400C313B3 /* VideoCell.swift */; };
 		B64F777524561A4E0061AC49 /* CellIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64F777424561A4E0061AC49 /* CellIdentifier.swift */; };
 		B6567F6B2453BBFF009E4E03 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6567F6A2453BBFF009E4E03 /* UIColor.swift */; };
 		B6567F6E2454A11E009E4E03 /* PhotoPickingCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6567F6D2454A11E009E4E03 /* PhotoPickingCollectionViewController.swift */; };
@@ -51,6 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B6280E3E2459DE9400C313B3 /* VideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCell.swift; sourceTree = "<group>"; };
 		B64F777424561A4E0061AC49 /* CellIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellIdentifier.swift; sourceTree = "<group>"; };
 		B6567F6A2453BBFF009E4E03 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		B6567F6D2454A11E009E4E03 /* PhotoPickingCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickingCollectionViewController.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 				B6567F732455D7F3009E4E03 /* HorizontalBottomCollectionViewCell.swift */,
 				B688B4B5245655D400377CBF /* EditOptionCell.swift */,
 				B688B4BC24589D1A00377CBF /* ReorderCollectionViewCell.swift */,
+				B6280E3E2459DE9400C313B3 /* VideoCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -377,6 +380,7 @@
 				B688B4BB2458959900377CBF /* ReorderCollectionViewController.swift in Sources */,
 				B6567F702454BBA9009E4E03 /* PhotoPickingCollectionViewCell.swift in Sources */,
 				B66F7836245380F100E0727E /* BottomCollectionViewCell.swift in Sources */,
+				B6280E3F2459DE9400C313B3 /* VideoCell.swift in Sources */,
 				B64F777524561A4E0061AC49 /* CellIdentifier.swift in Sources */,
 				B6567F722455C606009E4E03 /* ContainerViewController.swift in Sources */,
 				B688B4B924575A7100377CBF /* Gif.swift in Sources */,
