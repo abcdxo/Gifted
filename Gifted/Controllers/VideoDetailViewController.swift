@@ -9,11 +9,45 @@
 import UIKit
 import AVFoundation
 import Photos
+import ImageIO
+import MobileCoreServices
+
+
+//extension UIImage {
+//    static func animatedGif(from images: [UIImage]) {
+//        let fileProperties: CFDictionary = [kCGImagePropertyGIFDictionary as String: [kCGImagePropertyGIFLoopCount as String: 0]]  as CFDictionary
+//        let frameProperties: CFDictionary = [kCGImagePropertyGIFDictionary as String: [(kCGImagePropertyGIFDelayTime as String): 1.0]] as CFDictionary
+//
+//        let documentsDirectoryURL: URL? = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+//        let fileURL: URL? = documentsDirectoryURL?.appendingPathComponent("animated.gif")
+//
+//        if let url = fileURL as CFURL? {
+//            if let destination = CGImageDestinationCreateWithURL(url, kUTTypeGIF, images.count, nil) {
+//                CGImageDestinationSetProperties(destination, fileProperties)
+//                for image in images {
+//                    if let cgImage = image.cgImage {
+//                        CGImageDestinationAddImage(destination, cgImage, frameProperties)
+//                    }
+//                }
+//                if !CGImageDestinationFinalize(destination) {
+//                    print("Failed to finalize the image destination")
+//                }
+//                print("Url = \(fileURL)")
+//            }
+//        }
+//    }
+//}
 
 class VideoDetailViewController: UIViewController {
     
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
     var video: PHAsset?
     let photoManager = PHImageManager()
+    
     let options : PHVideoRequestOptions = {
         let opt = PHVideoRequestOptions()
         opt.deliveryMode = .highQualityFormat
@@ -22,6 +56,10 @@ class VideoDetailViewController: UIViewController {
         return opt
     }()
     @objc func handleExport() {
+        print(video!.duration)
+        let exportVC = ExportVideoController()
+        navigationController?.pushViewController(exportVC, animated: true)
+        exportVC.videoAsset = video
         print("trying to make a gif from video")
     }
     @objc func handleCancel() {
@@ -40,7 +78,9 @@ class VideoDetailViewController: UIViewController {
         return bt
     }()
     
-    var isPlayed = false
+    var isPlayed = false 
+      
+    
     
     @objc func playerDidFinishPlaying() {
         segmentedControl.selectedSegmentIndex = 2
@@ -63,9 +103,7 @@ class VideoDetailViewController: UIViewController {
      
       
     }
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
+   
     
     
     let segmentedControl: UISegmentedControl = {
@@ -93,24 +131,33 @@ class VideoDetailViewController: UIViewController {
                 videoPreviewView.player?.setRate(1.0, time: CMTime.positiveInfinity, atHostTime: CMTime.negativeInfinity)
             case 3 :
                  videoPreviewView.player?.setRate(1.5, time: CMTime.positiveInfinity, atHostTime: CMTime.negativeInfinity)
-//                videoPreviewView.player?.setRate(2.5, time: CMTime.init(), atHostTime: CMTime.init())
-              
             case 4:
-                // Second segment tapped
+            
                 videoPreviewView.player?.setRate(2.0, time: CMTime.positiveInfinity, atHostTime: CMTime.negativeInfinity)
             default:
                 break
         }
     }
-
+    deinit{
+        NotificationCenter.default.removeObserver(self)
+    }
     //MARK:- Life Cycle
+    
+    lazy var  activityIndicator: UIActivityIndicatorView = {
+       let view = UIActivityIndicatorView()
+        view.startAnimating()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.style = .large
+        view.tintColor = .black
+        view.backgroundColor = .white
+        return view
+    }()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpViews()
-       
-        
+     
      NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
         
        
@@ -118,10 +165,11 @@ class VideoDetailViewController: UIViewController {
         view.addSubview(videoPreviewView)
         if let video = video {
             print(video.duration)
+            
             photoManager.requestPlayerItem(forVideo: video, options: options) { (avPlayerItem, _) in
                
                 self.videoPreviewView.player = AVPlayer(playerItem: avPlayerItem)
-                
+                self.activityIndicator.stopAnimating()
             }
         }
         NSLayoutConstraint.activate([
@@ -150,6 +198,13 @@ class VideoDetailViewController: UIViewController {
             segmentedControl.heightAnchor.constraint(equalToConstant: 40)
 
         ])
+        view.addSubview(activityIndicator)
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        
        
     }
     

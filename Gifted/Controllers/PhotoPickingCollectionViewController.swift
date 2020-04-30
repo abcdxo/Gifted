@@ -63,17 +63,21 @@ class PhotoPickingCollectionViewController: UIViewController
  
     override func viewDidLoad() {
         super.viewDidLoad()
+         self.grabPhotos()
           NotificationCenter.default.addObserver(self, selector: #selector(zero(_:)), name: NSNotification.Name("Zero"), object: nil)
          NotificationCenter.default.addObserver(self, selector: #selector(closeContainerView(_:)), name: NSNotification.Name("Close"), object: nil)
         
-        self.grabPhotos()
+      
         containerHeightConstraint.constant = 0
         setUpNavBar()
         
        
         
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+         
+    }
  
 
     func fetchCollections() {
@@ -97,14 +101,14 @@ class PhotoPickingCollectionViewController: UIViewController
         visibleCells.forEach { (cell) in
             cell.isSelected = false
             PhotoPickingCollectionViewController.selectedImages.removeAll()
-          photoCollectionView.reloadData()
+         
         }
         
         containerHeightConstraint.constant = 0
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
-
+        photoCollectionView.reloadData()
     }
     
     deinit  {
@@ -151,25 +155,16 @@ class PhotoPickingCollectionViewController: UIViewController
     private func setUpNavBar() {
         
         navigationController?.navigationBar.prefersLargeTitles = true
-        
         navigationItem.title = "Select Photos"
-        
         let appearance = UINavigationBarAppearance()
-        
         appearance.titleTextAttributes = [.foregroundColor: #colorLiteral(red: 0.2470482588, green: 0.239345789, blue: 0.3378213048, alpha: 1)]
-        
         appearance.largeTitleTextAttributes = [.foregroundColor: #colorLiteral(red: 0.2470482588, green: 0.239345789, blue: 0.3378213048, alpha: 1)]
-        
         appearance.backgroundColor = .white
-        
         navigationItem.standardAppearance = appearance
-        
         navigationItem.scrollEdgeAppearance = appearance
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: #selector(handleBack))
-        
         navigationItem.leftBarButtonItem?.tintColor = #colorLiteral(red: 0.2470482588, green: 0.239345789, blue: 0.3378213048, alpha: 1)
-        
         view.backgroundColor = .secondarySystemBackground
        
 
@@ -186,15 +181,15 @@ class PhotoPickingCollectionViewController: UIViewController
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         
         self.assetsFetchResults = PHAsset.fetchAssets(with: .image, options: fetchOptions)
-        
-        
+      
+//
 //        let scale = UIScreen.main.scale
 //        let numberOfPhotos: CGFloat = 3
 //        let thumbnailWidth = (photoCollectionView.bounds.width / numberOfPhotos) * scale
 //
-//        if fetchResult.count > 0 {
-//            for index in 0 ..< fetchResult.count {
-//                imageManager.requestImage(for: fetchResult.object(at: index) , targetSize: CGSize(width: thumbnailWidth, height: thumbnailWidth), contentMode: .aspectFill, options: requestOptions) { [weak self]
+//        if assetsFetchResults!.count > 0 {
+//            for index in 0 ..< assetsFetchResults!.count {
+//                imageManager.requestImage(for: assetsFetchResults!.object(at: index) , targetSize: CGSize(width: thumbnailWidth, height: thumbnailWidth), contentMode: .aspectFill, options: requestOptions) { [weak self]
 //                    image, error in
 ////                  print(thumbnailWidth)
 //                    guard let self = self else { return }
@@ -212,7 +207,7 @@ class PhotoPickingCollectionViewController: UIViewController
 //            print("You got no photos!")
 //
 //        }
-     
+//
     }
     func drawImageOnCanvas(_ useImage: UIImage, canvasSize: CGSize, canvasColor: UIColor ) -> UIImage {
         
@@ -254,6 +249,7 @@ class PhotoPickingCollectionViewController: UIViewController
     
     private func showContainerViewController() {
         self.containerHeightConstraint.constant = 140
+        
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
@@ -301,16 +297,27 @@ class PhotoPickingCollectionViewController: UIViewController
 
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = photoCollectionView.dequeueReusableCell(withReuseIdentifier: CellIdentifier.photoPickingCell.rawValue, for: indexPath) as? PhotoPickingCollectionViewCell else { return UICollectionViewCell() }
+        
         let asset = assetsFetchResults?.object(at: indexPath.item)
         let scale = UIScreen.main.scale
         let numberOfPhotos: CGFloat = 3
-        
-      
+
+//
         let thumbnailWidth = (photoCollectionView.bounds.width / numberOfPhotos) * scale
-        imageCachingManager.requestImage(for: asset!, targetSize: CGSize(width: thumbnailWidth, height: thumbnailWidth), contentMode: .aspectFill, options: requestOptions) { (image, _) in
-             cell.imageView.image = image
-            
-        }
+        cell.representedAssetIdentifier = asset?.localIdentifier
+        
+            self.imageManager.requestImage(for: asset!, targetSize: CGSize(width: thumbnailWidth, height: thumbnailWidth), contentMode: .aspectFill, options: self.requestOptions) { (image, _) in
+                if cell.representedAssetIdentifier == asset?.localIdentifier {
+                    
+                       cell.imageView.image = image
+                }
+                   
+                
+
+
+            }
+        
+     
         return cell
     
      

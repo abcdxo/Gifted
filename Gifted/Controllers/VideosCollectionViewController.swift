@@ -25,7 +25,11 @@ class VideosCollectionViewController: UICollectionViewController, UICollectionVi
     
     let option = PHVideoRequestOptions()
     let videoManager = PHImageManager()
-    let options = PHFetchOptions()
+    let options: PHFetchOptions =  {
+       let opt = PHFetchOptions()
+        opt.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+        return opt
+    }()
     var videoAssets: PHFetchResult<PHAsset>?
     let imageOption = PHImageRequestOptions()
     
@@ -73,7 +77,7 @@ class VideosCollectionViewController: UICollectionViewController, UICollectionVi
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-      
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! VideoCell
         let videoAsset = videoAssets!.object(at: indexPath.item)
         

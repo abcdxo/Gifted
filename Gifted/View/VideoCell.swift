@@ -29,19 +29,17 @@ class VideoCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         layoutViews()
-        layer.borderColor = UIColor.black.cgColor
+      
         layer.cornerRadius = 2
-     
-        layer.borderWidth = 3
+        layer.borderWidth = 2
     }
     
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         layer.cornerRadius = 2
-         
-        layer.borderColor = UIColor.black.cgColor
-        layer.borderWidth = 3
+        layer.borderWidth = 2
+      
         layoutViews()
     }
     

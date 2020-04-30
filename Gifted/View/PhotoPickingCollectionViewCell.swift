@@ -11,12 +11,20 @@ import UIKit
 class PhotoPickingCollectionViewCell: UICollectionViewCell {
     
     //MARK:- Outlets
+    
+    var representedAssetIdentifier: String!
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var checkMark: UIImageView! {
         didSet {
             checkMark.layer.masksToBounds = true
             checkMark.layer.cornerRadius = checkMark.frame.size.width / 2
         }
+    }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
+        checkMark.image = nil
     }
     
  //MARK:- Init

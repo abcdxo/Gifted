@@ -85,6 +85,7 @@ func textToImage(drawText text: String, inImage image: UIImage, atPoint point: C
 // TODO: Drag and Drop
 
 class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityItemSource, ReorderCollectionViewControllerDelegate {
+    
     func didReorder(images: [UIImage]) {
    imagesToMakeGIF = images
     }
@@ -156,29 +157,12 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         slide.addTarget(self, action: #selector(sliderValueChanged), for: .valueChanged)
         return slide
     }()
-    
+    var valueToSave = 0.0
     @objc private func sliderValueChanged(sender: UISlider) {
         //STUCK:
-//        print(sender.value)
-//
-//        let imageViewForGif = createGifImage(with: imagesToMakeGIF!, duration: Double(sender.value) * Double(imagesToMakeGIF!.count))
-//                view.addSubview(imageViewForGif)
-//
-//        NSLayoutConstraint.activate([
-//
-//            imageViewForGif.leadingAnchor.constraint(equalTo: gifImageView.leadingAnchor),
-//
-//            imageViewForGif.trailingAnchor.constraint(equalTo: gifImageView.trailingAnchor),
-//
-//            imageViewForGif.topAnchor.constraint(equalTo: gifImageView.topAnchor),
-//
-//            imageViewForGif.bottomAnchor.constraint(equalTo: gifImageView.bottomAnchor)
-//        ])
-//
-//        self.gifImageView = imageViewForGif
-//        gifImageView = createGifImage(with: imagesToMakeGIF!, duration: Double(sender.value))
-        
-        
+
+        gifImageView.image = createGifImage(with: imagesToMakeGIF!, duration: Double(sender.value) * Double(imagesToMakeGIF!.count))
+       
     }
  
    private let slowImage: UIImageView = {
@@ -303,7 +287,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     override func viewDidLoad() {
         super.viewDidLoad()
      
-        speedSlider.value = 1.25
+        speedSlider.value = (speedSlider.minimumValue + speedSlider.maximumValue) / 2
         
         navigationController?.navigationItem.largeTitleDisplayMode = .never
         
@@ -418,7 +402,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
       
     private func showSavingOptionAlert() {
         
-        let ac = UIAlertController(title: "", message: "You are all set", preferredStyle: .actionSheet)
+        let ac = UIAlertController(title: "You are all set", message: nil, preferredStyle: .actionSheet)
         ac.addAction(UIAlertAction(title: "Save to photo Library", style: .default, handler: saveGifToPhotoLibrary(action:)))
         ac.addAction(UIAlertAction(title: "Share GIF", style: .default, handler: openActivityVC(action:)))
         ac.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
@@ -451,7 +435,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
             
            UIApplication.shared.open(URL(string:"photos-redirect://")!)
         }))
-        ac.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
+        ac.addAction(UIAlertAction(title: "Go back", style: .destructive, handler: nil))
         present(ac, animated: true, completion: nil)
        
     }
@@ -460,7 +444,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
       
         let imageForGIF = createGifImage(with: imagesToMakeGIF!, duration: Double(speedSlider.value) * Double(imagesToMakeGIF!.count))
         gifImageView.image = imageForGIF
-//        imagesToMakeGIF!.animatedGif()
+        //        imagesToMakeGIF!.animatedGif()
         Timer.scheduledTimer(withTimeInterval: 0.25  , repeats: true) { (timer) in
             
             guard self.progress.isFinished == false else {
