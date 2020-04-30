@@ -14,13 +14,43 @@ import ImageIO
 import CoreVideo
 import VideoToolbox
 
-
 class ExportVideoController: UIViewController
 {
     var videoAsset: PHAsset?
     let photoManager = PHImageManager()
-    let option = PHVideoRequestOptions()
+    let option : PHVideoRequestOptions = {
+       let opt = PHVideoRequestOptions()
+        opt.deliveryMode = .fastFormat
+        return opt
+    }()
     var image: UIImage?
+    
+    var frames: [UIImage] = []
+    private var generator: AVAssetImageGenerator!
+    
+    func getAllFrames(from asset: AVAsset) {
+        let duration: Float64 = CMTimeGetSeconds(asset.duration)
+        self.generator = AVAssetImageGenerator(asset: asset)
+        self.generator.appliesPreferredTrackTransform = true
+        self.frames = []
+        for index: Int in 0 ..< Int(duration) {
+            self.getFrame(fromTime: Float64(index))
+        }
+        self.generator = nil
+    }
+    
+    
+    private func getFrame(fromTime:Float64) {
+        let time: CMTime = CMTimeMakeWithSeconds(fromTime, preferredTimescale: 600)
+        let image: CGImage
+        do {
+            try image = self.generator.copyCGImage(at: time, actualTime: nil)
+        } catch {
+            return
+        }
+        self.frames.append(UIImage(cgImage: image))
+    }
+    
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -31,12 +61,37 @@ class ExportVideoController: UIViewController
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+    private func createGifImage(with images: [UIImage],duration:Double) -> UIImage? {
+        
+        let animatedImage = UIImage.animatedImage(with:images, duration: duration ) // Create GIF
+        return animatedImage
+    }
     let pixelBuffer : CVPixelBuffer! = nil
+    
+    
+    func showAlert() {
+        let ac = UIAlertController(title: "GIF saved to Photo Library", message: nil, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Cool", style: .default, handler: { [weak self] (action) in
+            guard let self = self else { return }
+            self.createGIF(with: self.frames, url: CustomizeViewController.gifURL, frameDelay: 0)
+            
+            PHPhotoLibrary.shared().performChanges({ PHAssetChangeRequest.creationRequestForAssetFromImage(
+                atFileURL: CustomizeViewController.self.gifURL)})
+        }))
+        present(ac, animated: true, completion: nil)
+    }
+    
+    @objc func savePressed() {
+        print("saving")
+       showAlert()
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-   
+        navigationItem.title = "GIF Image"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(savePressed))
         view.addSubview(gifImageView)
+        
         NSLayoutConstraint.activate([
             gifImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             gifImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -47,80 +102,41 @@ class ExportVideoController: UIViewController
             print("Export: \(video.duration)")
             
             photoManager.requestAVAsset(forVideo: video, options: option) { (asset, _, _) in
-                let assetIG = AVAssetImageGenerator(asset: asset!)
-                assetIG.appliesPreferredTrackTransform = true
-                assetIG.apertureMode = AVAssetImageGenerator.ApertureMode.encodedPixels
-                
-                var time = asset?.duration
-                time!.value = min(time!.value, 2)
-                do {
-                    let imageRef = try assetIG.copyCGImage(at: time!, actualTime: nil)
-                    self.image =  UIImage(cgImage: imageRef)
-                    DispatchQueue.main.async {
-                             self.gifImageView.image = self.image
-                    }
-               
-                } catch let err as NSError {
-                    print(err)
-                    return
+                self.getAllFrames(from: asset!)
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    self.gifImageView.image = self.createGifImage(with: self.frames, duration: Double(asset!.preferredRate))
                 }
+               
             }
         }
-      
-        
         view.backgroundColor = .white
     }
     
+    private func createGIF(with images: [UIImage], url: URL, loopCount: Int = 0, frameDelay: Double)  {
+        
+        let destinationURL = url
+        
+        let destinationGIF = CGImageDestinationCreateWithURL(destinationURL as CFURL, kUTTypeGIF, images.count, nil)!
+        
+        // This dictionary controls the delay between frames
+        // If you don't specify this, CGImage will apply a default delay
+        let properties = [
+            (kCGImagePropertyGIFDictionary as String): [(kCGImagePropertyGIFDelayTime as String): frameDelay]
+        ]
+        
+        
+        for image in images {
+            // Convert an UIImage to CGImage, fitting within the specified rect
+            let cgImage = image.cgImage
+            // Add the frame to the GIF image
+            CGImageDestinationAddImage(destinationGIF, cgImage!, properties as CFDictionary?)
+            
+        }
+        
+        // Write the GIF file to disk
+        CGImageDestinationFinalize(destinationGIF)
+        
+    }
 }
-//static UIImage *frameImage(CGSize size, CGFloat radians) {
-//    UIGraphicsBeginImageContextWithOptions(size, YES, 1); {
-//        [[UIColor whiteColor] setFill];
-//        UIRectFill(CGRectInfinite);
-//        CGContextRef gc = UIGraphicsGetCurrentContext();
-//        CGContextTranslateCTM(gc, size.width / 2, size.height / 2);
-//        CGContextRotateCTM(gc, radians);
-//        CGContextTranslateCTM(gc, size.width / 4, 0);
-//        [[UIColor redColor] setFill];
-//        CGFloat w = size.width / 10;
-//        CGContextFillEllipseInRect(gc, CGRectMake(-w / 2, -w / 2, w, w));
-//    }
-//    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-//    UIGraphicsEndImageContext();
-//    return image;
-//}
-//
-//static void makeAnimatedGif(void) {
-//    static NSUInteger kFrameCount = 16;
-//
-//    NSDictionary *fileProperties = @{
-//        (__bridge id)kCGImagePropertyGIFDictionary: @{
-//            (__bridge id)kCGImagePropertyGIFLoopCount: @0, // 0 means loop forever
-//        }
-//    };
-//
-//    NSDictionary *frameProperties = @{
-//        (__bridge id)kCGImagePropertyGIFDictionary: @{
-//            (__bridge id)kCGImagePropertyGIFDelayTime: @0.02f, // a float (not double!) in seconds, rounded to centiseconds in the GIF data
-//        }
-//    };
-//
-//    NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:nil];
-//    NSURL *fileURL = [documentsDirectoryURL URLByAppendingPathComponent:@"animated.gif"];
-//
-//    CGImageDestinationRef destination = CGImageDestinationCreateWithURL((__bridge CFURLRef)fileURL, kUTTypeGIF, kFrameCount, NULL);
-//    CGImageDestinationSetProperties(destination, (__bridge CFDictionaryRef)fileProperties);
-//
-//    for (NSUInteger i = 0; i < kFrameCount; i++) {
-//        @autoreleasepool {
-//            UIImage *image = frameImage(CGSizeMake(300, 300), M_PI * 2 * i / kFrameCount);
-//            CGImageDestinationAddImage(destination, image.CGImage, (__bridge CFDictionaryRef)frameProperties);
-//        }
-//    }
-//
-//    if (!CGImageDestinationFinalize(destination)) {
-//        NSLog(@"failed to finalize image destination");
-//    }
-//    CFRelease(destination);
-//
-//    NSLog(@"url=%@", fileURL);
-//}
+

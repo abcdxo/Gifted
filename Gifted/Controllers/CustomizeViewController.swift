@@ -13,32 +13,6 @@ import ImageIO
 import MobileCoreServices
 
 
-
-extension Array where Element == UIImage {
-     func animatedGif() {
-        let fileProperties: CFDictionary = [kCGImagePropertyGIFDictionary as String: [kCGImagePropertyGIFLoopCount as String: 0]]  as CFDictionary
-        let frameProperties: CFDictionary = [kCGImagePropertyGIFDictionary as String: [(kCGImagePropertyGIFDelayTime as String): 1.0]] as CFDictionary
-        
-        let documentsDirectoryURL: URL? = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-        let fileURL: URL? = documentsDirectoryURL?.appendingPathComponent("animated.gif")
-        
-        if let url = fileURL as CFURL? {
-            if let destination = CGImageDestinationCreateWithURL(url, kUTTypeGIF, self.count, nil) {
-                CGImageDestinationSetProperties(destination, fileProperties)
-                for image in self {
-                    if let cgImage = image.cgImage {
-                        CGImageDestinationAddImage(destination, cgImage, frameProperties)
-                    }
-                }
-                if !CGImageDestinationFinalize(destination) {
-                    print("Failed to finalize the image destination")
-                }
-                print("Url = \(fileURL)")
-            }
-        }
-    }
-}
-
 func textToImage2(drawText text: NSString, inImage image: UIImage) -> UIImage {
     UIGraphicsBeginImageContext(image.size)
     image.draw(in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
@@ -78,7 +52,6 @@ func textToImage(drawText text: String, inImage image: UIImage, atPoint point: C
     return newImage!
 }
 // STUCK: Share gif to Twitter
-// STUCK: Slider to adjust speed
 // STUCK: scroll to bottom
 // STUCK: Progress view repeat over and over
 // STUCK: 
@@ -124,7 +97,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         UIImage(systemName: "radiowaves.left")
         
     ]
-    private var gifURL: URL {
+    static var gifURL: URL {
         let documentsURL = FileManager.default.urls( for: .documentDirectory,in: .userDomainMask).first
         let imageURL = documentsURL!.appendingPathComponent("MyImage.gif")
         return imageURL
@@ -412,9 +385,9 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     
     private func openActivityVC(action: UIAlertAction) {
         
-        createGIF(with: imagesToMakeGIF!, url: gifURL, frameDelay: Double(speedSlider.value))
+        createGIF(with: imagesToMakeGIF!, url: CustomizeViewController.gifURL, frameDelay: Double(speedSlider.value))
         
-        let imageData = try! Data(contentsOf: gifURL, options: .alwaysMapped)
+        let imageData = try! Data(contentsOf: CustomizeViewController.gifURL, options: .alwaysMapped)
 
         let ac = UIActivityViewController(activityItems: [imageData], applicationActivities: nil)
         
@@ -428,10 +401,10 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         let ac = UIAlertController(title: "GIF Saved!", message: nil, preferredStyle: .alert)
         
         ac.addAction(UIAlertAction(title: "Go check it out", style: .default, handler: { (action) in
-            self.createGIF(with: self.imagesToMakeGIF!, url: self.gifURL, frameDelay: Double(self.speedSlider.value) ) // 
+            self.createGIF(with: self.imagesToMakeGIF!, url: CustomizeViewController.self.gifURL, frameDelay: Double(self.speedSlider.value) ) // 
             
             PHPhotoLibrary.shared().performChanges({ PHAssetChangeRequest.creationRequestForAssetFromImage(
-                atFileURL: self.gifURL)})
+                atFileURL: CustomizeViewController.self.gifURL)})
             
            UIApplication.shared.open(URL(string:"photos-redirect://")!)
         }))

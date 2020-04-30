@@ -57,6 +57,7 @@ class VideoDetailViewController: UIViewController {
     }()
     @objc func handleExport() {
         print(video!.duration)
+        videoPreviewView.player?.pause()
         let exportVC = ExportVideoController()
         navigationController?.pushViewController(exportVC, animated: true)
         exportVC.videoAsset = video
@@ -78,7 +79,7 @@ class VideoDetailViewController: UIViewController {
         return bt
     }()
     
-    var isPlayed = false 
+    var isPlayed = false
       
     
     
@@ -98,20 +99,14 @@ class VideoDetailViewController: UIViewController {
                playButton.setImage(UIImage(systemName: "play.circle", withConfiguration: UIImage.SymbolConfiguration(pointSize: 60, weight: .light)), for: .normal)
               self.videoPreviewView.player!.pause()
             isPlayed.toggle()
-           
         }
      
-      
     }
-   
-    
-    
+  
     let segmentedControl: UISegmentedControl = {
         let sc = UISegmentedControl(items: ["-3X", "-2X","1X","+2X","+3X"])
         sc.translatesAutoresizingMaskIntoConstraints = false
-        
         sc.selectedSegmentIndex = 2
-  
         sc.backgroundColor = .white
         sc.selectedSegmentTintColor = .lightGray
         sc.addTarget(self, action: #selector(segmentControl), for: .valueChanged)
