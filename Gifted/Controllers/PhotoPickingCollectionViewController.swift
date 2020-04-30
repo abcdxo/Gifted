@@ -183,13 +183,15 @@ class PhotoPickingCollectionViewController: UIViewController
     private func grabPhotos() {
    
         let fetchOptions = PHFetchOptions()
-        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         
         self.assetsFetchResults = PHAsset.fetchAssets(with: .image, options: fetchOptions)
-        let scale = UIScreen.main.scale
-        let numberOfPhotos: CGFloat = 3
-        let thumbnailWidth = (photoCollectionView.bounds.width / numberOfPhotos) * scale
         
+        
+//        let scale = UIScreen.main.scale
+//        let numberOfPhotos: CGFloat = 3
+//        let thumbnailWidth = (photoCollectionView.bounds.width / numberOfPhotos) * scale
+//
 //        if fetchResult.count > 0 {
 //            for index in 0 ..< fetchResult.count {
 //                imageManager.requestImage(for: fetchResult.object(at: index) , targetSize: CGSize(width: thumbnailWidth, height: thumbnailWidth), contentMode: .aspectFill, options: requestOptions) { [weak self]
@@ -309,9 +311,6 @@ class PhotoPickingCollectionViewController: UIViewController
              cell.imageView.image = image
             
         }
-      
-       
-              
         return cell
     
      

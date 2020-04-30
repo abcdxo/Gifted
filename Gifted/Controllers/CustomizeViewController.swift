@@ -444,7 +444,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         let ac = UIAlertController(title: "GIF Saved!", message: nil, preferredStyle: .alert)
         
         ac.addAction(UIAlertAction(title: "Go check it out", style: .default, handler: { (action) in
-//            self.createGIF(with: self.imagesToMakeGIF!, url: self.gifURL, frameDelay: Double(self.speedSlider.value) )
+            self.createGIF(with: self.imagesToMakeGIF!, url: self.gifURL, frameDelay: Double(self.speedSlider.value) ) // 
             
             PHPhotoLibrary.shared().performChanges({ PHAssetChangeRequest.creationRequestForAssetFromImage(
                 atFileURL: self.gifURL)})

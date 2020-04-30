@@ -92,7 +92,7 @@ class VideosCollectionViewController: UICollectionViewController, UICollectionVi
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 5.0, left: 5.0, bottom: 5.0, right: 5.0)
+        return UIEdgeInsets(top: 20.0, left: 20.0, bottom: 5.0, right: 20.0)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 5.0
