@@ -12,14 +12,12 @@ protocol HorizontalBottomCollectionViewCellDelegate : class {
     func didRemoveItem(for cell: HorizontalBottomCollectionViewCell)
 }
 
-class HorizontalBottomCollectionViewCell: UICollectionViewCell
-{
+class HorizontalBottomCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     
     weak var delegate: HorizontalBottomCollectionViewCellDelegate?
-    override init(frame: CGRect)
-    {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(redCancelButton)
         setUpButtons()
@@ -27,16 +25,14 @@ class HorizontalBottomCollectionViewCell: UICollectionViewCell
     }
     
     
-    required init?(coder: NSCoder)
-    {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
         addSubview(redCancelButton)
         layer.cornerRadius = 8
         setUpButtons()
     }
  
-    private func setUpButtons()
-    {
+    private func setUpButtons() {
         redCancelButton.trailingAnchor.constraint(equalTo: trailingAnchor,constant: -2).isActive = true
         redCancelButton.topAnchor.constraint(equalTo:topAnchor,constant: 2).isActive = true
         redCancelButton.heightAnchor.constraint(equalToConstant: 15).isActive = true
@@ -54,8 +50,7 @@ class HorizontalBottomCollectionViewCell: UICollectionViewCell
         return button
     }()
     
-    @objc func handleCancel()
-    {
+    @objc func handleCancel() {
         print("Cancel")
         delegate?.didRemoveItem(for: self)
         // delegate

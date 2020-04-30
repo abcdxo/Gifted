@@ -8,18 +8,15 @@
 
 import UIKit
 
-class TopCollectionViewCell: UICollectionViewCell
-{
+class TopCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView! 
-    required init?(coder: NSCoder)
-    {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
        
     }
 
-    override init(frame: CGRect)
-    {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         clipsToBounds = true
      

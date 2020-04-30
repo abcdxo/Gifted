@@ -64,12 +64,13 @@ class PhotoPickingCollectionViewController: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
           NotificationCenter.default.addObserver(self, selector: #selector(zero(_:)), name: NSNotification.Name("Zero"), object: nil)
+         NotificationCenter.default.addObserver(self, selector: #selector(closeContainerView(_:)), name: NSNotification.Name("Close"), object: nil)
         
         self.grabPhotos()
         containerHeightConstraint.constant = 0
         setUpNavBar()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(closeContainerView(_:)), name: NSNotification.Name("Close"), object: nil)
+       
         
     }
     
@@ -91,23 +92,25 @@ class PhotoPickingCollectionViewController: UIViewController
     }
     
     @objc func closeContainerView(_ notification: Notification) {
-        
+          
         let visibleCells = photoCollectionView.visibleCells as! [PhotoPickingCollectionViewCell]
         visibleCells.forEach { (cell) in
             cell.isSelected = false
             PhotoPickingCollectionViewController.selectedImages.removeAll()
+          photoCollectionView.reloadData()
         }
-        containerHeightConstraint.constant = 0
         
+        containerHeightConstraint.constant = 0
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
-        photoCollectionView.reloadData()
+
     }
     
     deinit  {
         NotificationCenter.default.removeObserver(self)
     }
+    
     @objc func zero(_ notification: Notification) {
         guard let userInfo = notification.userInfo, let indexPath = userInfo["IndexPath"] as? IndexPath else { return }
         
@@ -182,31 +185,31 @@ class PhotoPickingCollectionViewController: UIViewController
         let fetchOptions = PHFetchOptions()
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
         
-        let fetchResult: PHFetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+        self.assetsFetchResults = PHAsset.fetchAssets(with: .image, options: fetchOptions)
         let scale = UIScreen.main.scale
         let numberOfPhotos: CGFloat = 3
         let thumbnailWidth = (photoCollectionView.bounds.width / numberOfPhotos) * scale
         
-        if fetchResult.count > 0 {
-            for index in 0 ..< fetchResult.count {
-                imageManager.requestImage(for: fetchResult.object(at: index) , targetSize: CGSize(width: thumbnailWidth, height: thumbnailWidth), contentMode: .aspectFill, options: requestOptions) { [weak self]
-                    image, error in
-//                  print(thumbnailWidth)
-                    guard let self = self else { return }
-                    guard let image = image else { return }
-                    self.images.append(image)
-                    
-                    DispatchQueue.main.async {
-                         self.photoCollectionView.reloadData()
-                    }
-                   
-                }
-                
-            }
-        } else {
-            print("You got no photos!")
-          
-        }
+//        if fetchResult.count > 0 {
+//            for index in 0 ..< fetchResult.count {
+//                imageManager.requestImage(for: fetchResult.object(at: index) , targetSize: CGSize(width: thumbnailWidth, height: thumbnailWidth), contentMode: .aspectFill, options: requestOptions) { [weak self]
+//                    image, error in
+////                  print(thumbnailWidth)
+//                    guard let self = self else { return }
+//                    guard let image = image else { return }
+//                    self.images.append(image)
+//
+//                    DispatchQueue.main.async {
+//                         self.photoCollectionView.reloadData()
+//                    }
+//
+//                }
+//
+//            }
+//        } else {
+//            print("You got no photos!")
+//
+//        }
      
     }
     func drawImageOnCanvas(_ useImage: UIImage, canvasSize: CGSize, canvasColor: UIColor ) -> UIImage {
@@ -243,7 +246,7 @@ class PhotoPickingCollectionViewController: UIViewController
     
      func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return images.count
+        return assetsFetchResults!.count
     }
 
     
@@ -259,12 +262,18 @@ class PhotoPickingCollectionViewController: UIViewController
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         showContainerViewController()
+        let asset = assetsFetchResults?.object(at: indexPath.row)
         
-        let image = images[indexPath.row]
-        PhotoPickingCollectionViewController.selectedImages.append(image)
-        let userInfo = ["Photos":PhotoPickingCollectionViewController.selectedImages]
-        NotificationCenter.default.post(name: NSNotification.Name("NewPhoto"), object: nil, userInfo: userInfo)
-        print("Selected images is \(PhotoPickingCollectionViewController.selectedImages.count)")
+         imageManager.requestImage(for: asset!, targetSize: CGSize(width: collectionView.frame.width  , height:  collectionView.frame.width ), contentMode: .aspectFill, options: requestOptions) { (image, _) in
+            guard let image = image else { return }
+            
+            PhotoPickingCollectionViewController.selectedImages.append(image)
+            let userInfo = ["Photos":PhotoPickingCollectionViewController.selectedImages]
+            NotificationCenter.default.post(name: NSNotification.Name("NewPhoto"), object: nil, userInfo: userInfo)
+            print("Selected images is \(PhotoPickingCollectionViewController.selectedImages.count)")
+        }
+
+     
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
 
@@ -279,8 +288,7 @@ class PhotoPickingCollectionViewController: UIViewController
         if PhotoPickingCollectionViewController.selectedImages.count == 0 {
             self.containerHeightConstraint.constant = 0
             
-            UIView.animate(withDuration: 0.2)
-            {
+            UIView.animate(withDuration: 0.2) {
                 self.view.layoutIfNeeded()
                 
             }
@@ -291,9 +299,18 @@ class PhotoPickingCollectionViewController: UIViewController
 
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = photoCollectionView.dequeueReusableCell(withReuseIdentifier: CellIdentifier.photoPickingCell.rawValue, for: indexPath) as? PhotoPickingCollectionViewCell else { return UICollectionViewCell() }
-    
-        let image = images[indexPath.item]
-        cell.imageView.image = image
+        let asset = assetsFetchResults?.object(at: indexPath.item)
+        let scale = UIScreen.main.scale
+        let numberOfPhotos: CGFloat = 3
+        
+      
+        let thumbnailWidth = (photoCollectionView.bounds.width / numberOfPhotos) * scale
+        imageCachingManager.requestImage(for: asset!, targetSize: CGSize(width: thumbnailWidth, height: thumbnailWidth), contentMode: .aspectFill, options: requestOptions) { (image, _) in
+             cell.imageView.image = image
+            
+        }
+      
+       
               
         return cell
     
@@ -322,8 +339,7 @@ class PhotoPickingCollectionViewController: UIViewController
 }
     
 
-extension PhotoPickingCollectionViewController
-{
+extension PhotoPickingCollectionViewController {
     //    func updateCache() {
     //        let currentFrameCenter = collectionView.bounds.minY
     //        let height = collectionView.bounds.height
@@ -361,8 +377,7 @@ extension PhotoPickingCollectionViewController
     //        imageManager.stopCachingImages(for: assetsAtIndexPaths(indexesToStopCaching), targetSize: cellSize, contentMode: .aspectFill, options: requestOptions)
     //    }
     
-    func assetsAtIndexPaths(_ indexPaths: [IndexPath]) -> [PHAsset]
-    {
+    func assetsAtIndexPaths(_ indexPaths: [IndexPath]) -> [PHAsset] {
         return indexPaths.map { (indexPath) -> PHAsset in
             return self.currentAssetAtIndex(indexPath.item)
         }

@@ -8,22 +8,19 @@
 
 import UIKit
 
-class BottomCollectionViewCell: UICollectionViewCell
-{
+class BottomCollectionViewCell: UICollectionViewCell {
   
     @IBOutlet weak var menuLabel: UILabel!
     @IBOutlet weak var menuImage: UIImageView!
     
-    required init?(coder: NSCoder)
-    {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
         backgroundColor = .secondarySystemBackground
         layer.cornerRadius = 16
         clipsToBounds = true
     }
     
-    override init(frame: CGRect)
-    {
+    override init(frame: CGRect) {
         super.init(frame: frame)
       
     }

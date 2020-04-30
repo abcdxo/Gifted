@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		B6280E3F2459DE9400C313B3 /* VideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6280E3E2459DE9400C313B3 /* VideoCell.swift */; };
+		B6280E41245A473200C313B3 /* VideoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6280E40245A473200C313B3 /* VideoDetailViewController.swift */; };
+		B6280E43245A56F600C313B3 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6280E42245A56F600C313B3 /* VideoPlayerView.swift */; };
 		B64F777524561A4E0061AC49 /* CellIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64F777424561A4E0061AC49 /* CellIdentifier.swift */; };
 		B6567F6B2453BBFF009E4E03 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6567F6A2453BBFF009E4E03 /* UIColor.swift */; };
 		B6567F6E2454A11E009E4E03 /* PhotoPickingCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6567F6D2454A11E009E4E03 /* PhotoPickingCollectionViewController.swift */; };
@@ -53,6 +55,8 @@
 
 /* Begin PBXFileReference section */
 		B6280E3E2459DE9400C313B3 /* VideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCell.swift; sourceTree = "<group>"; };
+		B6280E40245A473200C313B3 /* VideoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDetailViewController.swift; sourceTree = "<group>"; };
+		B6280E42245A56F600C313B3 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
 		B64F777424561A4E0061AC49 /* CellIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellIdentifier.swift; sourceTree = "<group>"; };
 		B6567F6A2453BBFF009E4E03 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		B6567F6D2454A11E009E4E03 /* PhotoPickingCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickingCollectionViewController.swift; sourceTree = "<group>"; };
@@ -165,6 +169,7 @@
 				B66F78572453885500E0727E /* View */,
 				B6567F6C2453D1D0009E4E03 /* Storyboards */,
 				B66F783024537BE300E0727E /* Resources */,
+				B6280E42245A56F600C313B3 /* VideoPlayerView.swift */,
 			);
 			path = Gifted;
 			sourceTree = "<group>";
@@ -223,6 +228,7 @@
 				B688B4BA2458959800377CBF /* ReorderCollectionViewController.swift */,
 				B688B4BE2459044700377CBF /* TextTypingViewController.swift */,
 				B688B4C024591FF000377CBF /* VideosCollectionViewController.swift */,
+				B6280E40245A473200C313B3 /* VideoDetailViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -370,6 +376,7 @@
 				B688B4B6245655D400377CBF /* EditOptionCell.swift in Sources */,
 				B6567F6E2454A11E009E4E03 /* PhotoPickingCollectionViewController.swift in Sources */,
 				B6567F742455D7F3009E4E03 /* HorizontalBottomCollectionViewCell.swift in Sources */,
+				B6280E41245A473200C313B3 /* VideoDetailViewController.swift in Sources */,
 				B688B4B4245628AD00377CBF /* CustomizeViewController.swift in Sources */,
 				B688B4BF2459044700377CBF /* TextTypingViewController.swift in Sources */,
 				B688B4BD24589D1A00377CBF /* ReorderCollectionViewCell.swift in Sources */,
@@ -386,6 +393,7 @@
 				B688B4B924575A7100377CBF /* Gif.swift in Sources */,
 				B688B4C124591FF000377CBF /* VideosCollectionViewController.swift in Sources */,
 				B66F781F24537AF400E0727E /* SceneDelegate.swift in Sources */,
+				B6280E43245A56F600C313B3 /* VideoPlayerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

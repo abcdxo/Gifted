@@ -95,7 +95,7 @@ class ReorderCollectionViewController: UICollectionViewController, UICollectionV
         let flexibleSpace2 = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         
         let check = UIBarButtonItem(image: UIImage(systemName: "checkmark"), style: .done, target: self, action: #selector(handleCheck))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleBack))
+        
         
         self.toolbarItems = [button,flexibleSpace,title,flexibleSpace2,check] //
         navigationController?.setToolbarHidden(false, animated: false)
@@ -106,7 +106,10 @@ class ReorderCollectionViewController: UICollectionViewController, UICollectionV
         delegate?.didReorder(images: images!)
          navigationController?.popViewController(animated: true)
     }
-
+    @objc func handleDone() {
+        navigationController?.popViewController(animated: true)
+    }
+    
  
     // MARK: UICollectionViewDataSource
 
@@ -130,14 +133,11 @@ class ReorderCollectionViewController: UICollectionViewController, UICollectionV
     
         return cell
     }
-    @objc func handleDone() {
-        navigationController?.popViewController(animated: true)
-    }
     
     
-    @objc func handleBack() {
-       navigationController?.popViewController(animated: true)
-    }
+   
+    
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let collectionViewSize = collectionView.frame.size.width
         return CGSize(width: collectionViewSize / 6, height: collectionViewSize / 6 )

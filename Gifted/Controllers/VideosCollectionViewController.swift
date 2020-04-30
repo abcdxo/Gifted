@@ -12,8 +12,6 @@ import AVFoundation
 
 private let reuseIdentifier = "VideoCell"
 
-
-
 class VideosCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
     private lazy var timeIntervalFormatter: DateComponentsFormatter = {
@@ -58,10 +56,19 @@ class VideosCollectionViewController: UICollectionViewController, UICollectionVi
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
        
         return videoAssets!.count
+  
     }
   
+    
+    
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedAsset = videoAssets?.object(at: indexPath.item)
+          let vc = VideoDetailViewController()
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .fullScreen
+        vc.video = selectedAsset
+        
+        present(nav, animated: true, completion: nil)
         print(selectedAsset!.duration)
     }
 

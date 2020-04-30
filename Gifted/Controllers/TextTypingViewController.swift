@@ -10,7 +10,7 @@ import UIKit
 
 class TextTypingViewController: UIViewController {
 
-    var completion: ((String?) -> Void)? = nil
+     var completion: ((String?) -> Void)? = nil
     
     let textView: UITextView = {
        let v = UITextView()

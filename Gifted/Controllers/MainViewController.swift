@@ -11,12 +11,10 @@ import Photos
 // TODO: Scroll to bottom
 // Fix logic deselect row 
 
-class MainViewController: UIViewController
-{
+class MainViewController: UIViewController {
 // My thinking make me make this app.
     
-    @IBOutlet weak var pageView: UIPageControl!
-        {
+    @IBOutlet weak var pageView: UIPageControl! {
         didSet {
             pageView.numberOfPages = photos.count
             pageView.currentPage = 0
@@ -24,8 +22,7 @@ class MainViewController: UIViewController
         }
     }
     
-    @IBOutlet weak var topCollectionView: UICollectionView!
-        {
+    @IBOutlet weak var topCollectionView: UICollectionView! {
         didSet {
             topCollectionView.delegate = self
             topCollectionView.dataSource = self
@@ -33,8 +30,7 @@ class MainViewController: UIViewController
     }
     
  
-    @IBOutlet weak var bottomCollectionView: UICollectionView!
-        {
+    @IBOutlet weak var bottomCollectionView: UICollectionView! {
         didSet {
             bottomCollectionView.delegate = self
             bottomCollectionView.dataSource = self
@@ -68,8 +64,7 @@ class MainViewController: UIViewController
     private var userFavorites: PHFetchResult<PHAssetCollection>?
     //MARK:- Outlets
     func fetchCollections() {
-        if let albums = PHCollectionList.fetchTopLevelUserCollections(with: nil) as? PHFetchResult<PHAssetCollection>
-        {
+        if let albums = PHCollectionList.fetchTopLevelUserCollections(with: nil) as? PHFetchResult<PHAssetCollection> {
             userAlbums = albums
         }
         userFavorites = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumFavorites, options: nil)
@@ -271,25 +266,18 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
 extension MainViewController: PHPhotoLibraryChangeObserver
 {
     
-    func photoLibraryDidChange(_ changeInstance: PHChange)
-    {
-        DispatchQueue.main.async
-            {
+    func photoLibraryDidChange(_ changeInstance: PHChange) {
+        DispatchQueue.main.async {
                 var updatedFetchResults = false
-                if let userAlbums = self.userAlbums,
-                    let changes = changeInstance.changeDetails(for: userAlbums)
-                {
+                if let userAlbums = self.userAlbums,let changes = changeInstance.changeDetails(for: userAlbums) {
                     self.userAlbums = changes.fetchResultAfterChanges
                     updatedFetchResults = true
                 }
-                if let userFavorites = self.userFavorites,
-                    let changes = changeInstance.changeDetails(for: userFavorites)
-                {
+                if let userFavorites = self.userFavorites,let changes = changeInstance.changeDetails(for: userFavorites) {
                     self.userFavorites = changes.fetchResultAfterChanges
                     updatedFetchResults = true
                 }
-                if updatedFetchResults
-                {
+                if updatedFetchResults {
                     self.bottomCollectionView.reloadData()
                 }
         }

@@ -8,8 +8,7 @@
 
 import UIKit
 
-class PhotoPickingCollectionViewCell: UICollectionViewCell
-{
+class PhotoPickingCollectionViewCell: UICollectionViewCell {
     
     //MARK:- Outlets
     @IBOutlet weak var imageView: UIImageView!
@@ -22,8 +21,7 @@ class PhotoPickingCollectionViewCell: UICollectionViewCell
     
  //MARK:- Init
     
-    required init?(coder: NSCoder)
-    {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
@@ -35,22 +33,18 @@ class PhotoPickingCollectionViewCell: UICollectionViewCell
     
     //MARK:- Properties
     
-    override var isSelected: Bool
-        {
-        didSet
-        {
+    override var isSelected: Bool {
+        didSet {
             checkMark.image = isSelected ?  UIImage(systemName: "checkmark.circle.fill")!: UIImage(systemName: "")
             checkMark.backgroundColor = isSelected ? .white : .none
         }
     }
     
-    override var isHighlighted: Bool
-        {
+    override var isHighlighted: Bool {
         didSet {  toggleIsHighlighted()  }
     }
     
-    private func toggleIsHighlighted()
-    {
+    private func toggleIsHighlighted() {
         UIView.animate(withDuration: 0.5,
                        delay: 0,
                        options: [.curveEaseOut,.transitionFlipFromLeft],

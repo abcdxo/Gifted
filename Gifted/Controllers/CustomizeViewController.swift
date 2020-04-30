@@ -12,6 +12,50 @@ import Photos
 import ImageIO
 import MobileCoreServices
 
+
+
+extension Array where Element == UIImage {
+     func animatedGif() {
+        let fileProperties: CFDictionary = [kCGImagePropertyGIFDictionary as String: [kCGImagePropertyGIFLoopCount as String: 0]]  as CFDictionary
+        let frameProperties: CFDictionary = [kCGImagePropertyGIFDictionary as String: [(kCGImagePropertyGIFDelayTime as String): 1.0]] as CFDictionary
+        
+        let documentsDirectoryURL: URL? = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        let fileURL: URL? = documentsDirectoryURL?.appendingPathComponent("animated.gif")
+        
+        if let url = fileURL as CFURL? {
+            if let destination = CGImageDestinationCreateWithURL(url, kUTTypeGIF, self.count, nil) {
+                CGImageDestinationSetProperties(destination, fileProperties)
+                for image in self {
+                    if let cgImage = image.cgImage {
+                        CGImageDestinationAddImage(destination, cgImage, frameProperties)
+                    }
+                }
+                if !CGImageDestinationFinalize(destination) {
+                    print("Failed to finalize the image destination")
+                }
+                print("Url = \(fileURL)")
+            }
+        }
+    }
+}
+
+func textToImage2(drawText text: NSString, inImage image: UIImage) -> UIImage {
+    UIGraphicsBeginImageContext(image.size)
+    image.draw(in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
+    let font = UIFont(name: "Helvetica-Bold", size: 14)!
+    let text_style = NSMutableParagraphStyle()
+    text_style.alignment=NSTextAlignment.center
+    let text_color = UIColor.white
+    let attributes=[NSAttributedString.Key.font:font, NSAttributedString.Key.paragraphStyle:text_style, NSAttributedString.Key.foregroundColor:text_color]
+    let text_h = font.lineHeight
+    let text_y = (image.size.height-text_h)/2
+    let text_rect = CGRect(x: 0, y: text_y, width: image.size.width, height: text_h)
+    text.draw(in: text_rect.integral, withAttributes: attributes)
+    let result = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    return result!
+}
+
 func textToImage(drawText text: String, inImage image: UIImage, atPoint point: CGPoint) -> UIImage {
     let textColor = UIColor.white
     let textFont = UIFont(name: "Helvetica Bold", size: 12)!
@@ -42,7 +86,7 @@ func textToImage(drawText text: String, inImage image: UIImage, atPoint point: C
 
 class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityItemSource, ReorderCollectionViewControllerDelegate {
     func didReorder(images: [UIImage]) {
-     imagesToMakeGIF = images
+   imagesToMakeGIF = images
     }
     
     func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
@@ -63,6 +107,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         pg.backgroundColor = .gray
         return pg
     }()
+    
     private let options = ["Speed" ,"Boomerang" , "AR","Canvas","Reorder" , "Filters" , "Stickers", "Text", "Tune" ]
                
     
@@ -90,19 +135,10 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         }
     }
     
-//    private var labelTextFromUser: UIView = {
-//       let lb = UIView()
-//
-//        lb.backgroundColor = .red
-//        lb.translatesAutoresizingMaskIntoConstraints = false
-//        return lb
-//    }()
     //MARK:- Outlets
     
     @IBOutlet weak var gifImageView: UIImageView!
        
-    
-    
     @IBOutlet weak var optionCollectionView: UICollectionView!  {
         didSet {
             optionCollectionView.delegate = self
@@ -262,6 +298,8 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     @objc func valueChaned() {
     
     }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
      
@@ -282,9 +320,9 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         constraintsEverything()
         
         guard let images = imagesToMakeGIF else  { return }
-        
         print("images to make GIF : \(images.count)")
-           startGif()
+        
+        startGif()
     }
     
     private func constraintsEverything() {
@@ -327,14 +365,11 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        startGif()
         navigationController?.navigationBar.isHidden = false
         
         navigationController?.isToolbarHidden = true
 
-        
-     
-        
     }
     
     private let speedingView: UIView = {
@@ -344,9 +379,8 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         
         return view
     }()
-    
-    
-    private func createGIF(with images: [UIImage], url: URL, loopCount: Int = 0, frameDelay: Double) {
+  
+    private func createGIF(with images: [UIImage], url: URL, loopCount: Int = 0, frameDelay: Double)  {
         
         let destinationURL = url
         
@@ -359,24 +393,23 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         ]
         
         
-        for img in images {
+        for image in images {
             // Convert an UIImage to CGImage, fitting within the specified rect
-            let cgImage = img.cgImage
+            let cgImage = image.cgImage
             // Add the frame to the GIF image
             CGImageDestinationAddImage(destinationGIF, cgImage!, properties as CFDictionary?)
+          
         }
-    
+        
         // Write the GIF file to disk
         CGImageDestinationFinalize(destinationGIF)
+        
     }
   
     
     private func createGifImage(with images: [UIImage],duration:Double) -> UIImage? {
       
         let animatedImage = UIImage.animatedImage(with:images, duration: duration ) // Create GIF
-//        let imageView = UIImageView(image: animatedImage)
-       
-//        imageView.translatesAutoresizingMaskIntoConstraints = false
         return animatedImage
     }
     
@@ -411,7 +444,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         let ac = UIAlertController(title: "GIF Saved!", message: nil, preferredStyle: .alert)
         
         ac.addAction(UIAlertAction(title: "Go check it out", style: .default, handler: { (action) in
-            self.createGIF(with: self.imagesToMakeGIF!, url: self.gifURL, frameDelay: Double(self.speedSlider.value) )
+//            self.createGIF(with: self.imagesToMakeGIF!, url: self.gifURL, frameDelay: Double(self.speedSlider.value) )
             
             PHPhotoLibrary.shared().performChanges({ PHAssetChangeRequest.creationRequestForAssetFromImage(
                 atFileURL: self.gifURL)})
@@ -425,19 +458,9 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     
     private func startGif() {
       
-        let imageForGIF = createGifImage(with: imagesToMakeGIF!, duration: 0.5 * Double(imagesToMakeGIF!.count))
-        
-//        view.addSubview(imageViewForGif)
+        let imageForGIF = createGifImage(with: imagesToMakeGIF!, duration: Double(speedSlider.value) * Double(imagesToMakeGIF!.count))
         gifImageView.image = imageForGIF
-//        NSLayoutConstraint.activate([
-//            imageViewForGif.leadingAnchor.constraint(equalTo: gifImageView.leadingAnchor),
-//            imageViewForGif.trailingAnchor.constraint(equalTo: gifImageView.trailingAnchor),
-//            imageViewForGif.topAnchor.constraint(equalTo: gifImageView.topAnchor),
-//            imageViewForGif.bottomAnchor.constraint(equalTo: gifImageView.bottomAnchor)
-//        ])
-//
-//        self.gifImageView = imageViewForGif
-        
+//        imagesToMakeGIF!.animatedGif()
         Timer.scheduledTimer(withTimeInterval: 0.25  , repeats: true) { (timer) in
             
             guard self.progress.isFinished == false else {
@@ -457,8 +480,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         progressView.progress += Float(gifImageView.image!.duration) / Float(imagesToMakeGIF!.count)
     }
     
-    @IBAction func saveTapped(_ sender: UIBarButtonItem)
-    {
+    @IBAction func saveTapped(_ sender: UIBarButtonItem) {
         showSavingOptionAlert()
     // Save as gif,live photo or video, show activity controller to share to friend
 
@@ -490,37 +512,23 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     
     
     @IBAction func reversePressed(_ sender: UIButton) {
-//        let reversedImages = Array(imagesToMakeGIF!.reversed())
-//        
-//        let imageViewForGif = createGifImage(with: reversedImages, duration: Double(speedSlider.value) * Double(reversedImages.count))
-//        
-//        view.addSubview(imageViewForGif)
-//        
-//        NSLayoutConstraint.activate([
-//            
-//            imageViewForGif.leadingAnchor.constraint(equalTo: gifImageView.leadingAnchor),
-//            
-//            imageViewForGif.trailingAnchor.constraint(equalTo: gifImageView.trailingAnchor),
-//            
-//            imageViewForGif.topAnchor.constraint(equalTo: gifImageView.topAnchor),
-//            
-//            imageViewForGif.bottomAnchor.constraint(equalTo: gifImageView.bottomAnchor)
-//        ])
-//        
-//        self.gifImageView = imageViewForGif
+        let reversedImages = Array(imagesToMakeGIF!.reversed())
+        
+        let imageViewForGif = createGifImage(with: reversedImages, duration: Double(speedSlider.value) * Double(reversedImages.count))
+       
+        self.gifImageView.image = imageViewForGif
     }
     
     
     @IBAction func repeatPressed(_ sender: UIButton) {
         
     }
-    
+    var imageWithText : UIImage?
     //MARK:- Actions
     
 
 }
-extension CustomizeViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
-{
+extension CustomizeViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return options.count
     }
@@ -543,9 +551,11 @@ extension CustomizeViewController : UICollectionViewDelegate, UICollectionViewDa
                 
                 let textViewController = TextTypingViewController()
                 let navViewController = UINavigationController(rootViewController: textViewController)
-                textViewController.completion = { text in
-                    guard let text = text else { return }
+                
+                textViewController.completion = { [weak self] text in
+                    guard let text = text,let self = self else { return }
                     self.createLabelWithText(text: text)
+                    self.imageWithText = textToImage2(drawText: NSString(string: text), inImage: self.gifImageView.image!)
                 }
                 navViewController.modalPresentationStyle = .fullScreen
                 present(navViewController, animated: true, completion: nil)

@@ -43,30 +43,16 @@ class ContainerViewController: UIViewController, HorizontalBottomCollectionViewC
     }
     // MARK:- Life Cycle
    
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
         super.viewDidLoad()
-        if let flowLayout = self.containerCollectionView?.collectionViewLayout as? UICollectionViewFlowLayout
-        {
+        if let flowLayout = self.containerCollectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.estimatedItemSize = CGSize(width: 1, height: 1)
         }
-        
-    
-        
+   
         NotificationCenter.default.addObserver(self, selector: #selector(didGetPhotos(_:)), name: NSNotification.Name("NewPhoto"), object: nil)
     }
-    
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-     
-    }
-    
-   
-  
-    @IBAction func deSelectAllButtonPressed(_ sender: UIButton)
-    {
+ 
+    @IBAction func deSelectAllButtonPressed(_ sender: UIButton) {
         print("deselect")
         images?.removeAll()
         containerCollectionView.reloadData()
@@ -75,8 +61,7 @@ class ContainerViewController: UIViewController, HorizontalBottomCollectionViewC
     
     
     
-    @IBAction func nextStepButtonPressed(_ sender: UIButton)
-    {
+    @IBAction func nextStepButtonPressed(_ sender: UIButton) {
         print("nextstep \(String(describing: images!.count))")
         let vc = (storyboard!.instantiateViewController(identifier: "sd")) as! CustomizeViewController
         vc.imagesToMakeGIF = images
