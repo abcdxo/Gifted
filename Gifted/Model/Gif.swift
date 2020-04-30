@@ -8,8 +8,7 @@
 
 import UIKit
 
-struct Gif
-{
+struct Gif {
     let thumbnail: UIImage
     let highResolutionImage: UIImage
     

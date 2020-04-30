@@ -46,7 +46,6 @@ class EditOptionCell: UICollectionViewCell
         setUpViewsForCell()
     }
     
-    
     private func setUpViewsForCell() {
         addSubview(optionStackView)
         NSLayoutConstraint.activate([

@@ -24,7 +24,6 @@ class HorizontalBottomCollectionViewCell: UICollectionViewCell {
         layer.cornerRadius = 8
     }
     
-    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         addSubview(redCancelButton)

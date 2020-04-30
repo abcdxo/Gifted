@@ -62,8 +62,6 @@ class VideosCollectionViewController: UICollectionViewController, UICollectionVi
         return videoAssets!.count
   
     }
-  
-    
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedAsset = videoAssets?.object(at: indexPath.item)
@@ -110,7 +108,4 @@ class VideosCollectionViewController: UICollectionViewController, UICollectionVi
         return CGSize(width: size,height: size)
     }
     
-    
-
-  
 }

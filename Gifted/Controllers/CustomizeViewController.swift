@@ -11,6 +11,11 @@ import ARKit
 import Photos
 import ImageIO
 import MobileCoreServices
+import CoreImage
+
+
+
+
 
 
 func textToImage2(drawText text: NSString, inImage image: UIImage) -> UIImage {
@@ -29,7 +34,6 @@ func textToImage2(drawText text: NSString, inImage image: UIImage) -> UIImage {
     UIGraphicsEndImageContext()
     return result!
 }
-
 func textToImage(drawText text: String, inImage image: UIImage, atPoint point: CGPoint) -> UIImage {
     let textColor = UIColor.white
     let textFont = UIFont(name: "Helvetica Bold", size: 12)!
@@ -82,6 +86,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         return pg
     }()
     
+ 
     private let options = ["Speed" ,"Boomerang" , "AR","Canvas","Reorder" , "Filters" , "Stickers", "Text", "Tune" ]
                
     
@@ -102,13 +107,15 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         let imageURL = documentsURL!.appendingPathComponent("MyImage.gif")
         return imageURL
     }
+    var filterManager : FilterManager?
     var imagesToMakeGIF: [UIImage]? {
         didSet {
             progress = Progress(totalUnitCount: Int64(imagesToMakeGIF!.count))
-            
+            filterManager = FilterManager(image: imagesToMakeGIF!.last!)
         }
     }
     
+
     //MARK:- Outlets
     
     @IBOutlet weak var gifImageView: UIImageView!
@@ -256,6 +263,53 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     
     }
     
+    let filterContainerView: UIView = {
+       let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        return view
+    }()
+    @objc func handleCheck() {
+        filterContainerViewAnchor?.isActive = false
+        UIView.animate(withDuration: 0.25) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    lazy var  filterCheckButton: UIButton = {
+        let bt = UIButton(type: .system)
+        bt.translatesAutoresizingMaskIntoConstraints = false
+        bt.addTarget(self, action: #selector(handleCheck), for: .touchUpInside)
+        bt.setImage(UIImage(systemName: "multiply"), for: .normal)
+        return bt
+    }()
+    
+    lazy var filterOkayButton: UIButton = {
+        let bt = UIButton(type: .system)
+        bt.translatesAutoresizingMaskIntoConstraints = false
+        bt.addTarget(self, action: #selector(handleDone), for: .touchUpInside)
+        bt.setImage(UIImage(systemName: "checkmark"), for: .normal)
+        return bt
+    }()
+    @objc func handleDone() {
+        filterContainerViewAnchor?.isActive = false
+        UIView.animate(withDuration: 0.25) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    lazy var filterCollectionView: UICollectionView = {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .horizontal
+        
+        let view = UICollectionView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: flowLayout) //
+        view.backgroundColor = .white
+        view.showsHorizontalScrollIndicator = false
+        view.showsVerticalScrollIndicator = false 
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -266,6 +320,11 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         
         view.addSubview(progressView)
         view.addSubview(speedingView)
+        view.addSubview(filterContainerView)
+        
+        filterCollectionView.register(FilterCell.self, forCellWithReuseIdentifier: "FilterCell")
+        filterCollectionView.delegate = self
+        filterCollectionView.dataSource = self
         
         speedingView.addSubview(horizontalStackView)
         speedingView.addSubview(horizontalTopStackView)
@@ -314,7 +373,36 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
             horizontalTopStackView.heightAnchor.constraint(equalToConstant: 50),
             horizontalTopStackView.topAnchor.constraint(equalTo: speedingView.topAnchor)
         ])
+        self.filterContainerViewAnchor =  filterContainerView.heightAnchor.constraint(equalToConstant: 160)
+        NSLayoutConstraint.activate([
+            filterContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            filterContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            filterContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        ])
+        
+        filterContainerView.addSubview(filterCollectionView)
+        filterContainerView.addSubview(filterCheckButton)
+        filterContainerView.addSubview(filterOkayButton)
+        
+        NSLayoutConstraint.activate([
+            filterCollectionView.leadingAnchor.constraint(equalTo: filterContainerView.leadingAnchor),
+            filterCollectionView.trailingAnchor.constraint(equalTo: filterContainerView.trailingAnchor),
+            filterCollectionView.topAnchor.constraint(equalTo: filterContainerView.topAnchor,constant: 32),
+            filterCollectionView.heightAnchor.constraint(equalToConstant: 100),
+            
+            filterCheckButton.leadingAnchor.constraint(equalTo: filterContainerView.leadingAnchor),
+            filterCheckButton.topAnchor.constraint(equalTo: filterContainerView.topAnchor),
+            filterCheckButton.heightAnchor.constraint(equalToConstant: 40),
+            filterCheckButton.widthAnchor.constraint(equalToConstant: 40),
+            
+            filterOkayButton.trailingAnchor.constraint(equalTo: filterContainerView.trailingAnchor),
+            filterOkayButton.topAnchor.constraint(equalTo: filterContainerView.topAnchor),
+            filterOkayButton.heightAnchor.constraint(equalToConstant: 40),
+            filterOkayButton.widthAnchor.constraint(equalToConstant: 40)
+        
+        ])
     }
+    var filterContainerViewAnchor: NSLayoutConstraint?
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
      
@@ -324,7 +412,6 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         super.viewWillAppear(animated)
         startGif()
         navigationController?.navigationBar.isHidden = false
-        
         navigationController?.isToolbarHidden = true
 
     }
@@ -362,7 +449,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         CGImageDestinationFinalize(destinationGIF)
         
     }
-  
+    
     
     private func createGifImage(with images: [UIImage],duration:Double) -> UIImage? {
       
@@ -381,8 +468,6 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         ac.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
         present(ac, animated: true, completion: nil)
     }
-    
-    
     private func openActivityVC(action: UIAlertAction) {
         
         createGIF(with: imagesToMakeGIF!, url: CustomizeViewController.gifURL, frameDelay: Double(speedSlider.value))
@@ -395,7 +480,6 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         
         present(ac, animated: true, completion: nil)
     }
-    
     private func saveGifToPhotoLibrary(action: UIAlertAction) {
         
         let ac = UIAlertController(title: "GIF Saved!", message: nil, preferredStyle: .alert)
@@ -412,7 +496,6 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         present(ac, animated: true, completion: nil)
        
     }
-    
     private func startGif() {
       
         let imageForGIF = createGifImage(with: imagesToMakeGIF!, duration: Double(speedSlider.value) * Double(imagesToMakeGIF!.count))
@@ -465,9 +548,6 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         }
     
     }
-    
-    
-    
     @IBAction func reversePressed(_ sender: UIButton) {
         let reversedImages = Array(imagesToMakeGIF!.reversed())
         
@@ -480,60 +560,119 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     @IBAction func repeatPressed(_ sender: UIButton) {
         
     }
+ 
     var imageWithText : UIImage?
     //MARK:- Actions
-    
+
+//
+    let filterImageName = [
+        "comic",
+        "sepia",
+        "halftone",
+        "crystallize",
+        "vignette",
+        "noir"
+    ]
 
 }
 extension CustomizeViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return options.count
+        switch collectionView {
+            case filterCollectionView:
+                return filterManager!.filterNames.count
+            default:
+             return options.count
+        }
+       
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        switch indexPath.item {
-            case 0:
-                self.speedingViewHeight!.isActive = true
-                
-                UIView.animate(withDuration: 0.3) {
-                    self.view.layoutIfNeeded()
+        switch collectionView {
+            case filterCollectionView:
+            //
+                if let type = FilterType(rawValue: indexPath.row) {
+//                    showLoading(true)
+                    DispatchQueue.global(qos: .userInitiated).async {
+        
+                        let filterImage = self.filterManager!.applyFilter(type: type)
+                        DispatchQueue.main.sync {
+                            
+                            self.gifImageView.image = filterImage
+//                            self.showLoading(false)
+                        }
+                    }
+                    
                 }
-            case 4:
-                let vc = storyboard?.instantiateViewController(withIdentifier: "312") as! ReorderCollectionViewController
-                
-                vc.images = imagesToMakeGIF!
-                vc.delegate = self 
-                navigationController?.pushViewController(vc, animated: true)
-            case 7 :
-                
-                let textViewController = TextTypingViewController()
-                let navViewController = UINavigationController(rootViewController: textViewController)
-                
-                textViewController.completion = { [weak self] text in
-                    guard let text = text,let self = self else { return }
-                    self.createLabelWithText(text: text)
-                    self.imageWithText = textToImage2(drawText: NSString(string: text), inImage: self.gifImageView.image!)
-                }
-                navViewController.modalPresentationStyle = .fullScreen
-                present(navViewController, animated: true, completion: nil)
-              
-            default:
             break
+            default:
+                switch indexPath.item {
+                    case 0:
+                        self.speedingViewHeight!.isActive = true
+                        
+                        UIView.animate(withDuration: 0.3) {
+                            self.view.layoutIfNeeded()
+                    }
+                    case 4:
+                        let vc = storyboard?.instantiateViewController(withIdentifier: "312") as! ReorderCollectionViewController
+                        
+                        vc.images = imagesToMakeGIF!
+                        vc.delegate = self
+                        navigationController?.pushViewController(vc, animated: true)
+                    case 7 :
+                        
+                        let textViewController = TextTypingViewController()
+                        let navViewController = UINavigationController(rootViewController: textViewController)
+                        
+                        textViewController.completion = { [weak self] text in
+                            guard let text = text,let self = self else { return }
+                            self.createLabelWithText(text: text)
+                            self.imageWithText = textToImage2(drawText: NSString(string: text), inImage: self.gifImageView.image!)
+                        }
+                        navViewController.modalPresentationStyle = .fullScreen
+                        present(navViewController, animated: true, completion: nil)
+                    case 5:
+                        print("Show collection view to pick core image filter ")
+                           self.filterContainerViewAnchor?.isActive = true
+                        UIView.animate(withDuration: 0.25) {
+                            self.view.layoutIfNeeded()
+                        }
+                     
+                    default:
+                        break
+            }
         }
+       
     }
     
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
-    {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellIdentifier.editCell.rawValue, for: indexPath) as! EditOptionCell
-        cell.optionLabel.text = options[indexPath.row]
-        cell.optionImageView.image = optionImages[indexPath.row]
-
-        return cell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        switch collectionView {
+            case filterCollectionView:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterCell", for: indexPath) as! FilterCell
+                cell.filterNameLabel.text = filterImageName[indexPath.item]
+                cell.filterImageView.image = UIImage(named: filterImageName[indexPath.row])
+               
+                return cell
+          
+            default:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellIdentifier.editCell.rawValue, for: indexPath) as! EditOptionCell
+                cell.optionLabel.text = options[indexPath.row]
+                cell.optionImageView.image = optionImages[indexPath.row]
+                
+                return cell
+        }
+      
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 80, height: 80)
+        switch collectionView {
+            case filterCollectionView:
+                let size = collectionView.frame.size.width / 4
+            return CGSize(width: size, height: size)
+            default:
+             return CGSize(width: 80, height: 80)
+        }
+       
     }
 }
 

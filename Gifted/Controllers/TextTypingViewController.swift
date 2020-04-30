@@ -117,7 +117,5 @@ class TextTypingViewController: UIViewController {
         view.backgroundColor = .white
       
     }
-    
-
    
 }

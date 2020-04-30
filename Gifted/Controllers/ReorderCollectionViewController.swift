@@ -77,6 +77,8 @@ class ReorderCollectionViewController: UICollectionViewController, UICollectionV
     override func viewDidLoad() {
         super.viewDidLoad()
         print(images!.count)
+        
+        
         collectionView.addInteraction(UIDropInteraction(delegate: self))
         collectionView.addInteraction(UIDropInteraction(delegate: self))
         
@@ -133,10 +135,6 @@ class ReorderCollectionViewController: UICollectionViewController, UICollectionV
     
         return cell
     }
-    
-    
-   
-    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let collectionViewSize = collectionView.frame.size.width

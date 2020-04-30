@@ -171,7 +171,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iRB-Ql-mkq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1006" y="872"/>
+            <point key="canvasLocation" x="918" y="861"/>
         </scene>
         <!--Photo Picking Collection View Controller-->
         <scene sceneID="e9Z-KR-pFF">
@@ -596,7 +596,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rZT-LU-gNd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2756.521739130435" y="-617.11956521739137"/>
+            <point key="canvasLocation" x="2756" y="-617.54122938530736"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gm3-WT-RmA">

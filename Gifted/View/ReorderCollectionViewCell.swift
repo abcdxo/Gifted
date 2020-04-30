@@ -25,7 +25,6 @@ class ReorderCollectionViewCell: UICollectionViewCell {
         layer.borderWidth  = 2
     }
     
-    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         
@@ -33,7 +32,6 @@ class ReorderCollectionViewCell: UICollectionViewCell {
         layer.borderColor = UIColor.black.cgColor
         layer.borderWidth  = 2
     }
-    
     
     private func layoutContrainsts() {
         addSubview(imageView)

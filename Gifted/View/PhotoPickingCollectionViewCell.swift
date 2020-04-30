@@ -33,8 +33,7 @@ class PhotoPickingCollectionViewCell: UICollectionViewCell {
         super.init(coder: coder)
     }
     
-    override init(frame: CGRect)
-    {
+    override init(frame: CGRect) {
         super.init(frame: frame)
 
     }

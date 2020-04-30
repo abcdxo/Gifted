@@ -288,13 +288,9 @@ class PhotoPickingCollectionViewController: UIViewController
             
             UIView.animate(withDuration: 0.2) {
                 self.view.layoutIfNeeded()
-                
             }
         }
-      
     }
-   
-
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = photoCollectionView.dequeueReusableCell(withReuseIdentifier: CellIdentifier.photoPickingCell.rawValue, for: indexPath) as? PhotoPickingCollectionViewCell else { return UICollectionViewCell() }
         
@@ -311,13 +307,8 @@ class PhotoPickingCollectionViewController: UIViewController
                     
                        cell.imageView.image = image
                 }
-                   
-                
-
-
+   
             }
-        
-     
         return cell
     
      

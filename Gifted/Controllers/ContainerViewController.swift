@@ -32,13 +32,10 @@ class ContainerViewController: UIViewController, HorizontalBottomCollectionViewC
         }
     }
     
-    @IBOutlet weak var containerCollectionView: UICollectionView!
-        {
-        didSet
-        {
+    @IBOutlet weak var containerCollectionView: UICollectionView! {
+        didSet {
             containerCollectionView.delegate = self
             containerCollectionView.dataSource = self
-          
         }
     }
     // MARK:- Life Cycle
@@ -70,8 +67,7 @@ class ContainerViewController: UIViewController, HorizontalBottomCollectionViewC
     
     
     
-    @objc func didGetPhotos(_ notification: Notification)
-    {
+    @objc func didGetPhotos(_ notification: Notification) {
         guard let userInfo = notification.userInfo,  let photos = userInfo["Photos"] as? [UIImage] else { return }
         self.images = photos
         
@@ -86,8 +82,7 @@ class ContainerViewController: UIViewController, HorizontalBottomCollectionViewC
         self.containerCollectionView.scrollToItem(at: indexPath, at: .right, animated: true)
     }
     
-    deinit
-    {
+    deinit {
         NotificationCenter.default.removeObserver(self)
     }
    

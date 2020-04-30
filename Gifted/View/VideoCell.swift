@@ -33,8 +33,6 @@ class VideoCell: UICollectionViewCell {
         layer.cornerRadius = 2
         layer.borderWidth = 2
     }
-    
-    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         layer.cornerRadius = 2
@@ -42,10 +40,6 @@ class VideoCell: UICollectionViewCell {
       
         layoutViews()
     }
-    
-    
-    
-    
     private func layoutViews() {
         addSubview(imageRepresentationForVideo)
         addSubview(durationLabel)
