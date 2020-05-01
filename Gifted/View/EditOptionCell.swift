@@ -53,8 +53,6 @@ class EditOptionCell: UICollectionViewCell
             optionStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             optionStackView.topAnchor.constraint(equalTo: topAnchor),
             optionStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
-        
         ])
     }
-    
 }

@@ -54,11 +54,6 @@ class VideoCell: UICollectionViewCell {
             durationLabel.leadingAnchor.constraint(equalTo: imageRepresentationForVideo.leadingAnchor),
             durationLabel.trailingAnchor.constraint(equalTo: imageRepresentationForVideo.trailingAnchor,constant: -4),
             durationLabel.heightAnchor.constraint(equalToConstant: 20)
-            
         ])
-        
-        
     }
-    
-    
 }

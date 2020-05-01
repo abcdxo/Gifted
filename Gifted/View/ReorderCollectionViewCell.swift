@@ -10,7 +10,6 @@ import UIKit
 
 class ReorderCollectionViewCell: UICollectionViewCell {
     
-    
     var imageView: UIImageView = {
        let m = UIImageView()
         m.translatesAutoresizingMaskIntoConstraints = false

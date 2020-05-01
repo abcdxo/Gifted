@@ -14,10 +14,6 @@ import MobileCoreServices
 import CoreImage
 
 
-
-
-
-
 func textToImage2(drawText text: NSString, inImage image: UIImage) -> UIImage {
     UIGraphicsBeginImageContext(image.size)
     image.draw(in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
@@ -107,11 +103,17 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         let imageURL = documentsURL!.appendingPathComponent("MyImage.gif")
         return imageURL
     }
-    var filterManager : FilterManager?
+    var timer = Timer()
+    var progress : Progress!
+    var currentImageGif: UIImage!
+    lazy var filterManager: FilterManager = {
+        let filterManager = FilterManager(image: currentImageGif)
+        return filterManager
+    }()
     var imagesToMakeGIF: [UIImage]? {
         didSet {
             progress = Progress(totalUnitCount: Int64(imagesToMakeGIF!.count))
-            filterManager = FilterManager(image: imagesToMakeGIF!.last!)
+           
         }
     }
     
@@ -119,7 +121,9 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     //MARK:- Outlets
     
     @IBOutlet weak var gifImageView: UIImageView!
-       
+   
+            
+    
     @IBOutlet weak var optionCollectionView: UICollectionView!  {
         didSet {
             optionCollectionView.delegate = self
@@ -159,6 +163,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         
         return image
     }()
+    
     private lazy var horizontalStackView : UIStackView = {
         let stack = UIStackView(arrangedSubviews: [self.slowImage,self.speedSlider,self.fastImage])
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -244,6 +249,8 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     
     @objc func cancelTapped() {
         self.speedingViewHeight?.isActive = false
+        
+        gifImageView.image = createGifImage(with: imagesToMakeGIF!, duration: Double(speedSlider.value))
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -281,6 +288,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         bt.translatesAutoresizingMaskIntoConstraints = false
         bt.addTarget(self, action: #selector(handleCheck), for: .touchUpInside)
         bt.setImage(UIImage(systemName: "multiply"), for: .normal)
+        bt.tintColor = .red
         return bt
     }()
     
@@ -289,6 +297,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         bt.translatesAutoresizingMaskIntoConstraints = false
         bt.addTarget(self, action: #selector(handleDone), for: .touchUpInside)
         bt.setImage(UIImage(systemName: "checkmark"), for: .normal)
+        bt.tintColor = .green
         return bt
     }()
     @objc func handleDone() {
@@ -311,9 +320,10 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     }()
     
     
+      
     override func viewDidLoad() {
         super.viewDidLoad()
-     
+    
         speedSlider.value = (speedSlider.minimumValue + speedSlider.maximumValue) / 2
         
         navigationController?.navigationItem.largeTitleDisplayMode = .never
@@ -373,7 +383,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
             horizontalTopStackView.heightAnchor.constraint(equalToConstant: 50),
             horizontalTopStackView.topAnchor.constraint(equalTo: speedingView.topAnchor)
         ])
-        self.filterContainerViewAnchor =  filterContainerView.heightAnchor.constraint(equalToConstant: 160)
+        self.filterContainerViewAnchor =  filterContainerView.heightAnchor.constraint(equalToConstant: 200)
         NSLayoutConstraint.activate([
             filterContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             filterContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -403,18 +413,14 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         ])
     }
     var filterContainerViewAnchor: NSLayoutConstraint?
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-     
-    }
+ 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         startGif()
         navigationController?.navigationBar.isHidden = false
         navigationController?.isToolbarHidden = true
-
-    }
+     }
     
     private let speedingView: UIView = {
        let view = UIView()
@@ -457,8 +463,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         return animatedImage
     }
     
-    var timer = Timer()
-    var progress : Progress!
+   
       
     private func showSavingOptionAlert() {
         
@@ -500,8 +505,9 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
       
         let imageForGIF = createGifImage(with: imagesToMakeGIF!, duration: Double(speedSlider.value) * Double(imagesToMakeGIF!.count))
         gifImageView.image = imageForGIF
+        self.currentImageGif = imageForGIF
         //        imagesToMakeGIF!.animatedGif()
-        Timer.scheduledTimer(withTimeInterval: 0.25  , repeats: true) { (timer) in
+        Timer.scheduledTimer(withTimeInterval: 0.5  , repeats: true) { (timer) in
             
             guard self.progress.isFinished == false else {
                 self.progressView.setProgress(0, animated: true)
@@ -550,9 +556,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     }
     @IBAction func reversePressed(_ sender: UIButton) {
         let reversedImages = Array(imagesToMakeGIF!.reversed())
-        
         let imageViewForGif = createGifImage(with: reversedImages, duration: Double(speedSlider.value) * Double(reversedImages.count))
-       
         self.gifImageView.image = imageViewForGif
     }
     
@@ -560,7 +564,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     @IBAction func repeatPressed(_ sender: UIButton) {
         
     }
- 
+    var imags = [UIImage]()
     var imageWithText : UIImage?
     //MARK:- Actions
 
@@ -579,29 +583,32 @@ extension CustomizeViewController : UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView {
             case filterCollectionView:
-                return filterManager!.filterNames.count
+                 
+                return filterManager.filterNames.count
             default:
              return options.count
         }
        
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+          var count = 0
         switch collectionView {
+          
             case filterCollectionView:
-            //
+            
                 if let type = FilterType(rawValue: indexPath.row) {
 //                    showLoading(true)
-                    DispatchQueue.global(qos: .userInitiated).async {
-        
-                        let filterImage = self.filterManager!.applyFilter(type: type)
-                        DispatchQueue.main.sync {
+                    DispatchQueue.global().async {
+                        count += 1
+                        print(count)
+                        let image = self.filterManager.applyFilter(type: type)
+                        DispatchQueue.main.async {
                             
-                            self.gifImageView.image = filterImage
-//                            self.showLoading(false)
+                            self.gifImageView.image = image
+                            
                         }
                     }
-                    
                 }
             break
             default:
@@ -633,6 +640,7 @@ extension CustomizeViewController : UICollectionViewDelegate, UICollectionViewDa
                     case 5:
                         print("Show collection view to pick core image filter ")
                            self.filterContainerViewAnchor?.isActive = true
+                        
                         UIView.animate(withDuration: 0.25) {
                             self.view.layoutIfNeeded()
                         }
@@ -649,6 +657,7 @@ extension CustomizeViewController : UICollectionViewDelegate, UICollectionViewDa
         switch collectionView {
             case filterCollectionView:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterCell", for: indexPath) as! FilterCell
+                
                 cell.filterNameLabel.text = filterImageName[indexPath.item]
                 cell.filterImageView.image = UIImage(named: filterImageName[indexPath.row])
                

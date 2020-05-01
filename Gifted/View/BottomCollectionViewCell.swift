@@ -15,6 +15,7 @@ class BottomCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        
         backgroundColor = .secondarySystemBackground
         layer.cornerRadius = 16
         clipsToBounds = true
@@ -24,6 +25,4 @@ class BottomCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
       
     }
-    
-   
 }

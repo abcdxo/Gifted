@@ -15,7 +15,6 @@ class VideoPlayerView: UIView {
         get {
             return playerLayer.player
         }
-        
         set {
             playerLayer.player = newValue
         }

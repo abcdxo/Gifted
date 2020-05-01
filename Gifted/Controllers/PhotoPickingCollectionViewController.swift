@@ -14,8 +14,7 @@ import Photos // access photos
 
 
 
-class PhotoPickingCollectionViewController: UIViewController
-{
+class PhotoPickingCollectionViewController: UIViewController {
     //MARK:- Outlets
      
   
@@ -63,14 +62,14 @@ class PhotoPickingCollectionViewController: UIViewController
  
     override func viewDidLoad() {
         super.viewDidLoad()
-         self.grabPhotos()
+        
           NotificationCenter.default.addObserver(self, selector: #selector(zero(_:)), name: NSNotification.Name("Zero"), object: nil)
          NotificationCenter.default.addObserver(self, selector: #selector(closeContainerView(_:)), name: NSNotification.Name("Close"), object: nil)
         
       
         containerHeightConstraint.constant = 0
         setUpNavBar()
-        
+         grabPhotos()
        
         
     }
@@ -126,6 +125,7 @@ class PhotoPickingCollectionViewController: UIViewController
         if PhotoPickingCollectionViewController.selectedImages.count == 0 {
             
             containerHeightConstraint.constant = 0
+            
             UIView.animate(withDuration: 0.2) {
                 self.view.layoutIfNeeded()
             }
@@ -178,35 +178,40 @@ class PhotoPickingCollectionViewController: UIViewController
     private func grabPhotos() {
    
         let fetchOptions = PHFetchOptions()
+        fetchOptions.fetchLimit = 30
+        
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         
         self.assetsFetchResults = PHAsset.fetchAssets(with: .image, options: fetchOptions)
       
-//
-//        let scale = UIScreen.main.scale
-//        let numberOfPhotos: CGFloat = 3
-//        let thumbnailWidth = (photoCollectionView.bounds.width / numberOfPhotos) * scale
-//
-//        if assetsFetchResults!.count > 0 {
-//            for index in 0 ..< assetsFetchResults!.count {
-//                imageManager.requestImage(for: assetsFetchResults!.object(at: index) , targetSize: CGSize(width: thumbnailWidth, height: thumbnailWidth), contentMode: .aspectFill, options: requestOptions) { [weak self]
-//                    image, error in
-////                  print(thumbnailWidth)
-//                    guard let self = self else { return }
-//                    guard let image = image else { return }
-//                    self.images.append(image)
-//
-//                    DispatchQueue.main.async {
-//                         self.photoCollectionView.reloadData()
-//                    }
-//
-//                }
-//
-//            }
-//        } else {
-//            print("You got no photos!")
-//
-//        }
+
+        let scale = UIScreen.main.scale
+        let numberOfPhotos: CGFloat = 3
+        let thumbnailWidth = (photoCollectionView.bounds.width / numberOfPhotos) * scale
+
+        if assetsFetchResults!.count > 0 {
+            for index in 0 ..< assetsFetchResults!.count {
+                DispatchQueue.global().async {
+                    self.imageManager.requestImage(for: self.assetsFetchResults!.object(at: index) , targetSize: CGSize(width: thumbnailWidth, height: thumbnailWidth), contentMode: .aspectFill, options: self.requestOptions) { [weak self]
+                        image, error in
+                        //                  print(thumbnailWidth)
+                        guard let self = self else { return }
+                        guard let image = image else { return }
+                        self.images.append(image)
+                        
+                        DispatchQueue.main.async {
+                            self.photoCollectionView.reloadData()
+                        }
+                        
+                    }
+                }
+              
+
+            }
+        } else {
+            print("You got no photos!")
+
+        }
 //
     }
     func drawImageOnCanvas(_ useImage: UIImage, canvasSize: CGSize, canvasColor: UIColor ) -> UIImage {
@@ -243,7 +248,8 @@ class PhotoPickingCollectionViewController: UIViewController
     
      func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return assetsFetchResults!.count
+//        return assetsFetchResults!.count
+        return images.count
     }
 
     
@@ -260,16 +266,13 @@ class PhotoPickingCollectionViewController: UIViewController
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         showContainerViewController()
-        let asset = assetsFetchResults?.object(at: indexPath.row)
+
+        let image = images[indexPath.row]
+        PhotoPickingCollectionViewController.selectedImages.append(image)
+        let userInfo = ["Photos":PhotoPickingCollectionViewController.selectedImages]
+        NotificationCenter.default.post(name: NSNotification.Name("NewPhoto"), object: nil, userInfo: userInfo)
+        print("Selected images is \(PhotoPickingCollectionViewController.selectedImages.count)")
         
-         imageManager.requestImage(for: asset!, targetSize: CGSize(width: collectionView.frame.width  , height:  collectionView.frame.width ), contentMode: .aspectFill, options: requestOptions) { (image, _) in
-            guard let image = image else { return }
-            
-            PhotoPickingCollectionViewController.selectedImages.append(image)
-            let userInfo = ["Photos":PhotoPickingCollectionViewController.selectedImages]
-            NotificationCenter.default.post(name: NSNotification.Name("NewPhoto"), object: nil, userInfo: userInfo)
-            print("Selected images is \(PhotoPickingCollectionViewController.selectedImages.count)")
-        }
 
      
     }
@@ -294,21 +297,26 @@ class PhotoPickingCollectionViewController: UIViewController
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = photoCollectionView.dequeueReusableCell(withReuseIdentifier: CellIdentifier.photoPickingCell.rawValue, for: indexPath) as? PhotoPickingCollectionViewCell else { return UICollectionViewCell() }
         
-        let asset = assetsFetchResults?.object(at: indexPath.item)
-        let scale = UIScreen.main.scale
-        let numberOfPhotos: CGFloat = 3
-
-//
-        let thumbnailWidth = (photoCollectionView.bounds.width / numberOfPhotos) * scale
-        cell.representedAssetIdentifier = asset?.localIdentifier
+//        let asset = assetsFetchResults?.object(at: indexPath.item)
+//        let scale = UIScreen.main.scale
+//        let numberOfPhotos: CGFloat = 3
+        let image = images[indexPath.row]
+            cell.imageView.image = image
         
-            self.imageManager.requestImage(for: asset!, targetSize: CGSize(width: thumbnailWidth, height: thumbnailWidth), contentMode: .aspectFill, options: self.requestOptions) { (image, _) in
-                if cell.representedAssetIdentifier == asset?.localIdentifier {
-                    
-                       cell.imageView.image = image
-                }
-   
-            }
+//
+//        let thumbnailWidth = (photoCollectionView.bounds.width / numberOfPhotos) * scale
+//        cell.representedAssetIdentifier = asset?.localIdentifier
+       
+//            self.imageManager.requestImage(for: asset!, targetSize: CGSize(width: thumbnailWidth, height: thumbnailWidth), contentMode: .aspectFill, options: self.requestOptions) { (image, _) in
+//
+//                    DispatchQueue.main.async {
+//                        cell.imageView.image = image
+//                    }
+//
+//
+//            }
+            
+        
         return cell
     
      

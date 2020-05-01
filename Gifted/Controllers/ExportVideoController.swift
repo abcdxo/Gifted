@@ -11,8 +11,7 @@ import Photos
 import AVFoundation
 import MobileCoreServices
 import ImageIO
-import CoreVideo
-import VideoToolbox
+
 
 class ExportVideoController: UIViewController
 {
@@ -21,6 +20,9 @@ class ExportVideoController: UIViewController
     let option : PHVideoRequestOptions = {
        let opt = PHVideoRequestOptions()
         opt.deliveryMode = .fastFormat
+        opt.isNetworkAccessAllowed = false
+        opt.version =  .current
+        
         return opt
     }()
     var image: UIImage?
@@ -71,9 +73,9 @@ class ExportVideoController: UIViewController
     
     func showAlert() {
         let ac = UIAlertController(title: "GIF saved to Photo Library", message: nil, preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "Cool", style: .default, handler: { [weak self] (action) in
+        ac.addAction(UIAlertAction(title: "Okay", style: .default, handler: { [weak self] (action) in
             guard let self = self else { return }
-            self.createGIF(with: self.frames, url: CustomizeViewController.gifURL, frameDelay: 0)
+            self.createGIF(with: self.frames, url: CustomizeViewController.gifURL, frameDelay: 0.2 ) // not x count
             
             PHPhotoLibrary.shared().performChanges({ PHAssetChangeRequest.creationRequestForAssetFromImage(
                 atFileURL: CustomizeViewController.self.gifURL)})
@@ -83,9 +85,10 @@ class ExportVideoController: UIViewController
     
     @objc func savePressed() {
         print("saving")
-       showAlert()
+        showAlert()
         
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "GIF Image"
@@ -105,7 +108,7 @@ class ExportVideoController: UIViewController
                 self.getAllFrames(from: asset!)
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
-                    self.gifImageView.image = self.createGifImage(with: self.frames, duration: Double(asset!.preferredRate))
+                    self.gifImageView.image = self.createGifImage(with: self.frames, duration: Double(0.2) * Double(self.frames.count))
                 }
                
             }

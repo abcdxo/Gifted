@@ -21,7 +21,9 @@ enum FilterType: Int {
 class FilterManager {
     
     let originalImage: UIImage
+    
     let context = CIContext(options: nil)
+    
     let filterNames = [
         "CIComicEffect",
         "CISepiaTone",
@@ -36,8 +38,10 @@ class FilterManager {
     }
     
     func applyFilter(type: FilterType) -> UIImage {
+        
         guard let ciImage = CIImage(image: originalImage) else { fatalError("Image not found!") }
         guard let filter = CIFilter(name: filterNames[type.rawValue]) else { fatalError("Filter not found!") }
+        
         filter.setValue(ciImage, forKey: kCIInputImageKey)
         
         switch type {
@@ -51,6 +55,7 @@ class FilterManager {
                 filter.setValue(25, forKey: kCIInputRadiusKey)
             case .vignette:
                 filter.setValue(3, forKey: kCIInputIntensityKey)
+                
                 filter.setValue(30, forKey: kCIInputRadiusKey)
             case .noir:
                 break

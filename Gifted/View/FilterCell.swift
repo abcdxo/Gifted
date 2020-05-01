@@ -18,7 +18,7 @@ class FilterCell: UICollectionViewCell {
         view.layer.masksToBounds = true
         view.clipsToBounds = true
         view.backgroundColor = .black
-        
+        view.layer.borderColor = UIColor.gray.cgColor
         view.layer.cornerRadius = 6
         return view
     }()
@@ -28,7 +28,7 @@ class FilterCell: UICollectionViewCell {
         lb.translatesAutoresizingMaskIntoConstraints = false
         lb.font = UIFont.systemFont(ofSize: 12)
         lb.textAlignment = .center
-        lb.setContentHuggingPriority(.defaultHigh, for: .vertical)
+//        lb.setContentHuggingPriority(.defaultHigh, for: .vertical)
         return lb
     }()
     
@@ -39,13 +39,10 @@ class FilterCell: UICollectionViewCell {
         verticalStackView.alignment = .fill
         
         verticalStackView.axis = .vertical
-        verticalStackView.spacing = 10
+        verticalStackView.spacing = 0
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
         return verticalStackView
     }()
-    
-    
-    
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)

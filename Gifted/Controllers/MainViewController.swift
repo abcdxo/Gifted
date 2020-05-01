@@ -95,6 +95,8 @@ class MainViewController: UIViewController {
         }
     }
 
+    //MARK:- Life Cycle
+    
     override func viewDidLoad() {
 
         super.viewDidLoad()
@@ -136,8 +138,7 @@ class MainViewController: UIViewController {
 
 }
 
-extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
-{
+extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView {
             case bottomCollectionView:
@@ -263,8 +264,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
     }
 }
-extension MainViewController: PHPhotoLibraryChangeObserver
-{
+extension MainViewController: PHPhotoLibraryChangeObserver {
     
     func photoLibraryDidChange(_ changeInstance: PHChange) {
         DispatchQueue.main.async {

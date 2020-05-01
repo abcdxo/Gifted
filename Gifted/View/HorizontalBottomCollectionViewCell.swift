@@ -18,6 +18,7 @@ class HorizontalBottomCollectionViewCell: UICollectionViewCell {
     
     weak var delegate: HorizontalBottomCollectionViewCellDelegate?
     override init(frame: CGRect) {
+        
         super.init(frame: frame)
         addSubview(redCancelButton)
         setUpButtons()
@@ -50,10 +51,8 @@ class HorizontalBottomCollectionViewCell: UICollectionViewCell {
     }()
     
     @objc func handleCancel() {
-        print("Cancel")
         delegate?.didRemoveItem(for: self)
         // delegate
     }
-    
 }
 

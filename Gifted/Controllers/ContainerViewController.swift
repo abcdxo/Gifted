@@ -8,8 +8,7 @@
 
 import UIKit
 
-class ContainerViewController: UIViewController, HorizontalBottomCollectionViewCellDelegate
-{
+class ContainerViewController: UIViewController, HorizontalBottomCollectionViewCellDelegate {
     func didRemoveItem(for cell: HorizontalBottomCollectionViewCell) {
        
         let item = containerCollectionView.indexPath(for: cell)
@@ -90,8 +89,7 @@ class ContainerViewController: UIViewController, HorizontalBottomCollectionViewC
 }
 //MARK:- Datasource
 
-extension ContainerViewController: UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UICollectionViewDataSource
-{
+extension ContainerViewController: UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
     {

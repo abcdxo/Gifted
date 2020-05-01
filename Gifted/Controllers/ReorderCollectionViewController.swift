@@ -64,7 +64,9 @@ class ReorderCollectionViewController: UICollectionViewController, UICollectionV
 
     
     var images: [UIImage]?
-  
+    
+  //MARK:- Life Cycle
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         collectionView.dragInteractionEnabled = true

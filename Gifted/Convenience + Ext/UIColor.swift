@@ -11,11 +11,9 @@ import Photos
 import ImageIO
 import MobileCoreServices
 
-extension UIImage
-{
+extension UIImage {
     // create gif
-    static func animatedGif(from images: [UIImage])
-    {
+    static func animatedGif(from images: [UIImage]) {
         let fileProperties: CFDictionary = [kCGImagePropertyGIFDictionary as String: [kCGImagePropertyGIFLoopCount as String: 0]]  as CFDictionary
         let frameProperties: CFDictionary = [kCGImagePropertyGIFDictionary as String: [(kCGImagePropertyGIFDelayTime as String): 1.0]] as CFDictionary
         
@@ -44,27 +42,22 @@ extension UIImage
     }
 }
 
-extension IndexSet
-{
+extension IndexSet {
     // Create an array of index paths from an index set
-    func indexPaths(for section: Int) -> [IndexPath]
-    {
+    func indexPaths(for section: Int) -> [IndexPath] {
         let indexPaths = map { (i) -> IndexPath in
             return IndexPath(item: i, section: section)
         }
         return indexPaths
     }
 }
-extension UIColor
-{
+extension UIColor {
     convenience init(r:CGFloat,g:CGFloat,b:CGFloat) {
         self.init(red: r / 255, green: g / 255, blue: b / 255, alpha: 1)
     }
 }
-extension UIImageView
-{
-    func fetchImage(asset: PHAsset, contentMode: PHImageContentMode, targetSize: CGSize)
-    {
+extension UIImageView {
+    func fetchImage(asset: PHAsset, contentMode: PHImageContentMode, targetSize: CGSize) {
         let options = PHImageRequestOptions()
         options.version = .original
         PHImageManager.default().requestImage(for: asset, targetSize: targetSize, contentMode: contentMode, options: options)
@@ -112,18 +105,15 @@ extension UIImageView
 //
 //
 //    }
-extension UIImage
-{
-    func resize(targetSize: CGSize) -> UIImage
-    {
+extension UIImage {
+    func resize(targetSize: CGSize) -> UIImage {
         return UIGraphicsImageRenderer(size:targetSize).image
             { _ in
             self.draw(in: CGRect(origin: .zero, size: targetSize))
         }
     }
     
-    func imageWithImage(image:UIImage, scaledToSize newSize:CGSize) -> UIImage
-    {
+    func imageWithImage(image:UIImage, scaledToSize newSize:CGSize) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0);
         image.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
         let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
