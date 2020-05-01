@@ -101,7 +101,6 @@ class TextTypingViewController: UIViewController {
         navigationController?.setToolbarHidden(false, animated: false)
         
         view.addSubview(textView)
-        
         view.addSubview(horizontalStackView)
         
         navigationItem.titleView = horizontalStackView

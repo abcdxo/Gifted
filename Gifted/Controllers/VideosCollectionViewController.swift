@@ -84,11 +84,7 @@ class VideosCollectionViewController: UICollectionViewController, UICollectionVi
      
         videoManager.requestImage(for: videoAsset, targetSize: CGSize(width: size, height: size), contentMode: .aspectFill, options: imageOption) { (image, _) in
             cell.imageRepresentationForVideo.image = image
-           
         }
-     
-        // Configure the cell
-    
         return cell
     }
     

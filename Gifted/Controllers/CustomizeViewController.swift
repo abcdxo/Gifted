@@ -106,16 +106,22 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     var timer = Timer()
     var progress : Progress!
     var currentImageGif: UIImage!
-    lazy var filterManager: FilterManager = {
-        let filterManager = FilterManager(image: currentImageGif)
-        return filterManager
-    }()
+//    lazy var filterManager: FilterManager = {
+//        let filterManager = FilterManager(image: currentImageGif)
+//        return filterManager
+//    }()
+    var filterManager: FilterManager?
     var imagesToMakeGIF: [UIImage]? {
         didSet {
-            progress = Progress(totalUnitCount: Int64(imagesToMakeGIF!.count))
-           
+            self.filterManager = FilterManager(images: imagesToMakeGIF!)
         }
     }
+    
+//        didSet {
+//            progress = Progress(totalUnitCount: Int64(imagesToMakeGIF!.count))
+//
+//        }
+    
     
 
     //MARK:- Outlets
@@ -250,7 +256,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     @objc func cancelTapped() {
         self.speedingViewHeight?.isActive = false
         
-        gifImageView.image = createGifImage(with: imagesToMakeGIF!, duration: Double(speedSlider.value))
+//        gifImageView.image = createGifImage(with: imagesToMakeGIF!, duration: Double(speedSlider.value))
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -328,7 +334,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         
         navigationController?.navigationItem.largeTitleDisplayMode = .never
         
-        view.addSubview(progressView)
+//        view.addSubview(progressView)
         view.addSubview(speedingView)
         view.addSubview(filterContainerView)
         
@@ -361,14 +367,14 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
             
         ])
         //          speedingViewHeight!
-        NSLayoutConstraint.activate([
-            
-            progressView.leadingAnchor.constraint(equalTo: gifImageView.leadingAnchor),
-            progressView.trailingAnchor.constraint(equalTo: gifImageView.trailingAnchor),
-            progressView.topAnchor.constraint(equalTo: gifImageView.bottomAnchor),
-            progressView.heightAnchor.constraint(equalToConstant: 5)
-            
-        ])
+//        NSLayoutConstraint.activate([
+//
+//            progressView.leadingAnchor.constraint(equalTo: gifImageView.leadingAnchor),
+//            progressView.trailingAnchor.constraint(equalTo: gifImageView.trailingAnchor),
+//            progressView.topAnchor.constraint(equalTo: gifImageView.bottomAnchor),
+//            progressView.heightAnchor.constraint(equalToConstant: 5)
+//
+//        ])
         
         NSLayoutConstraint.activate([
             
@@ -507,18 +513,18 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
         gifImageView.image = imageForGIF
         self.currentImageGif = imageForGIF
         //        imagesToMakeGIF!.animatedGif()
-        Timer.scheduledTimer(withTimeInterval: 0.5  , repeats: true) { (timer) in
-            
-            guard self.progress.isFinished == false else {
-                self.progressView.setProgress(0, animated: true)
-                self.progress = Progress(totalUnitCount: Int64(self.imagesToMakeGIF!.count))
-                return
-            }
-            
-            self.progress.completedUnitCount += 1
-            let progressFloat = Float(self.progress.fractionCompleted)
-            self.progressView.setProgress(progressFloat, animated: true)
-        }
+//        Timer.scheduledTimer(withTimeInterval: 0.5  , repeats: true) { (timer) in
+//
+//            guard self.progress.isFinished == false else {
+//                self.progressView.setProgress(0, animated: true)
+//                self.progress = Progress(totalUnitCount: Int64(self.imagesToMakeGIF!.count))
+//                return
+//            }
+//
+//            self.progress.completedUnitCount += 1
+//            let progressFloat = Float(self.progress.fractionCompleted)
+//            self.progressView.setProgress(progressFloat, animated: true)
+//        }
     }
     
     @objc func handle() {
@@ -584,7 +590,7 @@ extension CustomizeViewController : UICollectionViewDelegate, UICollectionViewDa
         switch collectionView {
             case filterCollectionView:
                  
-                return filterManager.filterNames.count
+                return filterManager!.filterNames.count
             default:
              return options.count
         }
@@ -592,21 +598,18 @@ extension CustomizeViewController : UICollectionViewDelegate, UICollectionViewDa
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-          var count = 0
+        
         switch collectionView {
           
             case filterCollectionView:
             
                 if let type = FilterType(rawValue: indexPath.row) {
-//                    showLoading(true)
+
                     DispatchQueue.global().async {
-                        count += 1
-                        print(count)
-                        let image = self.filterManager.applyFilter(type: type)
+                        let imagesFilted = self.filterManager?.applyFilter(type: type)
                         DispatchQueue.main.async {
-                            
-                            self.gifImageView.image = image
-                            
+                            self.imagesToMakeGIF = imagesFilted
+                            self.gifImageView.image = self.createGifImage(with: self.imagesToMakeGIF!, duration: Double(self.speedSlider.value) * Double(self.imagesToMakeGIF!.count))
                         }
                     }
                 }

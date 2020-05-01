@@ -40,7 +40,6 @@ import MobileCoreServices
 
 class VideoDetailViewController: UIViewController {
     
-    
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -152,17 +151,17 @@ class VideoDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpViews()
-     
-     NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
         
-       
+        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
+        
+        
         videoPreviewView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(videoPreviewView)
         if let video = video {
             print(video.duration)
             
             photoManager.requestPlayerItem(forVideo: video, options: options) { (avPlayerItem, _) in
-               
+                
                 self.videoPreviewView.player = AVPlayer(playerItem: avPlayerItem)
                 self.activityIndicator.stopAnimating()
             }
@@ -172,7 +171,7 @@ class VideoDetailViewController: UIViewController {
             videoPreviewView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             videoPreviewView.topAnchor.constraint(equalTo: view.topAnchor),
             videoPreviewView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        
+            
         ])
         
         view.addSubview(playButton)
@@ -182,8 +181,8 @@ class VideoDetailViewController: UIViewController {
             playButton.heightAnchor.constraint(equalToConstant: 200),
             playButton.widthAnchor.constraint(equalToConstant: 200)
         ])
-   
-    
+        
+        
         view.addSubview(segmentedControl)
         
         NSLayoutConstraint.activate([
@@ -191,7 +190,7 @@ class VideoDetailViewController: UIViewController {
             segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 0),
             segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: 0),
             segmentedControl.heightAnchor.constraint(equalToConstant: 40)
-
+            
         ])
         view.addSubview(activityIndicator)
         
@@ -200,7 +199,7 @@ class VideoDetailViewController: UIViewController {
             activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
         
-       
+        
     }
     
     private func setUpViews() {

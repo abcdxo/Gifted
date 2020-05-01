@@ -11,5 +11,4 @@ import UIKit
 struct Gif {
     let thumbnail: UIImage
     let highResolutionImage: UIImage
-    
 }

@@ -21,7 +21,7 @@ class ExportVideoController: UIViewController
        let opt = PHVideoRequestOptions()
         opt.deliveryMode = .fastFormat
         opt.isNetworkAccessAllowed = false
-        opt.version =  .current
+        opt.version =  .original
         
         return opt
     }()

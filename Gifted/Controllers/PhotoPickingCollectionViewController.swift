@@ -63,13 +63,13 @@ class PhotoPickingCollectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-          NotificationCenter.default.addObserver(self, selector: #selector(zero(_:)), name: NSNotification.Name("Zero"), object: nil)
-         NotificationCenter.default.addObserver(self, selector: #selector(closeContainerView(_:)), name: NSNotification.Name("Close"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(zero(_:)), name: NSNotification.Name("Zero"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(closeContainerView(_:)), name: NSNotification.Name("Close"), object: nil)
         
       
         containerHeightConstraint.constant = 0
         setUpNavBar()
-         grabPhotos()
+        grabPhotos()
        
         
     }
