@@ -22,7 +22,6 @@ class VideoPlayerView: UIView {
   var playerLayer: AVPlayerLayer {
     return layer as! AVPlayerLayer
   }
-  
   override class var layerClass: AnyClass {
     return AVPlayerLayer.self
   }
