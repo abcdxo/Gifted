@@ -11,7 +11,6 @@ import UIKit
 class PhotoPickingCollectionViewCell: UICollectionViewCell {
   
   //MARK:- Outlets
-  
   var representedAssetIdentifier: String!
   
   @IBOutlet weak var imageView: UIImageView!
