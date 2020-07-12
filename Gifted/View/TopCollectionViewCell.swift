@@ -9,17 +9,17 @@
 import UIKit
 
 class TopCollectionViewCell: UICollectionViewCell {
+  
+  @IBOutlet weak var imageView: UIImageView!
+  
+  required init?(coder: NSCoder) {
+    super.init(coder: coder)
     
-    @IBOutlet weak var imageView: UIImageView!
+  }
+  
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+    clipsToBounds = true
     
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-       
-    }
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        clipsToBounds = true
-     
-    }
+  }
 }

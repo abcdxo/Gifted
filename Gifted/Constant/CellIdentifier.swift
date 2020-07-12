@@ -9,11 +9,11 @@
 import UIKit
 
 public enum CellIdentifier: String {
-    
-    case menuCell = "MenuCell"
-    case topCell = "TopCell"
-    case photoPickingCell = "Hello"
-    case containerCollectionViewCell = "Cell"
-    case editCell = "EditCell"
-    
+  
+  case menuCell = "MenuCell"
+  case topCell = "TopCell"
+  case photoPickingCell = "Hello"
+  case containerCollectionViewCell = "Cell"
+  case editCell = "EditCell"
+  
 }

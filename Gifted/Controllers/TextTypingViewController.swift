@@ -9,112 +9,111 @@
 import UIKit
 
 class TextTypingViewController: UIViewController {
-
-     var completion: ((String?) -> Void)? = nil
+  
+  var completion: ((String?) -> Void)? = nil
+  
+  let textView: UITextView = {
+    let v = UITextView()
+    v.translatesAutoresizingMaskIntoConstraints = false
+    v.font = UIFont.systemFont(ofSize: 26)
+    v.textAlignment = .center
+    v.becomeFirstResponder()
+    return v
+  }()
+  
+  @objc func handleLeftAlignment() {
+    textView.textAlignment = .left
+  }
+  
+  lazy var leftButton: UIButton = {
+    let b = UIButton(type: .system)
+    b.translatesAutoresizingMaskIntoConstraints = false
+    b.setImage(UIImage(systemName: "text.alignleft"), for: .normal)
+    b.addTarget(self, action: #selector(handleLeftAlignment), for: .touchUpInside)
+    return b
+  }()
+  
+  @objc func hanldleRightAlignment() {
+    textView.textAlignment = .right
+  }
+  
+  lazy var  rightButton: UIButton = {
+    let b = UIButton(type: .system)
+    b.translatesAutoresizingMaskIntoConstraints = false
+    b.setImage(UIImage(systemName: "text.alignright"), for: .normal)
+    b.addTarget(self, action: #selector(hanldleRightAlignment), for: .touchUpInside)
+    return b
+  }()
+  
+  @objc func handleCenterAlignment() {
+    textView.textAlignment = .center
+  }
+  
+  lazy var  middleButton: UIButton = {
+    let b = UIButton(type: .system)
+    b.translatesAutoresizingMaskIntoConstraints = false
+    b.setImage(UIImage(systemName: "text.justify"), for: .normal)
+    b.addTarget(self, action: #selector(handleCenterAlignment), for: .touchUpInside)
+    return b
+  }()
+  
+  lazy var  horizontalStackView: UIStackView = {
+    let stack = UIStackView()
+    stack.translatesAutoresizingMaskIntoConstraints = false
+    stack.addArrangedSubview(self.leftButton)
+    stack.addArrangedSubview(self.middleButton)
+    stack.addArrangedSubview(self.rightButton)
     
-    let textView: UITextView = {
-       let v = UITextView()
-        v.translatesAutoresizingMaskIntoConstraints = false
-        v.font = UIFont.systemFont(ofSize: 26)
-        v.textAlignment = .center
-        v.becomeFirstResponder()
-        return v
-    }()
-    
-    @objc func handleLeftAlignment() {
-        textView.textAlignment = .left
+    stack.alignment = .fill
+    stack.axis = .horizontal
+    stack.distribution = .fillEqually
+    stack.spacing = 40
+    return stack
+  }()
+  
+  @objc func addTextButtonPressed() {
+    dismiss(animated: true, completion: nil)
+    if textView.hasText {
+      completion?(textView.text!)
+    } else {
+      completion?(nil)
     }
+  }
+  
+  @objc func handleCancel() {
+    dismiss(animated: true, completion: nil)
+    completion?(nil)
+  }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
     
-    lazy var leftButton: UIButton = {
-        let b = UIButton(type: .system)
-        b.translatesAutoresizingMaskIntoConstraints = false
-        b.setImage(UIImage(systemName: "text.alignleft"), for: .normal)
-        b.addTarget(self, action: #selector(handleLeftAlignment), for: .touchUpInside)
-        return b
-    }()
+    hideKeyboardWhenTappedAround()
     
-    @objc func hanldleRightAlignment() {
-        textView.textAlignment = .right
-    }
+    navigationItem.title = "Hello"
     
-    lazy var  rightButton: UIButton = {
-        let b = UIButton(type: .system)
-        b.translatesAutoresizingMaskIntoConstraints = false
-        b.setImage(UIImage(systemName: "text.alignright"), for: .normal)
-          b.addTarget(self, action: #selector(hanldleRightAlignment), for: .touchUpInside)
-        return b
-    }()
+    view.backgroundColor = .white
     
-    @objc func handleCenterAlignment() {
-        textView.textAlignment = .center
-    }
+    navigationItem.rightBarButtonItem =  UIBarButtonItem(image: UIImage(systemName: "checkmark"), style: .done, target: self, action: #selector(addTextButtonPressed))
+    navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "multiply"), style: .done, target: self, action: #selector(handleCancel))
     
-    lazy var  middleButton: UIButton = {
-        let b = UIButton(type: .system)
-        b.translatesAutoresizingMaskIntoConstraints = false
-        b.setImage(UIImage(systemName: "text.justify"), for: .normal)
-             b.addTarget(self, action: #selector(handleCenterAlignment), for: .touchUpInside)
-        return b
-    }()
     
-    lazy var  horizontalStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.addArrangedSubview(self.leftButton)
-        stack.addArrangedSubview(self.middleButton)
-        stack.addArrangedSubview(self.rightButton)
-        
-        stack.alignment = .fill
-        stack.axis = .horizontal
-        stack.distribution = .fillEqually
-        stack.spacing = 40
-        return stack
-    }()
+    navigationController?.setToolbarHidden(false, animated: false)
     
-    @objc func addTextButtonPressed() {
-        dismiss(animated: true, completion: nil)
-        if textView.hasText {
-              completion?(textView.text!)
-        } else {
-              completion?(nil)
-        }
-    }
+    view.addSubview(textView)
+    view.addSubview(horizontalStackView)
     
-    @objc func handleCancel() {
-        dismiss(animated: true, completion: nil)
-        completion?(nil)
-    }
+    navigationItem.titleView = horizontalStackView
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        hideKeyboardWhenTappedAround()
-        
-        navigationItem.title = "Hello"
-        
-        view.backgroundColor = .white
-       
-        navigationItem.rightBarButtonItem =  UIBarButtonItem(image: UIImage(systemName: "checkmark"), style: .done, target: self, action: #selector(addTextButtonPressed))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "multiply"), style: .done, target: self, action: #selector(handleCancel))
-
-        
-        navigationController?.setToolbarHidden(false, animated: false)
-        
-        view.addSubview(textView)
-        view.addSubview(horizontalStackView)
-        
-        navigationItem.titleView = horizontalStackView
-        
-        NSLayoutConstraint.activate([
-            textView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            textView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            textView.heightAnchor.constraint(equalToConstant: 200),
-            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            textView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
-        
-        view.backgroundColor = .white
-      
-    }
-   
+    NSLayoutConstraint.activate([
+      textView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+      textView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+      textView.heightAnchor.constraint(equalToConstant: 200),
+      textView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      textView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+    ])
+    
+    view.backgroundColor = .white
+    
+  }
 }
