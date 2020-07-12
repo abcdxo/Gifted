@@ -15,5 +15,4 @@ public enum CellIdentifier: String {
   case photoPickingCell = "Hello"
   case containerCollectionViewCell = "Cell"
   case editCell = "EditCell"
-  
 }
