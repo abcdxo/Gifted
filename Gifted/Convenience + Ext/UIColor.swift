@@ -12,7 +12,6 @@ import ImageIO
 import MobileCoreServices
 
 extension UIImage {
-  // create gif
   static func animatedGif(from images: [UIImage]) {
     let fileProperties: CFDictionary = [kCGImagePropertyGIFDictionary as String: [kCGImagePropertyGIFLoopCount as String: 0]]  as CFDictionary
     let frameProperties: CFDictionary = [kCGImagePropertyGIFDictionary as String: [(kCGImagePropertyGIFDelayTime as String): 1.0]] as CFDictionary
