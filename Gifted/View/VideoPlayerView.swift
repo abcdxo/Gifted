@@ -19,7 +19,6 @@ class VideoPlayerView: UIView {
       playerLayer.player = newValue
     }
   }
-  
   var playerLayer: AVPlayerLayer {
     return layer as! AVPlayerLayer
   }
