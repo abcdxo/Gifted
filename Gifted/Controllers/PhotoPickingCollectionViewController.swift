@@ -8,11 +8,8 @@
 
 // TODO: - Checkmark picked photos
 
-
 import UIKit
-import Photos // access photos
-
-
+import Photos
 
 class PhotoPickingCollectionViewController: UIViewController {
   //MARK:- Outlets
@@ -65,7 +62,6 @@ class PhotoPickingCollectionViewController: UIViewController {
     
     NotificationCenter.default.addObserver(self, selector: #selector(zero(_:)), name: NSNotification.Name("Zero"), object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(closeContainerView(_:)), name: NSNotification.Name("Close"), object: nil)
-    
     
     containerHeightConstraint.constant = 0
     setUpNavBar()
@@ -202,11 +198,8 @@ class PhotoPickingCollectionViewController: UIViewController {
             DispatchQueue.main.async {
               self.photoCollectionView.reloadData()
             }
-            
           }
         }
-        
-        
       }
     } else {
       print("You got no photos!")

@@ -106,7 +106,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
   var timer = Timer()
   var progress : Progress!
   var currentImageGif: UIImage!
-
+  
   var filterManager: FilterManager?
   var imagesToMakeGIF: [UIImage]? {
     didSet {
@@ -489,7 +489,7 @@ class CustomizeViewController: UIViewController, ARSessionDelegate, UIActivityIt
     let imageForGIF = createGifImage(with: imagesToMakeGIF!, duration: Double(speedSlider.value) * Double(imagesToMakeGIF!.count))
     gifImageView.image = imageForGIF
     self.currentImageGif = imageForGIF
- 
+    
   }
   
   @objc func handle() {
@@ -649,7 +649,6 @@ extension CustomizeViewController : UICollectionViewDelegate, UICollectionViewDa
       default:
         return CGSize(width: 80, height: 80)
     }
-    
   }
 }
 
