@@ -15,7 +15,6 @@ class EditOptionCell: UICollectionViewCell {
     image.contentMode = .scaleAspectFit
     return image
   }()
-  
   let optionLabel : UILabel = {
     let lb = UILabel()
     lb.translatesAutoresizingMaskIntoConstraints = false
