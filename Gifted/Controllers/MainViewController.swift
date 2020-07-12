@@ -12,7 +12,9 @@ import Photos
 // Fix logic deselect row 
 
 class MainViewController: UIViewController {
-  // My thinking make me make this app.
+  
+  
+  //MARK:- IBOutlets
   
   @IBOutlet weak var pageView: UIPageControl! {
     didSet {
@@ -37,21 +39,10 @@ class MainViewController: UIViewController {
     }
   }
   
-  
-  private var menuOptions = ["Photo to GIF",
-                             "Video to GIF",
-                             "AR","Camera",
-                             "GIF Editor",
-                             "Timelapse",
-                             "Slowmotion",
-                             "Live Photo to GIF"]
-  
-  private let photos = [ UIImage(named: "art"),
-                         UIImage(named: "background"),
-                         UIImage(named: "smile"),
-                         UIImage(named: "rose"),
-                         UIImage(named: "selfie"),
-                         UIImage(named: "sit")  ]
+  //MARK:- Properties
+  private var menuOptions = ["Photo to GIF","Video to GIF","AR","Camera","GIF Editor","Timelapse","Slowmotion","Live Photo to GIF"]
+  private let photos = [ UIImage(named: "art"),UIImage(named: "background"),UIImage(named: "smile"),UIImage(named: "rose"),
+                         UIImage(named: "selfie"),UIImage(named: "sit")  ]
   
   private var timer = Timer()
   private var counter = 0
@@ -134,8 +125,6 @@ class MainViewController: UIViewController {
       counter = 1
     }
   }
-  
-  
 }
 
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -185,11 +174,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
         
         return cell
-        
-        
     }
   }
-  
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     switch collectionView {
       case bottomCollectionView:
@@ -218,7 +204,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
       default:
         return UIEdgeInsets(top: 0, left: 20.0, bottom: 0, right: 20.0)
     }
-    
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -228,7 +213,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
       default:
         return minimumSpacing
     }
-    
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
