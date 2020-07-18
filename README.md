@@ -17,7 +17,11 @@
 
 
 
-
+# Technologies Used:
+- PhotoKit
+- AVFoundation
+- UICollectionView
+- UIKit
 
 
 - Visualization
