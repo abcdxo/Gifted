@@ -33,5 +33,5 @@
 
 
 
-[![Nick's github stats](https://github-readme-stats.vercel.app/api?username=nick)](https://github.com/nick/github-readme-stats)
+[![Nick's github stats](https://github-readme-stats.vercel.app/api?username=NickNguyeniOS14)](https://github.com/NickNguyeniOS14/github-readme-stats)
 
