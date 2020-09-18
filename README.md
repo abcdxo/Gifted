@@ -17,7 +17,7 @@
 
 
 
-# Technologies Used:
+# API Used:
 - PhotoKit
 - AVFoundation
 - UICollectionView
