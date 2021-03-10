@@ -1,6 +1,6 @@
 # Gifted
 
-- Gifted is an app to create GIF using combinations of photo,video and sound to make the best experience for user.
+- Gifted is an app to create GIF using combinations of photo, video and sound.
 
 
 
@@ -12,18 +12,14 @@
 
 
 
-- Images credit to : https://undraw.co/
-
-
-
+- Image source: https://undraw.co/
 
 # API Used:
+
 - PhotoKit
 - AVFoundation
 - UICollectionView
 - UIKit
-
-
 
 # Visualization:
 
@@ -33,8 +29,3 @@
 
 - Xcode 11
 - iOS 13
-
-
-
-
-
