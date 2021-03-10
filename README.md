@@ -1,6 +1,6 @@
 # Gifted
 
-- Gifted is an app to create GIF using combinations of photo, video and sound.
+- Gifted is an app to create GIF using combination of photo, video and sound.
 
 
 
