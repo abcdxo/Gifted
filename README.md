@@ -1,6 +1,6 @@
-# Gifted
+# GIF Maker
 
-- Gifted is an app to create GIF using combination of photo, video and sound.
+- GIF Maker is an app to create GIF using combination of photo, video and sound.
 
 
 
