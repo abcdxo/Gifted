@@ -14,7 +14,7 @@
 
 - Image source: https://undraw.co/
 
-# API Used:
+# Techonologies Used:
 
 - PhotoKit
 - AVFoundation
